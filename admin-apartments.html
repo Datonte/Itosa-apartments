@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ITOSA Admin - Apartments</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+tailwind.config={darkMode:"class",theme:{extend:{colors:{"surface-tint":"#5f5e5e","surface-container-low":"#f7f3f2","error":"#ba1a1a","outline":"#747878","secondary":"#795900","on-surface":"#1c1b1b","inverse-surface":"#313030","tertiary-fixed":"#c9e6ff","on-surface-variant":"#444748","secondary-fixed-dim":"#f9bd22","on-primary":"#ffffff","on-secondary-container":"#6f5100","surface-container-high":"#ebe7e7","primary-fixed":"#e4e2e1","on-primary-fixed":"#1b1c1c","on-error-container":"#93000a","tertiary":"#001a2a","on-primary-fixed-variant":"#474747","background":"#fdf8f8","surface-container":"#f1edec","primary":"#181919","outline-variant":"#c4c7c7","primary-container":"#2d2d2d","surface-container-lowest":"#ffffff","surface-container-highest":"#e5e2e1","inverse-primary":"#c8c6c6","secondary-container":"#ffc329","surface-variant":"#e5e2e1","on-error":"#ffffff","on-secondary-fixed-variant":"#5c4300","surface-dim":"#ddd9d8","on-secondary":"#ffffff","secondary-fixed":"#ffdf9f","on-background":"#1c1b1b","surface":"#fdf8f8","tertiary-fixed-dim":"#89ceff","on-secondary-fixed":"#261a00","surface-bright":"#fdf8f8","on-tertiary-container":"#009ddf"},fontFamily:{"caption":["Be Vietnam Pro"],"body-md":["Be Vietnam Pro"],"headline-md":["Manrope"],"headline-lg":["Manrope"],"label-bold":["Be Vietnam Pro"],"display-xl":["Manrope"]},fontSize:{"caption":["12px",{"lineHeight":"1.4","fontWeight":"400"}],"body-md":["16px",{"lineHeight":"1.6","fontWeight":"400"}],"headline-md":["24px",{"lineHeight":"1.3","fontWeight":"600"}],"headline-lg":["32px",{"lineHeight":"1.2","fontWeight":"700"}],"label-bold":["14px",{"lineHeight":"1.4","letterSpacing":"0.05em","fontWeight":"600"}],"display-xl":["48px",{"lineHeight":"1.1","letterSpacing":"-0.02em","fontWeight":"800"}]}}}}
+</script>
+<style>
+.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;}
+.nav-link{transition:all .2s;}
+.apt-row{transition:background .15s;}
+.modal-overlay{transition:opacity .2s;}
+</style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen">
+
+<!-- Sidebar -->
+<aside class="h-screen w-64 fixed left-0 top-0 border-r border-surface-variant bg-surface-container-lowest flex flex-col z-50 hidden md:flex">
+  <div class="p-6 border-b border-surface-variant flex items-center gap-3">
+    <span class="material-symbols-outlined text-primary text-[28px]" style="font-variation-settings:'FILL' 1;">apartment</span>
+    <div><h2 class="text-lg font-bold text-primary leading-tight">ITOSA Admin</h2><p class="text-caption font-caption text-on-surface-variant">Property Management</p></div>
+  </div>
+  <nav class="flex-1 py-6 flex flex-col gap-1 overflow-y-auto px-3">
+    <a href="admin-dashboard.html" class="nav-link flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container hover:text-primary rounded-xl"><span class="material-symbols-outlined">dashboard</span><span>Overview</span></a>
+    <a href="admin-apartments.html" class="nav-link flex items-center gap-3 px-4 py-3 text-primary font-semibold bg-surface-container rounded-xl"><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">apartment</span><span>Apartments</span></a>
+    <a href="admin-bookings.html" class="nav-link flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container hover:text-primary rounded-xl"><span class="material-symbols-outlined">event_available</span><span>Bookings</span></a>
+    <a href="admin-availability.html" class="nav-link flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container hover:text-primary rounded-xl"><span class="material-symbols-outlined">calendar_month</span><span>Availability</span></a>
+  </nav>
+  <div class="p-5 border-t border-surface-variant flex flex-col gap-4">
+    <button onclick="openModal()" class="w-full bg-primary text-on-primary py-3 px-4 rounded-xl font-label-bold text-label-bold hover:bg-primary-container transition-all shadow-md flex items-center justify-center gap-2">
+      <span class="material-symbols-outlined text-[18px]">add</span> Add New Property
+    </button>
+    <div class="flex items-center gap-3 px-2 pt-2 border-t border-surface-variant">
+      <div class="w-9 h-9 rounded-full bg-secondary-container flex items-center justify-center font-label-bold text-sm text-primary">AD</div>
+      <div><p class="font-label-bold text-sm text-primary">Admin User</p><p class="text-caption text-on-surface-variant">admin@itosa.ng</p></div>
+    </div>
+  </div>
+</aside>
+
+<!-- Top Bar -->
+<header class="fixed top-0 right-0 left-0 md:left-64 h-16 border-b border-surface-variant bg-surface-container-lowest/90 backdrop-blur-xl z-40 flex justify-between items-center px-8">
+  <h1 class="font-headline-md text-primary tracking-tight font-bold">ITOSA APARTMENT</h1>
+  <div class="flex items-center gap-5">
+    <button class="text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined">notifications</span></button>
+    <button class="text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined">apps</span></button>
+    <div class="w-9 h-9 rounded-full bg-secondary-container flex items-center justify-center font-label-bold text-sm text-primary">AD</div>
+  </div>
+</header>
+
+<!-- Main -->
+<main class="md:ml-64 pt-24 px-4 md:px-8 pb-12">
+  <div class="max-w-[1280px] mx-auto">
+    <!-- Page Header -->
+    <div class="flex justify-between items-end mb-8 flex-wrap gap-4">
+      <div>
+        <h2 class="font-headline-lg text-headline-lg text-on-surface mb-1">Apartments</h2>
+        <p class="font-body-md text-on-surface-variant">Manage your property portfolio, pricing, and availability.</p>
+      </div>
+      <button onclick="openModal()" class="bg-primary text-on-primary px-6 py-3 rounded-xl font-label-bold text-label-bold flex items-center gap-2 hover:bg-primary-container transition-colors shadow-sm">
+        <span class="material-symbols-outlined text-[18px]">add</span> Add New Apartment
+      </button>
+    </div>
+
+    <!-- Banner Image -->
+    <div class="w-full h-48 rounded-2xl overflow-hidden mb-8 relative border border-surface-variant shadow-sm">
+      <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1200&q=80" alt="Luxury apartment portfolio" class="w-full h-full object-cover"/>
+      <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+      <div class="absolute bottom-5 left-6">
+        <p class="text-white font-label-bold text-caption uppercase tracking-wider opacity-80 mb-1">Featured Property</p>
+        <h3 class="text-white font-headline-md text-headline-md">Skyline Executive Suite</h3>
+      </div>
+    </div>
+
+    <!-- Stats row -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+      <div class="bg-surface-container-lowest rounded-xl p-4 border border-surface-variant text-center">
+        <p class="text-[28px] font-extrabold text-primary font-display-xl">15</p>
+        <p class="text-caption text-on-surface-variant">Total Properties</p>
+      </div>
+      <div class="bg-surface-container-lowest rounded-xl p-4 border border-surface-variant text-center">
+        <p class="text-[28px] font-extrabold text-emerald-600 font-display-xl">12</p>
+        <p class="text-caption text-on-surface-variant">Available</p>
+      </div>
+      <div class="bg-surface-container-lowest rounded-xl p-4 border border-surface-variant text-center">
+        <p class="text-[28px] font-extrabold text-amber-600 font-display-xl">2</p>
+        <p class="text-caption text-on-surface-variant">Occupied</p>
+      </div>
+      <div class="bg-surface-container-lowest rounded-xl p-4 border border-surface-variant text-center">
+        <p class="text-[28px] font-extrabold text-on-surface-variant font-display-xl">1</p>
+        <p class="text-caption text-on-surface-variant">Under Renovation</p>
+      </div>
+    </div>
+
+    <!-- Search & filter bar -->
+    <div class="flex gap-3 mb-5 flex-wrap">
+      <div class="relative flex-1 min-w-[200px]">
+        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span>
+        <input type="text" placeholder="Search apartments..." class="w-full pl-10 pr-4 py-2.5 bg-surface-container-lowest border border-surface-variant rounded-xl font-body-md text-sm text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"/>
+      </div>
+      <select class="px-4 py-2.5 bg-surface-container-lowest border border-surface-variant rounded-xl font-body-md text-sm text-on-surface outline-none focus:border-primary">
+        <option>All Status</option><option>Available</option><option>Booked</option><option>Renovation</option>
+      </select>
+      <select class="px-4 py-2.5 bg-surface-container-lowest border border-surface-variant rounded-xl font-body-md text-sm text-on-surface outline-none focus:border-primary">
+        <option>All Locations</option><option>Lekki</option><option>Victoria Island</option><option>Ikoyi</option>
+      </select>
+    </div>
+
+    <!-- Properties Table -->
+    <div class="bg-surface-container-lowest rounded-2xl border border-surface-variant shadow-sm overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="w-full text-left">
+          <thead>
+            <tr class="bg-surface-container-low border-b border-surface-variant">
+              <th class="py-4 px-6 font-label-bold text-label-bold text-on-surface-variant">Apartment Details</th>
+              <th class="py-4 px-6 font-label-bold text-label-bold text-on-surface-variant">Location</th>
+              <th class="py-4 px-6 font-label-bold text-label-bold text-on-surface-variant">Price / Night</th>
+              <th class="py-4 px-6 font-label-bold text-label-bold text-on-surface-variant">Status</th>
+              <th class="py-4 px-6 font-label-bold text-label-bold text-on-surface-variant text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="font-body-md text-on-surface divide-y divide-surface-variant">
+            <!-- Row 1 -->
+            <tr class="apt-row hover:bg-surface-container-low group">
+              <td class="py-4 px-6">
+                <div class="flex items-center gap-3">
+                  <div class="w-12 h-12 rounded-lg overflow-hidden flex-shrink-0 bg-surface-container"><img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=100&q=80" alt="" class="w-full h-full object-cover"/></div>
+                  <div><p class="font-semibold text-on-surface">Skyline Executive Suite</p><p class="text-caption text-on-surface-variant">2 Bed · 2 Bath · 1,200 sqft</p></div>
+                </div>
+              </td>
+              <td class="py-4 px-6 text-on-surface-variant">Downtown District</td>
+              <td class="py-4 px-6 font-semibold">₦120,000</td>
+              <td class="py-4 px-6">
+                <span class="inline-flex items-center px-3 py-1 rounded-full bg-amber-50 text-amber-700 font-label-bold text-caption border border-amber-100">
+                  <span class="w-2 h-2 rounded-full bg-amber-400 mr-2"></span>Booked
+                </span>
+              </td>
+              <td class="py-4 px-6 text-right">
+                <div class="flex justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <button class="p-2 text-on-surface-variant hover:text-primary rounded-lg hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-[20px]">visibility</span></button>
+                  <button class="p-2 text-on-surface-variant hover:text-primary rounded-lg hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-[20px]">edit</span></button>
+                  <button class="p-2 text-error hover:bg-error-container rounded-lg transition-colors"><span class="material-symbols-outlined text-[20px]">delete</span></button>
+                </div>
+              </td>
+            </tr>
+            <!-- Row 2 -->
+            <tr class="apt-row hover:bg-surface-container-low group">
+              <td class="py-4 px-6">
+                <div class="flex items-center gap-3">
+                  <div class="w-12 h-12 rounded-lg overflow-hidden flex-shrink-0 bg-surface-container"><img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=100&q=80" alt="" class="w-full h-full object-cover"/></div>
+                  <div><p class="font-semibold text-on-surface">Coastal Retreat Loft</p><p class="text-caption text-on-surface-variant">1 Bed · 1 Bath · 850 sqft</p></div>
+                </div>
+              </td>
+              <td class="py-4 px-6 text-on-surface-variant">Victoria Island</td>
+              <td class="py-4 px-6 font-semibold">₦65,000</td>
+              <td class="py-4 px-6">
+                <span class="inline-flex items-center px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 font-label-bold text-caption border border-emerald-100">
+                  <span class="w-2 h-2 rounded-full bg-emerald-500 mr-2"></span>Available
+                </span>
+              </td>
+              <td class="py-4 px-6 text-right">
+                <div class="flex justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <button class="p-2 text-on-surface-variant hover:text-primary rounded-lg hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-[20px]">visibility</span></button>
+                  <button class="p-2 text-on-surface-variant hover:text-primary rounded-lg hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-[20px]">edit</span></button>
+                  <button class="p-2 text-error hover:bg-error-container rounded-lg transition-colors"><span class="material-symbols-outlined text-[20px]">delete</span></button>
+                </div>
+              </td>
+            </tr>
+            <!-- Row 3 -->
+            <tr class="apt-row hover:bg-surface-container-low group">
+              <td class="py-4 px-6">
+                <div class="flex items-center gap-3">
+                  <div class="w-12 h-12 rounded-lg overflow-hidden flex-shrink-0 bg-surface-container"><img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=100&q=80" alt="" class="w-full h-full object-cover"/></div>
+                  <div><p class="font-semibold text-on-surface">Urban Oasis Penthouse</p><p class="text-caption text-on-surface-variant">3 Bed · 3.5 Bath · 2,500 sqft</p></div>
+                </div>
+              </td>
+              <td class="py-4 px-6 text-on-surface-variant">Lekki Phase 1</td>
+              <td class="py-4 px-6 font-semibold">₦250,000</td>
+              <td class="py-4 px-6">
+                <span class="inline-flex items-center px-3 py-1 rounded-full bg-surface-container-high text-on-surface-variant font-label-bold text-caption border border-outline-variant">
+                  <span class="w-2 h-2 rounded-full bg-outline mr-2"></span>Under Renovation
+                </span>
+              </td>
+              <td class="py-4 px-6 text-right">
+                <div class="flex justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <button class="p-2 text-on-surface-variant hover:text-primary rounded-lg hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-[20px]">visibility</span></button>
+                  <button class="p-2 text-on-surface-variant hover:text-primary rounded-lg hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-[20px]">edit</span></button>
+                  <button class="p-2 text-error hover:bg-error-container rounded-lg transition-colors"><span class="material-symbols-outlined text-[20px]">delete</span></button>
+                </div>
+              </td>
+            </tr>
+            <!-- Row 4 -->
+            <tr class="apt-row hover:bg-surface-container-low group">
+              <td class="py-4 px-6">
+                <div class="flex items-center gap-3">
+                  <div class="w-12 h-12 rounded-lg overflow-hidden flex-shrink-0 bg-surface-container"><img src="https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?w=100&q=80" alt="" class="w-full h-full object-cover"/></div>
+                  <div><p class="font-semibold text-on-surface">The Sanctuary</p><p class="text-caption text-on-surface-variant">1 Bed · 1 Bath · 700 sqft</p></div>
+                </div>
+              </td>
+              <td class="py-4 px-6 text-on-surface-variant">Ikoyi</td>
+              <td class="py-4 px-6 font-semibold">₦85,000</td>
+              <td class="py-4 px-6">
+                <span class="inline-flex items-center px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 font-label-bold text-caption border border-emerald-100">
+                  <span class="w-2 h-2 rounded-full bg-emerald-500 mr-2"></span>Available
+                </span>
+              </td>
+              <td class="py-4 px-6 text-right">
+                <div class="flex justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <button class="p-2 text-on-surface-variant hover:text-primary rounded-lg hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-[20px]">visibility</span></button>
+                  <button class="p-2 text-on-surface-variant hover:text-primary rounded-lg hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-[20px]">edit</span></button>
+                  <button class="p-2 text-error hover:bg-error-container rounded-lg transition-colors"><span class="material-symbols-outlined text-[20px]">delete</span></button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- Pagination -->
+      <div class="p-5 border-t border-surface-variant flex justify-between items-center">
+        <span class="text-caption text-on-surface-variant">Showing 1 to 4 of 15 properties</span>
+        <div class="flex gap-2">
+          <button disabled class="px-3 py-1.5 border border-surface-variant rounded-lg text-caption text-on-surface-variant disabled:opacity-40">← Prev</button>
+          <button class="px-3 py-1.5 bg-primary text-on-primary rounded-lg text-caption font-bold">1</button>
+          <button class="px-3 py-1.5 border border-surface-variant rounded-lg text-caption text-on-surface hover:bg-surface-container">2</button>
+          <button class="px-3 py-1.5 border border-surface-variant rounded-lg text-caption text-on-surface hover:bg-surface-container">3</button>
+          <button class="px-3 py-1.5 border border-surface-variant rounded-lg text-caption text-on-surface hover:bg-surface-container">Next →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- Add Property Modal -->
+<div id="modal" class="fixed inset-0 z-[100] hidden">
+  <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" onclick="closeModal()"></div>
+  <div class="absolute inset-0 flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg p-8 relative">
+      <button onclick="closeModal()" class="absolute top-4 right-4 text-on-surface-variant hover:text-primary"><span class="material-symbols-outlined">close</span></button>
+      <h3 class="font-headline-md text-headline-md text-primary mb-6">Add New Apartment</h3>
+      <div class="space-y-4">
+        <div><label class="block font-label-bold text-caption uppercase text-on-surface-variant mb-1">Apartment Name</label><input type="text" placeholder="e.g. The Obsidian Suite" class="w-full px-4 py-3 border border-surface-variant rounded-xl font-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none"/></div>
+        <div class="grid grid-cols-2 gap-4">
+          <div><label class="block font-label-bold text-caption uppercase text-on-surface-variant mb-1">Location</label>
+            <select class="w-full px-4 py-3 border border-surface-variant rounded-xl font-body-md text-on-surface outline-none focus:border-primary appearance-none">
+              <option>Lekki Phase 1</option><option>Victoria Island</option><option>Ikoyi</option>
+            </select>
+          </div>
+          <div><label class="block font-label-bold text-caption uppercase text-on-surface-variant mb-1">Price / Night</label><input type="text" placeholder="₦0" class="w-full px-4 py-3 border border-surface-variant rounded-xl font-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none"/></div>
+        </div>
+        <div class="grid grid-cols-3 gap-4">
+          <div><label class="block font-label-bold text-caption uppercase text-on-surface-variant mb-1">Beds</label><input type="number" value="1" min="0" class="w-full px-4 py-3 border border-surface-variant rounded-xl font-body-md text-on-surface focus:border-primary outline-none"/></div>
+          <div><label class="block font-label-bold text-caption uppercase text-on-surface-variant mb-1">Baths</label><input type="number" value="1" min="0" class="w-full px-4 py-3 border border-surface-variant rounded-xl font-body-md text-on-surface focus:border-primary outline-none"/></div>
+          <div><label class="block font-label-bold text-caption uppercase text-on-surface-variant mb-1">Sqft</label><input type="text" placeholder="0" class="w-full px-4 py-3 border border-surface-variant rounded-xl font-body-md text-on-surface focus:border-primary outline-none"/></div>
+        </div>
+        <div><label class="block font-label-bold text-caption uppercase text-on-surface-variant mb-1">Description</label><textarea rows="3" placeholder="Describe the apartment..." class="w-full px-4 py-3 border border-surface-variant rounded-xl font-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none resize-none"></textarea></div>
+      </div>
+      <div class="flex gap-3 mt-6">
+        <button onclick="closeModal()" class="flex-1 py-3 border border-surface-variant text-on-surface rounded-xl font-label-bold hover:bg-surface-container transition-colors">Cancel</button>
+        <button class="flex-1 py-3 bg-primary text-on-primary rounded-xl font-label-bold hover:bg-primary-container transition-colors shadow-sm">Add Apartment</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function openModal(){document.getElementById('modal').classList.remove('hidden');}
+function closeModal(){document.getElementById('modal').classList.add('hidden');}
+</script>
+</body>
+</html>

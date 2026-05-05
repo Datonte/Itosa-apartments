@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ITOSA Admin - Availability</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+tailwind.config={darkMode:"class",theme:{extend:{colors:{"surface-container-low":"#f7f3f2","error":"#ba1a1a","outline":"#747878","secondary":"#795900","on-surface":"#1c1b1b","tertiary-fixed":"#c9e6ff","on-surface-variant":"#444748","secondary-fixed-dim":"#f9bd22","on-primary":"#ffffff","on-secondary-container":"#6f5100","surface-container-high":"#ebe7e7","primary-fixed":"#e4e2e1","on-primary-fixed":"#1b1c1c","background":"#fdf8f8","surface-container":"#f1edec","primary":"#181919","outline-variant":"#c4c7c7","primary-container":"#2d2d2d","surface-container-lowest":"#ffffff","surface-container-highest":"#e5e2e1","secondary-container":"#ffc329","surface-variant":"#e5e2e1","on-error":"#ffffff","surface-dim":"#ddd9d8","on-secondary":"#ffffff","secondary-fixed":"#ffdf9f","on-background":"#1c1b1b","surface":"#fdf8f8","on-secondary-fixed":"#261a00","surface-tint":"#5f5e5e"},fontFamily:{"caption":["Be Vietnam Pro"],"body-md":["Be Vietnam Pro"],"headline-md":["Manrope"],"headline-lg":["Manrope"],"label-bold":["Be Vietnam Pro"],"display-xl":["Manrope"]},fontSize:{"caption":["12px",{"lineHeight":"1.4","fontWeight":"400"}],"body-md":["16px",{"lineHeight":"1.6","fontWeight":"400"}],"headline-md":["24px",{"lineHeight":"1.3","fontWeight":"600"}],"headline-lg":["32px",{"lineHeight":"1.2","fontWeight":"700"}],"label-bold":["14px",{"lineHeight":"1.4","letterSpacing":"0.05em","fontWeight":"600"}],"display-xl":["48px",{"lineHeight":"1.1","letterSpacing":"-0.02em","fontWeight":"800"}]}}}}
+</script>
+<style>
+.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;}
+.day-cell{cursor:pointer;transition:background .15s,transform .1s;user-select:none;}
+.day-cell:hover:not(.booked):not(.other-month){background:#f1edec;border-radius:8px;}
+.day-cell.selected{background:#ffc329;border-radius:8px;font-weight:700;color:#181919;}
+.day-cell.selected-range{background:#ffdf9f;border-radius:0;}
+.day-cell.blocked{background:#181919;color:#fff;border-radius:8px;cursor:not-allowed;}
+.day-cell.booked{background:#c9e6ff;color:#001e2f;border-radius:8px;cursor:not-allowed;}
+.day-cell.other-month{color:#c4c7c7;cursor:default;}
+.day-cell.today{outline:2px solid #ffc329;border-radius:8px;}
+</style>
+</head>
+<body class="bg-surface text-on-surface font-body-md min-h-screen">
+
+<!-- Sidebar -->
+<aside class="h-screen w-64 fixed left-0 top-0 border-r border-surface-variant bg-surface-container-lowest flex flex-col z-50 hidden md:flex">
+  <div class="p-6 border-b border-surface-variant flex items-center gap-3">
+    <span class="material-symbols-outlined text-primary text-[28px]" style="font-variation-settings:'FILL' 1;">apartment</span>
+    <div><h2 class="text-lg font-bold text-primary">ITOSA Admin</h2><p class="text-caption text-on-surface-variant">Property Management</p></div>
+  </div>
+  <nav class="flex-1 py-6 flex flex-col gap-1 px-3">
+    <a href="admin-dashboard.html" class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container hover:text-primary rounded-xl transition-all"><span class="material-symbols-outlined">dashboard</span><span>Overview</span></a>
+    <a href="admin-apartments.html" class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container hover:text-primary rounded-xl transition-all"><span class="material-symbols-outlined">apartment</span><span>Apartments</span></a>
+    <a href="admin-bookings.html" class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container hover:text-primary rounded-xl transition-all"><span class="material-symbols-outlined">event_available</span><span>Bookings</span></a>
+    <a href="admin-availability.html" class="flex items-center gap-3 px-4 py-3 text-primary font-semibold bg-surface-container rounded-xl"><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">calendar_month</span><span>Availability</span></a>
+  </nav>
+  <div class="p-5 border-t border-surface-variant">
+    <a href="admin-apartments.html" class="w-full bg-primary text-on-primary py-3 px-4 rounded-xl font-label-bold text-label-bold hover:bg-primary-container transition-all shadow-md flex items-center justify-center gap-2 block text-center">
+      <span class="material-symbols-outlined text-[18px]">add</span> Add New Property
+    </a>
+    <div class="flex items-center gap-3 px-2 pt-4 mt-4 border-t border-surface-variant">
+      <div class="w-9 h-9 rounded-full bg-secondary-container flex items-center justify-center font-label-bold text-sm text-primary">AD</div>
+      <div><p class="font-label-bold text-sm text-primary">Admin User</p><p class="text-caption text-on-surface-variant">admin@itosa.ng</p></div>
+    </div>
+  </div>
+</aside>
+
+<!-- Top Bar -->
+<header class="fixed top-0 right-0 left-0 md:left-64 h-16 border-b border-surface-variant bg-surface-container-lowest/90 backdrop-blur-xl z-40 flex justify-between items-center px-8">
+  <h1 class="font-headline-md text-primary tracking-tight font-bold">ITOSA APARTMENT</h1>
+  <div class="flex items-center gap-5">
+    <button class="text-on-surface-variant hover:text-primary"><span class="material-symbols-outlined">notifications</span></button>
+    <button class="text-on-surface-variant hover:text-primary"><span class="material-symbols-outlined">apps</span></button>
+    <div class="w-9 h-9 rounded-full bg-secondary-container flex items-center justify-center font-label-bold text-sm text-primary">AD</div>
+  </div>
+</header>
+
+<!-- Main -->
+<main class="md:ml-64 mt-16 p-6 md:p-8 bg-background min-h-screen">
+  <!-- Page Header -->
+  <div class="flex justify-between items-end mb-6 flex-wrap gap-4">
+    <div>
+      <h2 class="font-headline-lg text-headline-lg text-primary">Availability Control</h2>
+      <p class="font-body-md text-on-surface-variant mt-1">Manage blocks and availability for specific properties.</p>
+    </div>
+    <div class="flex gap-3">
+      <button class="border border-outline text-on-surface px-4 py-2 rounded-xl font-label-bold text-label-bold hover:bg-surface-container-low transition-colors flex items-center gap-2">
+        <span class="material-symbols-outlined text-[18px]">sync</span> Sync Calendars
+      </button>
+      <button onclick="saveChanges()" class="bg-primary text-on-primary px-6 py-2 rounded-xl font-label-bold text-label-bold hover:bg-primary-container transition-colors shadow-sm">
+        Save Changes
+      </button>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-12 gap-6">
+    <!-- Left: Property list + Legend -->
+    <div class="col-span-12 lg:col-span-3 flex flex-col gap-5">
+      <!-- Property selector -->
+      <div class="bg-surface-container-lowest rounded-2xl border border-surface-container-highest p-5 shadow-sm">
+        <h3 class="font-headline-md text-[17px] text-primary mb-4">Select Property</h3>
+        <div class="relative mb-4">
+          <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span>
+          <input type="text" placeholder="Search apartments…" class="w-full pl-9 pr-4 py-2 bg-surface rounded-xl border border-surface-container-highest font-body-md text-sm text-on-surface outline-none focus:border-primary transition-all"/>
+        </div>
+        <div class="flex flex-col gap-2">
+          <!-- Active -->
+          <div onclick="selectProperty(this,'The Penthouse Suite')" class="property-item p-3 rounded-xl border border-secondary-container bg-surface-container-low cursor-pointer flex items-center gap-3 transition-all">
+            <div class="w-12 h-12 rounded-lg overflow-hidden flex-shrink-0 bg-surface-container">
+              <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=100&q=80" class="w-full h-full object-cover" alt=""/>
+            </div>
+            <div><p class="font-label-bold text-sm text-primary">The Penthouse Suite</p><p class="text-caption text-on-surface-variant">Lekki · 3 Beds</p></div>
+          </div>
+          <div onclick="selectProperty(this,'Coastal Retreat Loft')" class="property-item p-3 rounded-xl border border-transparent hover:bg-surface-container-low cursor-pointer flex items-center gap-3 transition-all">
+            <div class="w-12 h-12 rounded-lg bg-surface-container-highest flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-outline">image</span></div>
+            <div><p class="font-label-bold text-sm text-primary">Coastal Retreat Loft</p><p class="text-caption text-on-surface-variant">Victoria Island · 1 Bed</p></div>
+          </div>
+          <div onclick="selectProperty(this,'The Sanctuary')" class="property-item p-3 rounded-xl border border-transparent hover:bg-surface-container-low cursor-pointer flex items-center gap-3 transition-all">
+            <div class="w-12 h-12 rounded-lg bg-surface-container-highest flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-outline">image</span></div>
+            <div><p class="font-label-bold text-sm text-primary">The Sanctuary</p><p class="text-caption text-on-surface-variant">Ikoyi · 1 Bed</p></div>
+          </div>
+          <div onclick="selectProperty(this,'Urban Oasis Penthouse')" class="property-item p-3 rounded-xl border border-transparent hover:bg-surface-container-low cursor-pointer flex items-center gap-3 transition-all">
+            <div class="w-12 h-12 rounded-lg bg-surface-container-highest flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-outline">image</span></div>
+            <div><p class="font-label-bold text-sm text-primary">Urban Oasis Penthouse</p><p class="text-caption text-on-surface-variant">Lekki · 3 Beds</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Legend -->
+      <div class="bg-surface-container-lowest rounded-2xl border border-surface-container-highest p-5 shadow-sm">
+        <h3 class="font-headline-md text-[17px] text-primary mb-4">Legend</h3>
+        <div class="space-y-3">
+          <div class="flex items-center gap-3"><div class="w-5 h-5 rounded border border-surface-container-highest bg-surface-container-lowest"></div><span class="text-sm text-on-surface-variant">Available</span></div>
+          <div class="flex items-center gap-3"><div class="w-5 h-5 rounded bg-tertiary-fixed"></div><span class="text-sm text-on-surface-variant">Booked (Guest)</span></div>
+          <div class="flex items-center gap-3"><div class="w-5 h-5 rounded bg-primary"></div><span class="text-sm text-on-surface-variant">Blocked (Manual)</span></div>
+          <div class="flex items-center gap-3"><div class="w-5 h-5 rounded bg-secondary-container"></div><span class="text-sm text-on-surface-variant">Selected Range</span></div>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="bg-surface-container-lowest rounded-2xl border border-surface-container-highest p-5 shadow-sm">
+        <h3 class="font-headline-md text-[17px] text-primary mb-4">This Month</h3>
+        <div class="space-y-3">
+          <div class="flex justify-between items-center"><span class="text-sm text-on-surface-variant">Available days</span><span class="font-label-bold text-sm text-primary" id="stat-available">19</span></div>
+          <div class="flex justify-between items-center"><span class="text-sm text-on-surface-variant">Booked days</span><span class="font-label-bold text-sm text-emerald-700">7</span></div>
+          <div class="flex justify-between items-center"><span class="text-sm text-on-surface-variant">Blocked days</span><span class="font-label-bold text-sm text-error">2</span></div>
+          <div class="flex justify-between items-center"><span class="text-sm text-on-surface-variant">Occupancy rate</span><span class="font-label-bold text-sm text-primary">29%</span></div>
+        </div>
+        <div class="w-full bg-surface-container h-2 rounded-full mt-4 overflow-hidden">
+          <div class="bg-secondary-container h-full rounded-full" style="width:29%"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Calendar -->
+    <div class="col-span-12 lg:col-span-9">
+      <div class="bg-surface-container-lowest rounded-2xl border border-surface-container-highest p-6 shadow-sm">
+        <!-- Calendar controls -->
+        <div class="flex justify-between items-center mb-6 border-b border-surface-container-highest pb-5 flex-wrap gap-3">
+          <div class="flex items-center gap-3">
+            <button onclick="prevMonth()" class="p-2 hover:bg-surface-container-low rounded-full transition-colors text-on-surface-variant"><span class="material-symbols-outlined">chevron_left</span></button>
+            <h3 class="font-headline-md text-[18px] text-primary" id="cal-title">October 2024</h3>
+            <button onclick="nextMonth()" class="p-2 hover:bg-surface-container-low rounded-full transition-colors text-on-surface-variant"><span class="material-symbols-outlined">chevron_right</span></button>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="setView('month')" id="view-month" class="px-4 py-2 rounded-l-xl border border-surface-container-highest font-label-bold text-label-bold text-sm bg-surface-container-low text-on-surface transition-colors">Month</button>
+            <button onclick="setView('list')" id="view-list" class="px-4 py-2 rounded-r-xl border-t border-b border-r border-surface-container-highest font-label-bold text-label-bold text-sm text-on-surface-variant hover:bg-surface-container-low transition-colors">List</button>
+          </div>
+        </div>
+
+        <!-- Property label -->
+        <div class="flex items-center gap-2 mb-4">
+          <span class="material-symbols-outlined text-primary text-[18px]">apartment</span>
+          <p class="font-label-bold text-sm text-primary" id="selected-property-label">The Penthouse Suite</p>
+          <span class="ml-auto text-caption text-on-surface-variant">Click to select · Drag to range</span>
+        </div>
+
+        <!-- Calendar grid -->
+        <div id="calendar-view">
+          <!-- Day headers -->
+          <div class="grid grid-cols-7 mb-2">
+            <div class="text-center font-label-bold text-[11px] text-on-surface-variant py-2 uppercase">Sun</div>
+            <div class="text-center font-label-bold text-[11px] text-on-surface-variant py-2 uppercase">Mon</div>
+            <div class="text-center font-label-bold text-[11px] text-on-surface-variant py-2 uppercase">Tue</div>
+            <div class="text-center font-label-bold text-[11px] text-on-surface-variant py-2 uppercase">Wed</div>
+            <div class="text-center font-label-bold text-[11px] text-on-surface-variant py-2 uppercase">Thu</div>
+            <div class="text-center font-label-bold text-[11px] text-on-surface-variant py-2 uppercase">Fri</div>
+            <div class="text-center font-label-bold text-[11px] text-on-surface-variant py-2 uppercase">Sat</div>
+          </div>
+          <div id="cal-grid" class="grid grid-cols-7 gap-1"></div>
+        </div>
+
+        <!-- List view (hidden by default) -->
+        <div id="list-view" class="hidden">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between p-3 bg-tertiary-fixed/40 rounded-xl border border-tertiary-fixed">
+              <div class="flex items-center gap-3"><div class="w-2 h-8 rounded-full bg-tertiary-fixed"></div><div><p class="font-label-bold text-sm text-primary">John Doe - Booked</p><p class="text-caption text-on-surface-variant">Oct 6 – Oct 8, 2024</p></div></div>
+              <span class="text-caption text-on-surface-variant">3 nights</span>
+            </div>
+            <div class="flex items-center justify-between p-3 bg-primary/5 rounded-xl border border-outline-variant">
+              <div class="flex items-center gap-3"><div class="w-2 h-8 rounded-full bg-primary"></div><div><p class="font-label-bold text-sm text-primary">Manual Block</p><p class="text-caption text-on-surface-variant">Oct 11 – Oct 12, 2024</p></div></div>
+              <button class="text-error text-caption font-label-bold hover:underline">Remove</button>
+            </div>
+            <div class="flex items-center justify-between p-3 bg-secondary-fixed/30 rounded-xl border border-secondary-container">
+              <div class="flex items-center gap-3"><div class="w-2 h-8 rounded-full bg-secondary-container"></div><div><p class="font-label-bold text-sm text-primary">Emma Smith - Booked</p><p class="text-caption text-on-surface-variant">Oct 19 – Oct 23, 2024</p></div></div>
+              <span class="text-caption text-on-surface-variant">4 nights</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Selected range action bar -->
+        <div id="action-bar" class="hidden mt-6 pt-5 border-t border-surface-container-highest">
+          <div class="bg-secondary-fixed/20 border border-secondary-container/30 rounded-xl p-4 flex justify-between items-center flex-wrap gap-3">
+            <div>
+              <h4 class="font-label-bold text-sm text-primary">Selected: <span id="range-label" class="font-normal">–</span></h4>
+              <p class="text-caption text-on-surface-variant">Apply action to selected dates.</p>
+            </div>
+            <div class="flex gap-3">
+              <button onclick="clearSelection()" class="text-primary font-label-bold text-sm hover:bg-surface-container-low px-4 py-2 rounded-xl transition-colors">Clear</button>
+              <button onclick="markBlocked()" class="bg-primary text-on-primary px-5 py-2 rounded-xl font-label-bold text-sm hover:bg-primary-container transition-colors shadow-sm flex items-center gap-2">
+                <span class="material-symbols-outlined text-[16px]">block</span> Block Dates
+              </button>
+              <button onclick="markAvailable()" class="bg-secondary-container text-on-secondary-container px-5 py-2 rounded-xl font-label-bold text-sm hover:bg-secondary-fixed transition-colors shadow-sm flex items-center gap-2">
+                <span class="material-symbols-outlined text-[16px]">check_circle</span> Mark Available
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+// Calendar state
+let currentYear = 2024, currentMonth = 9; // 0-indexed: 9 = October
+const bookedDays = [6,7,8,19,20,21,22,23];
+const blockedDays = [11,12];
+let selectedDays = [];
+let isDragging = false;
+let dragStart = null;
+
+function renderCalendar() {
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  document.getElementById('cal-title').textContent = months[currentMonth] + ' ' + currentYear;
+  const grid = document.getElementById('cal-grid');
+  grid.innerHTML = '';
+  const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+  const daysInMonth = new Date(currentYear, currentMonth+1, 0).getDate();
+  const daysInPrev = new Date(currentYear, currentMonth, 0).getDate();
+  const today = new Date();
+
+  // Prev month trailing
+  for(let i=firstDay-1;i>=0;i--){
+    const d = document.createElement('div');
+    d.className='day-cell other-month aspect-square flex items-center justify-center text-sm';
+    d.textContent = daysInPrev - i;
+    grid.appendChild(d);
+  }
+  // Current month
+  for(let day=1;day<=daysInMonth;day++){
+    const d = document.createElement('div');
+    let cls = 'day-cell aspect-square flex items-center justify-center text-sm font-medium';
+    if(bookedDays.includes(day)) cls += ' booked';
+    else if(blockedDays.includes(day)) cls += ' blocked';
+    else if(selectedDays.includes(day)) cls += ' selected';
+    else cls += ' text-on-surface';
+    if(today.getFullYear()===currentYear && today.getMonth()===currentMonth && today.getDate()===day) cls += ' today';
+    d.className = cls;
+    d.textContent = day;
+    d.dataset.day = day;
+    if(!bookedDays.includes(day) && !blockedDays.includes(day)){
+      d.addEventListener('mousedown', e=>startDrag(day,e));
+      d.addEventListener('mouseenter', e=>extendDrag(day,e));
+      d.addEventListener('mouseup', e=>endDrag(day,e));
+      d.addEventListener('click', ()=>toggleDay(day));
+    }
+    grid.appendChild(d);
+  }
+  // Next month leading
+  const total = firstDay + daysInMonth;
+  const remaining = total % 7 === 0 ? 0 : 7 - (total % 7);
+  for(let i=1;i<=remaining;i++){
+    const d = document.createElement('div');
+    d.className='day-cell other-month aspect-square flex items-center justify-center text-sm';
+    d.textContent = i;
+    grid.appendChild(d);
+  }
+  updateActionBar();
+}
+
+function toggleDay(day){
+  const idx = selectedDays.indexOf(day);
+  if(idx>-1) selectedDays.splice(idx,1);
+  else selectedDays.push(day);
+  renderCalendar();
+}
+
+function startDrag(day, e){ isDragging=true; dragStart=day; e.preventDefault(); }
+function extendDrag(day){
+  if(!isDragging||dragStart===null) return;
+  const min=Math.min(dragStart,day), max=Math.max(dragStart,day);
+  selectedDays=[];
+  for(let i=min;i<=max;i++) if(!bookedDays.includes(i)&&!blockedDays.includes(i)) selectedDays.push(i);
+  renderCalendar();
+}
+function endDrag(){ isDragging=false; dragStart=null; }
+document.addEventListener('mouseup',()=>{ isDragging=false; dragStart=null; });
+
+function updateActionBar(){
+  const bar = document.getElementById('action-bar');
+  const label = document.getElementById('range-label');
+  if(selectedDays.length>0){
+    bar.classList.remove('hidden');
+    const sorted=[...selectedDays].sort((a,b)=>a-b);
+    const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    label.textContent = months[currentMonth]+' '+sorted[0]+' – '+months[currentMonth]+' '+sorted[sorted.length-1]+' ('+sorted.length+' days)';
+  } else {
+    bar.classList.add('hidden');
+  }
+}
+
+function clearSelection(){ selectedDays=[]; renderCalendar(); }
+
+function markBlocked(){
+  selectedDays.forEach(d=>{ if(!blockedDays.includes(d)) blockedDays.push(d); });
+  clearSelection();
+  showToast('Dates blocked successfully');
+}
+
+function markAvailable(){
+  selectedDays.forEach(d=>{ const i=blockedDays.indexOf(d); if(i>-1) blockedDays.splice(i,1); });
+  clearSelection();
+  showToast('Dates marked as available');
+}
+
+function prevMonth(){ currentMonth--; if(currentMonth<0){currentMonth=11;currentYear--;} selectedDays=[]; renderCalendar(); }
+function nextMonth(){ currentMonth++; if(currentMonth>11){currentMonth=0;currentYear++;} selectedDays=[]; renderCalendar(); }
+
+function setView(v){
+  const calView=document.getElementById('calendar-view');
+  const listView=document.getElementById('list-view');
+  const btnM=document.getElementById('view-month');
+  const btnL=document.getElementById('view-list');
+  if(v==='month'){
+    calView.classList.remove('hidden'); listView.classList.add('hidden');
+    btnM.classList.add('bg-surface-container-low','text-on-surface'); btnL.classList.remove('bg-surface-container-low');
+  } else {
+    calView.classList.add('hidden'); listView.classList.remove('hidden');
+    btnL.classList.add('bg-surface-container-low','text-on-surface'); btnM.classList.remove('bg-surface-container-low');
+  }
+}
+
+function selectProperty(el, name){
+  document.querySelectorAll('.property-item').forEach(p=>{
+    p.classList.remove('border-secondary-container','bg-surface-container-low');
+    p.classList.add('border-transparent');
+  });
+  el.classList.add('border-secondary-container','bg-surface-container-low');
+  el.classList.remove('border-transparent');
+  document.getElementById('selected-property-label').textContent = name;
+  clearSelection();
+}
+
+function saveChanges(){
+  showToast('Changes saved successfully!');
+}
+
+function showToast(msg){
+  const toast = document.createElement('div');
+  toast.textContent = msg;
+  toast.className = 'fixed bottom-8 left-1/2 -translate-x-1/2 bg-primary text-on-primary px-6 py-3 rounded-xl shadow-lg font-label-bold text-sm z-[200] transition-all';
+  document.body.appendChild(toast);
+  setTimeout(()=>toast.remove(), 2800);
+}
+
+renderCalendar();
+</script>
+</body>
+</html>
