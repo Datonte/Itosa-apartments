@@ -1,302 +1,423 @@
 <!DOCTYPE html>
 <html class="light" lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>The Penthouse Suite - ITOSA APARTMENT</title>
-<meta name="description" content="Book the Penthouse Suite at ITOSA Apartment. Luxury living in Downtown District with panoramic views."/>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<script id="tailwind-config">
-  tailwind.config = {
-    darkMode:"class",
-    theme:{extend:{
-      colors:{"secondary-fixed-dim":"#f9bd22","on-error":"#ffffff","primary-container":"#2d2d2d","on-secondary-fixed-variant":"#5c4300","secondary-container":"#ffc329","surface-variant":"#e5e2e1","inverse-surface":"#313030","outline":"#747878","background":"#fdf8f8","surface":"#fdf8f8","error":"#ba1a1a","outline-variant":"#c4c7c7","surface-container-lowest":"#ffffff","secondary":"#795900","surface-container-highest":"#e5e2e1","on-tertiary-fixed":"#001e2f","on-surface-variant":"#444748","error-container":"#ffdad6","surface-tint":"#5f5e5e","surface-dim":"#ddd9d8","on-primary":"#ffffff","surface-container-high":"#ebe7e7","inverse-on-surface":"#f4f0ef","tertiary":"#001a2a","primary-fixed":"#e4e2e1","tertiary-container":"#003048","on-tertiary-container":"#009ddf","on-secondary-container":"#6f5100","on-primary-fixed":"#1b1c1c","secondary-fixed":"#ffdf9f","on-secondary-fixed":"#261a00","surface-bright":"#fdf8f8","on-secondary":"#ffffff","primary-fixed-dim":"#c8c6c6","inverse-primary":"#c8c6c6","on-tertiary-fixed-variant":"#004c6e","on-primary-fixed-variant":"#474747","on-background":"#1c1b1b","tertiary-fixed":"#c9e6ff","surface-container":"#f1edec","primary":"#181919","surface-container-low":"#f7f3f2","on-surface":"#1c1b1b","on-primary-container":"#959494","tertiary-fixed-dim":"#89ceff","on-tertiary":"#ffffff","on-error-container":"#93000a"},
-      borderRadius:{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},
-      spacing:{"section-gap":"80px","margin-mobile":"20px","container-max":"1280px","unit":"8px","gutter":"32px"},
-      fontFamily:{"headline-lg":["Manrope"],"label-bold":["Be Vietnam Pro"],"headline-md":["Manrope"],"body-md":["Be Vietnam Pro"],"display-xl":["Manrope"],"body-lg":["Be Vietnam Pro"],"caption":["Be Vietnam Pro"]},
-      fontSize:{"headline-lg":["32px",{"lineHeight":"1.2","fontWeight":"700"}],"label-bold":["14px",{"lineHeight":"1.4","letterSpacing":"0.05em","fontWeight":"600"}],"headline-md":["24px",{"lineHeight":"1.3","fontWeight":"600"}],"body-md":["16px",{"lineHeight":"1.6","fontWeight":"400"}],"display-xl":["48px",{"lineHeight":"1.1","letterSpacing":"-0.02em","fontWeight":"800"}],"body-lg":["18px",{"lineHeight":"1.6","fontWeight":"400"}],"caption":["12px",{"lineHeight":"1.4","fontWeight":"400"}]}
-    }}
-  }
-</script>
-<style>
-  .material-symbols-outlined { font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24; }
-  .gallery-thumb { transition: transform 0.4s ease, opacity 0.3s; }
-  .gallery-thumb:hover { transform: scale(1.03); opacity: 0.9; }
-  .amenity-row { transition: background 0.2s; }
-  .amenity-row:hover { background: #f7f3f2; border-radius: 0.5rem; }
-</style>
-</head>
-<body class="bg-surface text-on-surface font-body-md min-h-screen flex flex-col">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Title, meta description and JSON-LD are populated dynamically per slug from the script at the bottom. -->
+  <title>Apartment Details — ITOSA Apartment</title>
+  <meta name="description" content="Premium shortlet apartment details. Real photos, real prices, real availability. Book direct with ITOSA Apartment." />
+  <meta name="robots" content="index, follow" />
 
-<!-- TopAppBar -->
-<header class="bg-white/90 backdrop-blur-md fixed top-0 w-full z-50 border-b border-surface-container shadow-sm shadow-black/5">
-  <div class="max-w-[1280px] mx-auto flex justify-between items-center px-8 h-20">
-    <a href="index.html" class="flex items-center gap-2">
-      <span class="material-symbols-outlined text-primary">apartment</span>
-      <span class="text-xl font-bold tracking-[0.2em] text-primary">ITOSA APARTMENT</span>
+  <link rel="icon" href="/assets/images/icons/favicon.svg" type="image/svg+xml" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://itosaapartment.com/assets/images/icons/og-default.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  <script src="/assets/js/tailwind.config.js"></script>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link rel="stylesheet" href="/assets/css/site.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css" />
+  <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/litepicker.js" defer></script>
+</head>
+<body class="bg-brand-bg text-brand-ink antialiased min-h-screen flex flex-col font-body-md">
+
+<!-- HEADER -->
+<header class="fixed top-0 w-full z-50 bg-white/85 backdrop-blur-md border-b border-zinc-100">
+  <div class="max-w-container mx-auto flex justify-between items-center px-5 lg:px-8 h-20">
+    <a href="/" class="flex items-center gap-2" aria-label="ITOSA Apartment home">
+      <span class="material-symbols-outlined text-brand-ink filled" style="font-variation-settings:'FILL' 1;">apartment</span>
+      <span class="text-lg lg:text-xl font-bold tracking-[0.18em] text-brand-ink font-display-xl">ITOSA APARTMENT</span>
     </a>
-    <button class="font-label-bold tracking-tight text-sm font-medium uppercase text-primary hover:text-secondary-fixed-dim transition-colors duration-300">Contact</button>
+    <nav class="hidden md:flex gap-10 items-center" aria-label="Primary">
+      <a href="/browse" class="nav-link text-sm font-semibold tracking-wide text-zinc-600 hover:text-brand-ink transition-colors">Apartments</a>
+      <a href="/faq" class="nav-link text-sm font-semibold tracking-wide text-zinc-600 hover:text-brand-ink transition-colors">FAQ</a>
+      <a href="/contact" class="nav-link text-sm font-semibold tracking-wide text-zinc-600 hover:text-brand-ink transition-colors">Contact</a>
+    </nav>
+    <a href="/browse" class="hidden md:inline-flex items-center gap-2 px-6 py-3 bg-brand-yellow text-brand-ink font-label-bold text-label-bold rounded-full hover:bg-brand-ink hover:text-white transition-all shadow-sm">
+      <span class="material-symbols-outlined text-[18px]">calendar_month</span>
+      Book Your Stay
+    </a>
+    <button id="mobile-menu-btn" class="md:hidden p-2 text-brand-ink" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+      <span class="material-symbols-outlined">menu</span>
+    </button>
+  </div>
+  <div id="mobile-menu" class="hidden md:hidden border-t border-zinc-100 bg-white">
+    <nav class="px-5 py-4 flex flex-col gap-1" aria-label="Mobile">
+      <a href="/" class="px-3 py-3 rounded-lg hover:bg-surface-container-low text-brand-ink font-medium">Home</a>
+      <a href="/browse" class="px-3 py-3 rounded-lg hover:bg-surface-container-low text-brand-ink font-medium">Apartments</a>
+      <a href="/faq" class="px-3 py-3 rounded-lg hover:bg-surface-container-low text-brand-ink font-medium">FAQ</a>
+      <a href="/contact" class="px-3 py-3 rounded-lg hover:bg-surface-container-low text-brand-ink font-medium">Contact</a>
+    </nav>
   </div>
 </header>
 
-<main class="flex-grow pt-[100px] pb-20 w-full max-w-[1280px] mx-auto px-4 md:px-8">
+<main class="flex-grow pt-24 pb-32" id="apartment-root">
+  <div class="max-w-container mx-auto px-5 lg:px-8">
+    <nav class="text-xs text-on-surface-variant mb-3" aria-label="Breadcrumb" id="breadcrumb">
+      <a href="/" class="hover:text-brand-ink">Home</a> <span class="mx-1">/</span>
+      <a href="/browse" class="hover:text-brand-ink">Browse</a> <span class="mx-1">/</span>
+      <span class="text-brand-ink font-semibold" id="bc-name">…</span>
+    </nav>
 
-  <!-- Title & Actions -->
-  <div class="mb-6">
-    <div class="flex justify-between items-end mb-4 flex-wrap gap-4">
-      <div>
-        <h1 class="font-display-xl text-[36px] md:text-[48px] font-extrabold text-primary mb-2 leading-tight">The Penthouse Suite</h1>
-        <p class="font-body-lg text-body-lg text-on-surface-variant flex items-center gap-2 flex-wrap">
-          <span class="material-symbols-outlined text-primary" style="font-variation-settings:'FILL' 1;">star</span>
-          <span class="font-medium text-primary">4.9</span>
-          <span>(128 reviews)</span>
-          <span class="mx-2 text-outline-variant">•</span>
-          Downtown District
-        </p>
+    <header class="mb-6">
+      <h1 id="apt-title" class="font-display-xl text-headline-lg text-brand-ink">Loading…</h1>
+      <div class="flex flex-wrap items-center gap-3 mt-2 text-sm text-on-surface-variant">
+        <span class="inline-flex items-center gap-1">
+          <span class="material-symbols-outlined filled text-brand-yellow text-[18px]" style="font-variation-settings:'FILL' 1;">star</span>
+          <span id="apt-rating" class="font-semibold text-brand-ink">—</span>
+          <span id="apt-review-count">(no reviews yet)</span>
+        </span>
+        <span aria-hidden="true">·</span>
+        <span class="inline-flex items-center gap-1"><span class="material-symbols-outlined text-[18px]">location_on</span> <span id="apt-location">—</span></span>
+        <span aria-hidden="true">·</span>
+        <span id="apt-type" class="inline-flex items-center gap-1"><span class="material-symbols-outlined text-[18px]">apartment</span> —</span>
       </div>
-      <div class="flex gap-3">
-        <button class="flex items-center gap-2 px-4 py-2 text-primary font-label-bold text-label-bold hover:bg-surface-variant rounded-lg transition-colors underline">
-          <span class="material-symbols-outlined text-[18px]">share</span> Share
-        </button>
-        <button class="flex items-center gap-2 px-4 py-2 text-primary font-label-bold text-label-bold hover:bg-surface-variant rounded-lg transition-colors underline">
-          <span class="material-symbols-outlined text-[18px]">favorite_border</span> Save
-        </button>
+    </header>
+
+    <section id="gallery-root" class="mb-10" aria-label="Photo gallery"></section>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+      <div class="lg:col-span-7 space-y-10">
+        <section class="border-b border-zinc-100 pb-8">
+          <h2 class="font-display-xl text-2xl text-brand-ink mb-2">About this space</h2>
+          <p id="apt-description" class="text-on-surface-variant leading-relaxed mb-6">—</p>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm">
+            <div class="flex items-center gap-2"><span class="material-symbols-outlined text-brand-yellow-deep">bed</span> <span><span id="stat-beds">—</span> bed</span></div>
+            <div class="flex items-center gap-2"><span class="material-symbols-outlined text-brand-yellow-deep">shower</span> <span><span id="stat-baths">—</span> bath</span></div>
+            <div class="flex items-center gap-2"><span class="material-symbols-outlined text-brand-yellow-deep">group</span> <span>Up to <span id="stat-guests">—</span></span></div>
+            <div class="flex items-center gap-2"><span class="material-symbols-outlined text-brand-yellow-deep">schedule</span> <span><span id="stat-min-stay">—</span> night min</span></div>
+          </div>
+        </section>
+
+        <section class="border-b border-zinc-100 pb-8">
+          <h2 class="font-display-xl text-2xl text-brand-ink mb-5">What this place offers</h2>
+          <div id="amenities-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
+        </section>
+
+        <section class="border-b border-zinc-100 pb-8">
+          <h2 class="font-display-xl text-2xl text-brand-ink mb-5">House rules</h2>
+          <div id="rules-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
+          <div class="mt-6 p-4 bg-surface-container-low rounded-xl text-sm text-on-surface-variant">
+            <strong class="text-brand-ink">Check-in:</strong> 3:00 PM &nbsp;·&nbsp; <strong class="text-brand-ink">Check-out:</strong> 11:00 AM
+          </div>
+        </section>
+
+        <section class="border-b border-zinc-100 pb-8">
+          <h2 class="font-display-xl text-2xl text-brand-ink mb-3">Damage policy</h2>
+          <p id="damage-summary" class="text-on-surface-variant leading-relaxed mb-4">—</p>
+          <ul id="damage-items" class="grid grid-cols-2 gap-2 text-sm text-brand-ink"></ul>
+          <p id="damage-note" class="text-sm text-on-surface-variant mt-4 italic">—</p>
+        </section>
+
+        <section class="border-b border-zinc-100 pb-8">
+          <h2 class="font-display-xl text-2xl text-brand-ink mb-3">Cleaning schedule</h2>
+          <p class="text-on-surface-variant leading-relaxed">Standard cleaning is included every 5 days. Need an extra clean during your stay? Let us know via WhatsApp — extra cleaning is available on request.</p>
+        </section>
+
+        <section class="border-b border-zinc-100 pb-8">
+          <h2 class="font-display-xl text-2xl text-brand-ink mb-5">Nearby landmarks</h2>
+          <ul id="landmarks-list" class="space-y-2"></ul>
+        </section>
+
+        <section class="border-b border-zinc-100 pb-8">
+          <h2 class="font-display-xl text-2xl text-brand-ink mb-3">Guest reviews</h2>
+          <p class="text-on-surface-variant text-sm">[Reviews will appear here after your first verified guest stays — placeholder for now.]</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+            <article class="bg-white p-5 rounded-2xl border border-zinc-100">
+              <div class="flex gap-1 text-brand-yellow mb-2">★★★★★</div>
+              <p class="text-on-surface-variant text-sm leading-relaxed mb-3">[PLACEHOLDER — clean, secure, exactly as photographed.]</p>
+              <p class="text-xs font-semibold">Guest name placeholder</p>
+            </article>
+            <article class="bg-white p-5 rounded-2xl border border-zinc-100">
+              <div class="flex gap-1 text-brand-yellow mb-2">★★★★★</div>
+              <p class="text-on-surface-variant text-sm leading-relaxed mb-3">[PLACEHOLDER — quick check-in, fast WiFi, the inverter saved us.]</p>
+              <p class="text-xs font-semibold">Guest name placeholder</p>
+            </article>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="font-display-xl text-2xl text-brand-ink mb-3">Where you'll be</h2>
+          <p class="text-on-surface-variant text-sm mb-4" id="apt-address">—</p>
+          <div class="aspect-[16/9] rounded-2xl overflow-hidden bg-surface-container">
+            <iframe id="map-iframe" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" class="w-full h-full border-0" title="Map"></iframe>
+          </div>
+          <p class="text-xs text-on-surface-variant mt-2 italic">Map preview based on neighbourhood. Exact address shared after booking.</p>
+        </section>
       </div>
-    </div>
 
-    <!-- Bento Gallery -->
-    <div class="grid grid-cols-4 grid-rows-2 gap-2 h-[300px] md:h-[460px] rounded-2xl overflow-hidden">
-      <div class="col-span-2 row-span-2 relative group cursor-pointer bg-surface-variant overflow-hidden">
-        <img class="w-full h-full object-cover gallery-thumb" src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=900&q=80" alt="Living Area"/>
-        <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors z-10"></div>
-      </div>
-      <div class="col-span-1 row-span-1 bg-surface-variant relative group cursor-pointer overflow-hidden">
-        <img class="w-full h-full object-cover gallery-thumb" src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&q=80" alt="Bedroom"/>
-      </div>
-      <div class="col-span-1 row-span-1 bg-surface-variant relative group cursor-pointer overflow-hidden">
-        <img class="w-full h-full object-cover gallery-thumb" src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=600&q=80" alt="Kitchen"/>
-      </div>
-      <div class="col-span-1 row-span-1 bg-surface-variant relative group cursor-pointer overflow-hidden">
-        <img class="w-full h-full object-cover gallery-thumb" src="https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=600&q=80" alt="Bathroom"/>
-      </div>
-      <div class="col-span-1 row-span-1 bg-surface-variant relative group cursor-pointer overflow-hidden">
-        <img class="w-full h-full object-cover gallery-thumb" src="https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?w=600&q=80" alt="Balcony"/>
-        <button class="absolute bottom-3 right-3 z-20 bg-white/90 backdrop-blur px-3 py-1.5 rounded-lg font-label-bold text-[11px] text-primary shadow-md border border-zinc-200 hover:bg-white transition-colors">Show all photos</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Details + Booking Layout -->
-  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 relative">
-
-    <!-- Left: Details -->
-    <div class="lg:col-span-7 space-y-10">
-
-      <!-- Host -->
-      <section class="border-b border-surface-container-high pb-8 flex justify-between items-start gap-4">
-        <div>
-          <h2 class="font-headline-md text-headline-md text-primary mb-1">Entire rental unit hosted by Sarah</h2>
-          <p class="font-body-md text-body-md text-on-surface-variant">4 guests · 2 bedrooms · 2 beds · 2 baths</p>
-        </div>
-        <div class="w-14 h-14 rounded-full overflow-hidden flex-shrink-0 shadow-sm border border-outline-variant bg-surface-variant">
-          <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=100&q=80" alt="Host Sarah" class="w-full h-full object-cover"/>
-        </div>
-      </section>
-
-      <!-- Highlights -->
-      <section class="border-b border-surface-container-high pb-8 space-y-5">
-        <div class="flex items-start gap-4 amenity-row p-2">
-          <span class="material-symbols-outlined text-[28px] text-primary mt-0.5">star</span>
-          <div>
-            <p class="font-label-bold text-primary">Superhost</p>
-            <p class="font-body-md text-on-surface-variant text-sm">Sarah is a highly rated host with 5 years of experience.</p>
-          </div>
-        </div>
-        <div class="flex items-start gap-4 amenity-row p-2">
-          <span class="material-symbols-outlined text-[28px] text-primary mt-0.5">key</span>
-          <div>
-            <p class="font-label-bold text-primary">Self check-in</p>
-            <p class="font-body-md text-on-surface-variant text-sm">Check yourself in with the smartlock.</p>
-          </div>
-        </div>
-        <div class="flex items-start gap-4 amenity-row p-2">
-          <span class="material-symbols-outlined text-[28px] text-primary mt-0.5">calendar_month</span>
-          <div>
-            <p class="font-label-bold text-primary">Free cancellation for 48 hours</p>
-            <p class="font-body-md text-on-surface-variant text-sm">Cancel up to 48 hours before check-in for a full refund.</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- Description -->
-      <section class="border-b border-surface-container-high pb-10">
-        <h3 class="font-headline-md text-headline-md text-primary mb-5">About this space</h3>
-        <div class="font-body-lg text-body-lg text-on-surface-variant space-y-4">
-          <p>Experience the epitome of minimalist corporate modern living in this expansive penthouse suite. Designed with 'Architectural Serenity' in mind, the space offers generous whitespace, structural clarity, and a tranquil atmosphere.</p>
-          <p>The interior features a sophisticated palette of deep blacks, crisp whites, and subtle warm accents, ensuring high-quality property features remain the focal point. Enjoy panoramic views and boutique hotel warmth.</p>
-        </div>
-        <button class="mt-5 font-label-bold text-label-bold text-primary underline hover:text-on-surface-variant transition-colors">Show more →</button>
-      </section>
-
-      <!-- Amenities -->
-      <section class="border-b border-surface-container-high pb-10">
-        <h3 class="font-headline-md text-headline-md text-primary mb-7">What this place offers</h3>
-        <div class="grid grid-cols-2 gap-y-5 gap-x-4">
-          <div class="flex items-center gap-3 amenity-row px-2 py-1.5"><span class="material-symbols-outlined text-[26px] text-primary">wifi</span><span class="font-body-md text-body-md">Fast Wi-Fi</span></div>
-          <div class="flex items-center gap-3 amenity-row px-2 py-1.5"><span class="material-symbols-outlined text-[26px] text-primary">pool</span><span class="font-body-md text-body-md">Infinity Pool</span></div>
-          <div class="flex items-center gap-3 amenity-row px-2 py-1.5"><span class="material-symbols-outlined text-[26px] text-primary">directions_car</span><span class="font-body-md text-body-md">Free Parking</span></div>
-          <div class="flex items-center gap-3 amenity-row px-2 py-1.5"><span class="material-symbols-outlined text-[26px] text-primary">kitchen</span><span class="font-body-md text-body-md">Chef's Kitchen</span></div>
-          <div class="flex items-center gap-3 amenity-row px-2 py-1.5"><span class="material-symbols-outlined text-[26px] text-primary">ac_unit</span><span class="font-body-md text-body-md">Central A/C</span></div>
-          <div class="flex items-center gap-3 amenity-row px-2 py-1.5"><span class="material-symbols-outlined text-[26px] text-primary">fitness_center</span><span class="font-body-md text-body-md">Gym Access</span></div>
-        </div>
-        <button class="mt-7 px-6 py-3 border border-primary text-primary font-label-bold text-label-bold rounded-lg hover:bg-surface-variant transition-colors">Show all 32 amenities</button>
-      </section>
-
-      <!-- Reviews -->
-      <section class="border-b border-surface-container-high pb-10">
-        <div class="flex items-center gap-3 mb-7">
-          <span class="material-symbols-outlined text-primary" style="font-variation-settings:'FILL' 1;">star</span>
-          <h3 class="font-headline-md text-headline-md text-primary">4.9 · 128 reviews</h3>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="bg-surface-container-low rounded-2xl p-5">
-            <div class="flex items-center gap-3 mb-3">
-              <div class="w-9 h-9 rounded-full bg-tertiary-fixed flex items-center justify-center font-label-bold text-sm text-primary">AM</div>
-              <div><p class="font-label-bold text-sm text-primary">Amara M.</p><p class="font-caption text-on-surface-variant">October 2024</p></div>
-            </div>
-            <p class="font-body-md text-on-surface-variant text-sm leading-relaxed">"Absolutely stunning space. The views were breathtaking and everything was exactly as described. Will definitely be back!"</p>
-          </div>
-          <div class="bg-surface-container-low rounded-2xl p-5">
-            <div class="flex items-center gap-3 mb-3">
-              <div class="w-9 h-9 rounded-full bg-secondary-fixed flex items-center justify-center font-label-bold text-sm text-primary">KO</div>
-              <div><p class="font-label-bold text-sm text-primary">Kemi O.</p><p class="font-caption text-on-surface-variant">September 2024</p></div>
-            </div>
-            <p class="font-body-md text-on-surface-variant text-sm leading-relaxed">"Perfect for a business trip. The wifi was excellent, the kitchen was well-stocked, and the bed was incredibly comfortable."</p>
-          </div>
-        </div>
-        <button class="mt-6 px-6 py-3 border border-primary text-primary font-label-bold text-label-bold rounded-lg hover:bg-surface-variant transition-colors">Show all 128 reviews</button>
-      </section>
-
-      <!-- Location -->
-      <section class="pb-10">
-        <h3 class="font-headline-md text-headline-md text-primary mb-5">Where you'll be</h3>
-        <div class="w-full h-[300px] rounded-2xl overflow-hidden mb-5 relative bg-surface-container-low border border-outline-variant">
-          <img src="https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?w=900&q=80" alt="Downtown District map view" class="w-full h-full object-cover opacity-70"/>
-          <div class="absolute inset-0 flex items-center justify-center">
-            <div class="bg-white rounded-full p-3 shadow-lg">
-              <span class="material-symbols-outlined text-primary text-[28px]" style="font-variation-settings:'FILL' 1;">location_on</span>
-            </div>
-          </div>
-        </div>
-        <h4 class="font-label-bold text-label-bold text-primary mb-2">Downtown District</h4>
-        <p class="font-body-md text-body-md text-on-surface-variant">Located in the heart of the city, walking distance to premium dining, shopping, and major business hubs.</p>
-      </section>
-    </div>
-
-    <!-- Right: Booking Widget (sticky) -->
-    <div class="lg:col-span-5 relative">
-      <div class="sticky top-28 bg-white rounded-2xl border border-zinc-200 shadow-xl shadow-black/5 p-6">
-        <div class="flex justify-between items-end mb-6">
-          <div>
-            <span class="font-headline-md text-[28px] font-bold text-primary">₦85,000</span>
-            <span class="font-body-md text-body-md text-on-surface-variant"> night</span>
-          </div>
-          <div class="text-right">
-            <p class="font-body-md text-sm text-primary flex items-center gap-1 justify-end font-medium">
-              <span class="material-symbols-outlined text-[16px] text-primary" style="font-variation-settings:'FILL' 1;">star</span> 4.9
+      <aside class="lg:col-span-5">
+        <div class="lg:sticky lg:top-28 bg-white p-6 rounded-2xl shadow-card border border-zinc-100">
+          <div class="flex items-end justify-between mb-5">
+            <p>
+              <span id="apt-price" class="block text-2xl font-bold text-brand-ink">—</span>
+              <span class="block text-xs text-on-surface-variant">per night</span>
             </p>
-            <a class="font-caption text-xs text-on-surface-variant underline mt-1 block hover:text-primary" href="#">128 reviews</a>
+            <span class="inline-flex items-center gap-1 text-sm text-brand-ink">
+              <span class="material-symbols-outlined filled text-brand-yellow text-[16px]" style="font-variation-settings:'FILL' 1;">star</span>
+              <span id="widget-rating">—</span>
+            </span>
+          </div>
+
+          <label class="block text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-1.5" for="date-range">Dates</label>
+          <input id="date-range" class="input-base mb-3 cursor-pointer" placeholder="Pick check-in and check-out" readonly />
+          <input type="hidden" id="checkin-iso" />
+          <input type="hidden" id="checkout-iso" />
+
+          <label class="block text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-1.5" for="guests">Guests</label>
+          <select id="guests" class="input-base mb-4"></select>
+
+          <div id="price-breakdown" class="hidden border-t border-zinc-100 pt-4 mb-4 text-sm space-y-2">
+            <div class="flex justify-between"><span class="text-on-surface-variant"><span id="bd-rate">—</span> × <span id="bd-nights">—</span> nights</span><span id="bd-subtotal">—</span></div>
+            <div class="flex justify-between"><span class="text-on-surface-variant">Cleaning fee</span><span id="bd-cleaning">—</span></div>
+            <div class="flex justify-between"><span class="text-on-surface-variant">Service fee</span><span id="bd-service">—</span></div>
+            <div class="flex justify-between font-bold text-brand-ink border-t border-zinc-100 pt-2 mt-2"><span>Total</span><span id="bd-total">—</span></div>
+          </div>
+
+          <button id="reserve-btn" class="w-full py-4 bg-brand-yellow text-brand-ink font-label-bold text-label-bold rounded-xl hover:bg-brand-ink hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+            Reserve
+          </button>
+          <p class="text-xs text-center text-on-surface-variant mt-3">You won't be charged until the next step.</p>
+
+          <div class="mt-5 pt-5 border-t border-zinc-100 grid grid-cols-3 gap-2 text-xs text-on-surface-variant">
+            <div class="text-center"><span class="material-symbols-outlined text-brand-yellow-deep block">lock</span>Secure booking</div>
+            <div class="text-center"><span class="material-symbols-outlined text-brand-yellow-deep block">payments</span>No hidden fees</div>
+            <div class="text-center"><span class="material-symbols-outlined text-brand-yellow-deep block">undo</span>Free 48h cancel</div>
           </div>
         </div>
-
-        <!-- Booking Inputs -->
-        <div class="border border-outline-variant rounded-xl mb-4 overflow-hidden focus-within:border-primary transition-all">
-          <div class="flex border-b border-outline-variant">
-            <div class="w-1/2 p-3 border-r border-outline-variant">
-              <label class="block font-caption text-[10px] uppercase font-bold text-primary mb-1">Check-in</label>
-              <input id="checkin" type="text" placeholder="Add date" readonly class="w-full bg-transparent border-none p-0 focus:ring-0 font-body-md text-sm text-primary placeholder-outline"/>
-            </div>
-            <div class="w-1/2 p-3">
-              <label class="block font-caption text-[10px] uppercase font-bold text-primary mb-1">Checkout</label>
-              <input id="checkout" type="text" placeholder="Add date" readonly class="w-full bg-transparent border-none p-0 focus:ring-0 font-body-md text-sm text-primary placeholder-outline"/>
-            </div>
-          </div>
-          <div class="p-3 relative">
-            <label class="block font-caption text-[10px] uppercase font-bold text-primary mb-1">Guests</label>
-            <select id="guests" class="w-full bg-transparent border-none p-0 focus:ring-0 font-body-md text-sm text-primary appearance-none cursor-pointer">
-              <option>1 guest</option><option>2 guests</option><option>3 guests</option><option>4 guests</option>
-            </select>
-            <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-primary">expand_more</span>
-          </div>
-        </div>
-
-        <button onclick="handleBook()" class="w-full bg-primary text-white py-4 rounded-xl font-label-bold text-label-bold hover:bg-primary-container transition-colors mb-4 flex items-center justify-center gap-2">
-          <span class="material-symbols-outlined text-[18px]">calendar_month</span>
-          Check Availability
-        </button>
-        <p class="font-caption text-sm text-on-surface-variant text-center mb-6">You won't be charged yet</p>
-
-        <!-- Price breakdown -->
-        <div id="price-breakdown" class="space-y-3 font-body-md text-sm text-on-surface-variant hidden">
-          <div class="flex justify-between"><span class="underline">₦85,000 × <span id="nights-count">0</span> nights</span><span id="subtotal">₦0</span></div>
-          <div class="flex justify-between"><span class="underline">Cleaning fee</span><span>₦15,000</span></div>
-          <div class="flex justify-between"><span class="underline">Service fee</span><span>₦12,000</span></div>
-          <div class="flex justify-between border-t border-surface-container-highest pt-3 text-primary font-bold">
-            <span>Total</span><span id="total-price">₦0</span>
-          </div>
-        </div>
-      </div>
+      </aside>
     </div>
-
   </div>
 </main>
 
-<!-- Mobile Bottom Nav -->
-<nav class="bg-white fixed bottom-0 w-full md:hidden rounded-t-2xl border-t border-zinc-200 shadow-[0_-4px_20px_rgba(0,0,0,0.05)] z-50">
-  <div class="flex justify-around items-center h-16 px-4">
-    <a class="flex flex-col items-center text-zinc-400" href="index.html"><span class="material-symbols-outlined">search</span><span class="text-[10px] font-bold uppercase tracking-widest mt-1">Explore</span></a>
-    <button class="flex flex-col items-center text-zinc-400"><span class="material-symbols-outlined">favorite_border</span><span class="text-[10px] font-bold uppercase tracking-widest mt-1">Saved</span></button>
-    <button class="flex flex-col items-center text-primary"><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">calendar_today</span><span class="text-[10px] font-bold uppercase tracking-widest mt-1">Book</span></button>
+<div class="mobile-book-bar lg:hidden">
+  <div>
+    <div class="text-xs text-on-surface-variant">From</div>
+    <div class="font-bold text-brand-ink"><span id="mobile-price">—</span> <span class="text-xs text-on-surface-variant font-normal">/night</span></div>
   </div>
-</nav>
+  <a id="mobile-reserve" href="#date-range" class="px-5 py-3 bg-brand-yellow text-brand-ink font-label-bold text-label-bold rounded-full">Reserve</a>
+</div>
 
-<!-- Footer -->
-<footer class="bg-zinc-50 w-full border-t border-zinc-200">
-  <div class="max-w-[1280px] mx-auto py-12 px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
-    <div class="col-span-1 md:col-span-2">
-      <span class="text-sm font-bold tracking-widest text-primary mb-4 block">ITOSA APARTMENT</span>
-      <p class="text-sm leading-relaxed text-zinc-500 max-w-sm">© 2024 ITOSA APARTMENT. Rest. Relax. Recharge.</p>
+<footer class="bg-brand-ink text-white mt-auto">
+  <div class="max-w-container mx-auto py-16 lg:py-20 px-5 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-12 lg:gap-16">
+    <div class="md:col-span-2">
+      <a href="/" class="flex items-center gap-2 mb-5">
+        <span class="material-symbols-outlined text-brand-yellow filled" style="font-variation-settings:'FILL' 1;">apartment</span>
+        <span class="text-xl font-bold tracking-[0.18em] font-display-xl">ITOSA APARTMENT</span>
+      </a>
+      <p class="text-zinc-400 max-w-md font-light leading-relaxed mb-6">Premium shortlet apartments in Lagos, Surulere, and Isheri. Rest. Relax. Recharge.</p>
     </div>
-    <div><ul class="space-y-3 text-sm text-zinc-500"><li><a class="hover:text-primary transition-colors" href="index.html">Browse Apartments</a></li><li><a class="hover:text-primary transition-colors" href="#">Contact Us</a></li></ul></div>
-    <div><ul class="space-y-3 text-sm text-zinc-500"><li><a class="hover:text-primary transition-colors" href="#">Privacy Policy</a></li><li><a class="hover:text-primary transition-colors" href="#">Terms of Service</a></li></ul></div>
+    <div>
+      <h4 class="font-label-bold text-white mb-5 tracking-[0.18em] text-xs uppercase">Explore</h4>
+      <ul class="space-y-3">
+        <li><a class="text-zinc-400 hover:text-brand-yellow font-light" href="/browse">All Apartments</a></li>
+        <li><a class="text-zinc-400 hover:text-brand-yellow font-light" href="/faq">FAQ</a></li>
+        <li><a class="text-zinc-400 hover:text-brand-yellow font-light" href="/contact">Contact</a></li>
+        <li><a class="text-zinc-400 hover:text-brand-yellow font-light" href="/refund">Refund Policy</a></li>
+        <li><a class="text-zinc-400 hover:text-brand-yellow font-light" href="/terms">Terms</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="font-label-bold text-white mb-5 tracking-[0.18em] text-xs uppercase">Reach Us</h4>
+      <ul class="space-y-3 text-zinc-400 font-light">
+        <li><a href="tel:PLACEHOLDER_PHONE" data-bind="phone-link" class="hover:text-brand-yellow">PLACEHOLDER_PHONE</a></li>
+        <li><a href="mailto:PLACEHOLDER_EMAIL" data-bind="email-link" class="hover:text-brand-yellow break-all">PLACEHOLDER_EMAIL</a></li>
+        <li><span data-bind="address">Lagos, Nigeria</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="border-t border-white/10">
+    <div class="max-w-container mx-auto py-6 px-5 lg:px-8 text-zinc-500 text-xs flex flex-col md:flex-row md:justify-between gap-2">
+      <p>&copy; <span data-bind="year">2026</span> ITOSA APARTMENT.</p>
+      <p class="font-label-bold tracking-[0.2em]">Rest. Relax. Recharge.</p>
+    </div>
   </div>
 </footer>
 
-<script>
-  function handleBook() {
-    const checkin = document.getElementById('checkin');
-    const checkout = document.getElementById('checkout');
-    if (!checkin.value) {
-      checkin.value = formatDate(new Date());
-      const out = new Date(); out.setDate(out.getDate() + 3);
-      checkout.value = formatDate(out);
-      showBreakdown(3);
-    }
+<a href="https://wa.me/PLACEHOLDER_WHATSAPP" data-bind="whatsapp-link" class="fixed bottom-32 right-5 z-40 h-14 w-14 flex items-center justify-center bg-[#25D366] text-white rounded-full shadow-lg active:scale-90 transition-transform md:bottom-6" aria-label="Chat on WhatsApp">
+  <svg fill="currentColor" height="24" viewBox="0 0 16 16" width="24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326z"/></svg>
+</a>
+
+<nav class="fixed bottom-0 w-full lg:hidden bg-white border-t border-zinc-100 shadow-[0_-4px_20px_rgba(0,0,0,0.05)] z-40" aria-label="Mobile bottom navigation">
+  <div class="grid grid-cols-4 items-center h-16 px-2">
+    <a class="flex flex-col items-center text-zinc-500 hover:text-brand-yellow" href="/" data-nav="/"><span class="material-symbols-outlined">home</span><span class="text-[10px] font-bold uppercase tracking-widest mt-0.5">Home</span></a>
+    <a class="flex flex-col items-center text-zinc-500 hover:text-brand-yellow" href="/browse" data-nav="/browse"><span class="material-symbols-outlined">search</span><span class="text-[10px] font-bold uppercase tracking-widest mt-0.5">Browse</span></a>
+    <a class="flex flex-col items-center text-zinc-500 hover:text-brand-yellow" href="/faq" data-nav="/faq"><span class="material-symbols-outlined">help</span><span class="text-[10px] font-bold uppercase tracking-widest mt-0.5">FAQ</span></a>
+    <a class="flex flex-col items-center text-zinc-500 hover:text-brand-yellow" href="/contact" data-nav="/contact"><span class="material-symbols-outlined">mail</span><span class="text-[10px] font-bold uppercase tracking-widest mt-0.5">Contact</span></a>
+  </div>
+</nav>
+
+<script type="module">
+  import "/assets/js/site.js";
+  import { getApartmentBySlug, getEffectiveBlockedDates } from "/assets/js/data/store.js";
+  import { AMENITY_CATALOG } from "/assets/js/data/apartments.js";
+  import { getSlugFromUrl } from "/assets/js/utils/slug.js";
+  import { formatNGN } from "/assets/js/utils/currency.js";
+  import { calcTotal } from "/assets/js/utils/price.js";
+  import { nightsBetween } from "/assets/js/utils/date.js";
+  import { renderBentoGallery } from "/assets/js/gallery.js";
+  import { initRangePicker } from "/assets/js/calendar.js";
+  import { buildAccommodationLD, buildBreadcrumbLD, injectLD } from "/assets/js/seo-helpers.js";
+  import { BRAND } from "/assets/js/data/config.js";
+
+  const slug = getSlugFromUrl();
+  const apt = slug ? getApartmentBySlug(slug) : null;
+
+  if (!apt) {
+    document.getElementById("apartment-root").innerHTML =
+      `<div class="max-w-container mx-auto px-5 lg:px-8 py-16 text-center">
+        <h1 class="font-display-xl text-headline-lg text-brand-ink mb-3">Apartment not found</h1>
+        <p class="text-on-surface-variant mb-6">We couldn't find an apartment with that link.</p>
+        <a href="/browse" class="inline-flex items-center gap-2 px-6 py-3 bg-brand-yellow text-brand-ink font-label-bold text-label-bold rounded-full">Browse all apartments</a>
+       </div>`;
+  } else {
+    hydrate(apt);
   }
-  function formatDate(d) {
-    return d.toLocaleDateString('en-NG', { day:'numeric', month:'short', year:'numeric' });
+
+  function hydrate(a) {
+    document.title = a.seo?.title || (a.name + " — ITOSA Apartment");
+    setMeta("description", a.seo?.description || a.description.slice(0, 155));
+    setMeta("keywords", a.seo?.keywords || "");
+    setOG("og:title", document.title);
+    setOG("og:description", a.seo?.description || a.description.slice(0, 155));
+    setOG("og:url", BRAND.domain + "/apartments/" + a.slug);
+    setOG("og:image", (a.gallery && a.gallery[0]) || a.galleryFallback || "");
+    addCanonical(BRAND.domain + "/apartments/" + a.slug);
+
+    injectLD(
+      buildAccommodationLD(a, AMENITY_CATALOG),
+      buildBreadcrumbLD([
+        { name: "Home", url: BRAND.domain + "/" },
+        { name: "Browse", url: BRAND.domain + "/browse" },
+        { name: a.name, url: BRAND.domain + "/apartments/" + a.slug }
+      ])
+    );
+
+    document.getElementById("bc-name").textContent = a.name;
+    document.getElementById("apt-title").textContent = a.name;
+    document.getElementById("apt-rating").textContent = a.rating?.toFixed(1) || "—";
+    document.getElementById("apt-review-count").textContent = a.reviewCount > 0 ? `(${a.reviewCount} reviews)` : "(no reviews yet)";
+    document.getElementById("apt-location").textContent = `${a.location}, ${a.city || "Lagos"}`;
+    document.getElementById("apt-type").innerHTML = `<span class="material-symbols-outlined text-[18px]">apartment</span> ${a.type || "Apartment"}`;
+
+    renderBentoGallery({
+      root: document.getElementById("gallery-root"),
+      images: (a.gallery || []).filter(Boolean).length ? a.gallery : (a.galleryFallback ? [a.galleryFallback] : []),
+      alt: a.name
+    });
+
+    document.getElementById("apt-description").textContent = a.description;
+    document.getElementById("stat-beds").textContent = a.beds;
+    document.getElementById("stat-baths").textContent = a.baths;
+    document.getElementById("stat-guests").textContent = a.maxGuests + " guests";
+    document.getElementById("stat-min-stay").textContent = a.minStayNights || 1;
+
+    document.getElementById("amenities-grid").innerHTML = (a.amenities || []).map((key) => {
+      const meta = AMENITY_CATALOG[key] || { label: key, icon: "check" };
+      return `<div class="flex items-center gap-3 p-3 rounded-xl bg-surface-container-low">
+        <span class="material-symbols-outlined text-brand-ink">${meta.icon}</span>
+        <span class="text-brand-ink">${meta.label}</span>
+      </div>`;
+    }).join("");
+
+    document.getElementById("rules-grid").innerHTML = (a.houseRules || []).map((r) =>
+      `<div class="flex items-start gap-3 p-3 rounded-xl bg-surface-container-low">
+         <span class="material-symbols-outlined text-brand-yellow-deep">${r.icon}</span>
+         <span class="text-brand-ink text-sm leading-relaxed">${r.rule}</span>
+       </div>`
+    ).join("");
+
+    document.getElementById("damage-summary").textContent = a.damagePolicy?.summary || "";
+    document.getElementById("damage-items").innerHTML = (a.damagePolicy?.itemsCovered || []).map((i) =>
+      `<li class="flex items-center gap-2"><span class="material-symbols-outlined text-brand-yellow-deep text-[16px]">check_circle</span>${i}</li>`
+    ).join("");
+    document.getElementById("damage-note").textContent = a.damagePolicy?.note || "";
+
+    document.getElementById("landmarks-list").innerHTML = (a.landmarks || []).map((l) =>
+      `<li class="flex items-center justify-between p-3 rounded-xl bg-surface-container-low">
+         <span class="flex items-center gap-2"><span class="material-symbols-outlined text-brand-yellow-deep">place</span>${l.name}</span>
+         <span class="text-sm text-on-surface-variant">${l.distanceKm} km</span>
+       </li>`
+    ).join("") || `<li class="text-sm text-on-surface-variant italic">[Add nearby landmarks in apartments.js]</li>`;
+
+    document.getElementById("apt-address").textContent = a.address || "Lagos, Nigeria";
+    const mapQuery = encodeURIComponent(`${a.location} ${a.city || "Lagos"} Nigeria`);
+    document.getElementById("map-iframe").src = `https://www.google.com/maps?q=${mapQuery}&output=embed`;
+
+    document.getElementById("apt-price").textContent = formatNGN(a.pricePerNight);
+    document.getElementById("mobile-price").textContent = formatNGN(a.pricePerNight);
+    document.getElementById("widget-rating").textContent = a.rating?.toFixed(1) || "—";
+
+    const guestsSel = document.getElementById("guests");
+    guestsSel.innerHTML = Array.from({ length: a.maxGuests || 2 }, (_, i) =>
+      `<option value="${i + 1}">${i + 1} guest${i ? "s" : ""}</option>`
+    ).join("");
+
+    const dateInput = document.getElementById("date-range");
+    const checkinIso = document.getElementById("checkin-iso");
+    const checkoutIso = document.getElementById("checkout-iso");
+    const breakdown = document.getElementById("price-breakdown");
+    const reserveBtn = document.getElementById("reserve-btn");
+    let chosenStart = null, chosenEnd = null;
+
+    const tryInitPicker = () => {
+      if (!window.Litepicker) { setTimeout(tryInitPicker, 50); return; }
+      initRangePicker({
+        inputEl: dateInput,
+        startInput: checkinIso,
+        endInput: checkoutIso,
+        blockedRanges: getEffectiveBlockedDates(a.slug),
+        onSelect: (start, end) => {
+          chosenStart = start; chosenEnd = end;
+          if (!start || !end) return;
+          const nights = nightsBetween(start, end);
+          const totals = calcTotal({ rate: a.pricePerNight, nights });
+          breakdown.classList.remove("hidden");
+          document.getElementById("bd-rate").textContent = formatNGN(a.pricePerNight);
+          document.getElementById("bd-nights").textContent = nights;
+          document.getElementById("bd-subtotal").textContent = formatNGN(totals.subtotal);
+          document.getElementById("bd-cleaning").textContent = formatNGN(totals.cleaning);
+          document.getElementById("bd-service").textContent = formatNGN(totals.service);
+          document.getElementById("bd-total").textContent = formatNGN(totals.total);
+        }
+      });
+    };
+    tryInitPicker();
+
+    reserveBtn.addEventListener("click", () => {
+      if (!chosenStart || !chosenEnd) {
+        alert("Please pick check-in and check-out dates.");
+        return;
+      }
+      const guests = guestsSel.value;
+      const params = new URLSearchParams({
+        slug: a.slug,
+        checkin: chosenStart,
+        checkout: chosenEnd,
+        guests
+      });
+      window.location.href = "/booking?" + params.toString();
+    });
   }
-  function showBreakdown(nights) {
-    const rate = 85000;
-    const sub = rate * nights;
-    const total = sub + 15000 + 12000;
-    document.getElementById('nights-count').textContent = nights;
-    document.getElementById('subtotal').textContent = '₦' + sub.toLocaleString();
-    document.getElementById('total-price').textContent = '₦' + total.toLocaleString();
-    document.getElementById('price-breakdown').classList.remove('hidden');
+
+  function setMeta(name, content) {
+    let el = document.querySelector(`meta[name="${name}"]`);
+    if (!el) { el = document.createElement("meta"); el.setAttribute("name", name); document.head.appendChild(el); }
+    el.setAttribute("content", content);
+  }
+  function setOG(prop, content) {
+    let el = document.querySelector(`meta[property="${prop}"]`);
+    if (!el) { el = document.createElement("meta"); el.setAttribute("property", prop); document.head.appendChild(el); }
+    el.setAttribute("content", content);
+  }
+  function addCanonical(url) {
+    let el = document.querySelector('link[rel="canonical"]');
+    if (!el) { el = document.createElement("link"); el.setAttribute("rel", "canonical"); document.head.appendChild(el); }
+    el.setAttribute("href", url);
   }
 </script>
+
 </body>
 </html>

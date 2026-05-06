@@ -1,344 +1,222 @@
 <!DOCTYPE html>
-
-<html class="light" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Booking Management - ITOSA Admin</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    "colors": {
-                        "surface-tint": "#5f5e5e",
-                        "surface-container-low": "#f7f3f2",
-                        "error": "#ba1a1a",
-                        "outline": "#747878",
-                        "on-tertiary-fixed": "#001e2f",
-                        "on-primary-container": "#959494",
-                        "secondary": "#795900",
-                        "on-surface": "#1c1b1b",
-                        "error-container": "#ffdad6",
-                        "inverse-surface": "#313030",
-                        "tertiary-fixed": "#c9e6ff",
-                        "on-surface-variant": "#444748",
-                        "secondary-fixed-dim": "#f9bd22",
-                        "on-tertiary": "#ffffff",
-                        "on-primary": "#ffffff",
-                        "on-secondary-container": "#6f5100",
-                        "surface-container-high": "#ebe7e7",
-                        "primary-fixed": "#e4e2e1",
-                        "on-primary-fixed": "#1b1c1c",
-                        "on-error-container": "#93000a",
-                        "tertiary": "#001a2a",
-                        "on-primary-fixed-variant": "#474747",
-                        "inverse-on-surface": "#f4f0ef",
-                        "background": "#fdf8f8",
-                        "surface-container": "#f1edec",
-                        "primary": "#181919",
-                        "outline-variant": "#c4c7c7",
-                        "primary-container": "#2d2d2d",
-                        "surface-container-lowest": "#ffffff",
-                        "surface-container-highest": "#e5e2e1",
-                        "inverse-primary": "#c8c6c6",
-                        "secondary-container": "#ffc329",
-                        "tertiary-container": "#003048",
-                        "surface-variant": "#e5e2e1",
-                        "primary-fixed-dim": "#c8c6c6",
-                        "on-error": "#ffffff",
-                        "on-secondary-fixed-variant": "#5c4300",
-                        "surface-dim": "#ddd9d8",
-                        "on-secondary": "#ffffff",
-                        "secondary-fixed": "#ffdf9f",
-                        "on-tertiary-fixed-variant": "#004c6e",
-                        "on-background": "#1c1b1b",
-                        "surface": "#fdf8f8",
-                        "tertiary-fixed-dim": "#89ceff",
-                        "on-secondary-fixed": "#261a00",
-                        "surface-bright": "#fdf8f8",
-                        "on-tertiary-container": "#009ddf"
-                    },
-                    "borderRadius": {
-                        "DEFAULT": "0.25rem",
-                        "lg": "0.5rem",
-                        "xl": "0.75rem",
-                        "full": "9999px"
-                    },
-                    "spacing": {
-                        "gutter": "32px",
-                        "section-gap": "80px",
-                        "margin-mobile": "20px",
-                        "unit": "8px",
-                        "container-max": "1280px"
-                    },
-                    "fontFamily": {
-                        "caption": ["Be Vietnam Pro"],
-                        "body-md": ["Be Vietnam Pro"],
-                        "body-lg": ["Be Vietnam Pro"],
-                        "headline-md": ["Manrope"],
-                        "headline-lg": ["Manrope"],
-                        "label-bold": ["Be Vietnam Pro"],
-                        "display-xl": ["Manrope"]
-                    },
-                    "fontSize": {
-                        "caption": ["12px", { "lineHeight": "1.4", "fontWeight": "400" }],
-                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
-                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
-                        "headline-md": ["24px", { "lineHeight": "1.3", "fontWeight": "600" }],
-                        "headline-lg": ["32px", { "lineHeight": "1.2", "fontWeight": "700" }],
-                        "label-bold": ["14px", { "lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "600" }],
-                        "display-xl": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800" }]
-                    }
-                }
-            }
-        }
-    </script>
-<style>
-        body { background-color: theme('colors.background'); color: theme('colors.on-background'); }
-    </style>
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bookings | ITOSA Admin</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" href="/assets/images/icons/favicon.svg" type="image/svg+xml" />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  <script src="/assets/js/tailwind.config.js"></script>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link rel="stylesheet" href="/assets/css/site.css" />
 </head>
-<body class="font-body-md text-body-md overflow-x-hidden min-h-screen">
-<!-- SideNavBar -->
-<nav class="h-screen w-64 fixed left-0 top-0 border-r border-zinc-100 dark:border-zinc-800 bg-white dark:bg-zinc-950 text-zinc-800 dark:text-zinc-100 font-manrope antialiased tracking-tight shadow-[4px_0_24px_rgba(0,0,0,0.02)] z-50 flex flex-col hidden md:flex">
-<div class="flex flex-col h-full overflow-y-auto">
-<!-- Header -->
-<div class="p-6 border-b border-zinc-100 dark:border-zinc-800 mb-4">
-<div class="flex items-center gap-3">
-<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center font-bold text-primary">AD</div>
-<div>
-<h1 class="text-xl font-bold text-zinc-900 dark:text-white">ITOSA Admin</h1>
-<p class="font-caption text-caption text-on-surface-variant">Property Management</p>
+<body class="bg-surface-container-low text-brand-ink antialiased min-h-screen font-body-md">
+
+<div class="demo-banner">
+  Demo mode — all changes save to your browser only. <a href="/" class="underline font-semibold">Return to site</a> ·
+  <button id="reset-overrides-btn" class="underline font-semibold ml-1">Reset to defaults</button>
 </div>
-</div>
-</div>
-<!-- Main Navigation -->
-<div class="flex-1 px-4 space-y-1">
-<a class="flex items-center gap-3 px-4 py-3 text-zinc-500 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors rounded-lg group" href="/admin-dashboard">
-<span class="material-symbols-outlined text-outline group-hover:text-zinc-900 dark:group-hover:text-white">dashboard</span>
-<span class="font-label-bold text-label-bold">Overview</span>
-</a>
-<a class="flex items-center gap-3 px-4 py-3 text-zinc-500 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors rounded-lg group" href="/admin-apartments">
-<span class="material-symbols-outlined text-outline group-hover:text-zinc-900 dark:group-hover:text-white">apartment</span>
-<span class="font-label-bold text-label-bold">Apartments</span>
-</a>
-<a class="flex items-center gap-3 px-4 py-3 text-zinc-900 dark:text-white font-semibold bg-zinc-50 dark:bg-zinc-900 border-r-4 border-amber-400 rounded-lg" href="/admin-bookings">
-<span class="material-symbols-outlined text-amber-500" style="font-variation-settings: 'FILL' 1;">event_available</span>
-<span class="font-label-bold text-label-bold">Bookings</span>
-</a>
-<a class="flex items-center gap-3 px-4 py-3 text-zinc-500 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors rounded-lg group" href="/admin-availability">
-<span class="material-symbols-outlined text-outline group-hover:text-zinc-900 dark:group-hover:text-white">calendar_month</span>
-<span class="font-label-bold text-label-bold">Availability</span>
-</a>
-</div>
-<!-- CTA -->
-<div class="p-4 mt-auto">
-<button class="w-full bg-primary text-on-primary py-3 rounded-lg font-label-bold text-label-bold hover:bg-primary-container transition-colors shadow-sm">
-                    Add New Property
-                </button>
-</div>
-<!-- Footer Navigation -->
-<div class="p-4 border-t border-zinc-100 dark:border-zinc-800 space-y-1">
-<a class="flex items-center gap-3 px-4 py-3 text-zinc-500 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors rounded-lg group" href="#">
-<span class="material-symbols-outlined text-outline group-hover:text-zinc-900 dark:group-hover:text-white">settings</span>
-<span class="font-label-bold text-label-bold">Settings</span>
-</a>
-<a class="flex items-center gap-3 px-4 py-3 text-zinc-500 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors rounded-lg group" href="#">
-<span class="material-symbols-outlined text-outline group-hover:text-zinc-900 dark:group-hover:text-white">contact_support</span>
-<span class="font-label-bold text-label-bold">Support</span>
-</a>
-</div>
-</div>
-</nav>
-<!-- TopAppBar -->
-<header class="fixed top-0 right-0 left-0 md:left-64 h-16 border-b border-zinc-100 dark:border-zinc-800 bg-white/80 dark:bg-zinc-950/80 backdrop-blur-md z-40 text-zinc-800 dark:text-zinc-100 font-manrope text-sm font-medium flex justify-between items-center px-8">
-<div class="flex items-center gap-4">
-<span class="text-lg font-extrabold tracking-tighter text-zinc-900 dark:text-white">ITOSA APARTMENT</span>
-</div>
-<div class="flex-1 max-w-md mx-8 hidden md:block">
-<div class="relative">
-<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
-<input class="w-full pl-10 pr-4 py-2 bg-surface-container rounded-full border border-surface-variant focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all font-body-md text-body-md text-on-surface" placeholder="Search bookings..." type="text"/>
-</div>
-</div>
-<div class="flex items-center gap-4">
-<button class="text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors active:opacity-70">
-<span class="material-symbols-outlined">notifications</span>
-</button>
-<button class="text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors active:opacity-70">
-<span class="material-symbols-outlined">apps</span>
-</button>
-<div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center font-bold text-sm text-primary">AD</div>
-</div>
+
+<aside class="hidden md:flex flex-col fixed left-0 top-[40px] bottom-0 w-64 bg-brand-ink text-white p-6 z-30">
+  <a href="/" class="flex items-center gap-2 mb-10"><span class="material-symbols-outlined text-brand-yellow filled" style="font-variation-settings:'FILL' 1;">apartment</span><span class="text-base font-bold tracking-[0.18em] font-display-xl">ITOSA · ADMIN</span></a>
+  <nav class="flex flex-col gap-1 text-sm" aria-label="Admin">
+    <a data-admin-link href="/admin-dashboard" class="px-3 py-2.5 rounded-lg flex items-center gap-2.5 text-zinc-400 hover:text-white hover:bg-white/5"><span class="material-symbols-outlined text-[20px]">dashboard</span>Dashboard</a>
+    <a data-admin-link href="/admin-apartments" class="px-3 py-2.5 rounded-lg flex items-center gap-2.5 text-zinc-400 hover:text-white hover:bg-white/5"><span class="material-symbols-outlined text-[20px]">apartment</span>Apartments</a>
+    <a data-admin-link href="/admin-bookings" class="px-3 py-2.5 rounded-lg flex items-center gap-2.5 text-zinc-400 hover:text-white hover:bg-white/5"><span class="material-symbols-outlined text-[20px]">receipt_long</span>Bookings</a>
+    <a data-admin-link href="/admin-availability" class="px-3 py-2.5 rounded-lg flex items-center gap-2.5 text-zinc-400 hover:text-white hover:bg-white/5"><span class="material-symbols-outlined text-[20px]">event_available</span>Availability</a>
+  </nav>
+</aside>
+
+<header class="md:hidden fixed top-[40px] left-0 right-0 bg-brand-ink text-white z-30 px-5 h-14 flex items-center justify-between">
+  <a href="/admin-dashboard" class="flex items-center gap-2"><span class="material-symbols-outlined text-brand-yellow filled" style="font-variation-settings:'FILL' 1;">apartment</span><span class="text-sm font-bold tracking-[0.18em]">ITOSA · ADMIN</span></a>
+  <button id="admin-mobile-menu-btn" class="p-2" aria-label="Open admin menu"><span class="material-symbols-outlined">menu</span></button>
 </header>
-<!-- Main Content Canvas -->
-<main class="md:ml-64 pt-24 px-4 md:px-8 pb-12">
-<div class="max-w-[1280px] mx-auto">
-<!-- Page Header -->
-<div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
-<div>
-<h2 class="font-headline-lg text-headline-lg text-on-surface mb-2">Bookings</h2>
-<p class="font-body-md text-body-md text-on-surface-variant">Manage reservations across all properties.</p>
-</div>
-<div class="flex gap-3">
-<button class="flex items-center gap-2 px-4 py-2 border border-outline-variant rounded-lg text-on-surface hover:bg-surface-container-high transition-colors font-label-bold text-label-bold">
-<span class="material-symbols-outlined text-[18px]">filter_list</span>
-                        Filter
-                    </button>
-<button class="flex items-center gap-2 px-4 py-2 border border-outline-variant rounded-lg text-on-surface hover:bg-surface-container-high transition-colors font-label-bold text-label-bold">
-<span class="material-symbols-outlined text-[18px]">download</span>
-                        Export
-                    </button>
-</div>
-</div>
-<!-- Header Image Banner -->
-<div class="w-full h-48 md:h-64 rounded-xl mb-12 overflow-hidden shadow-sm relative">
-<img alt="Luxury property overview" class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1200&q=80"/>
-<div class="absolute inset-0 bg-gradient-to-t from-primary/60 to-transparent flex items-end p-6">
-<div class="text-white">
-<p class="font-label-bold text-label-bold opacity-90 mb-1">Weekly Overview</p>
-<h3 class="font-headline-md text-headline-md">12 New Bookings This Week</h3>
-</div>
-</div>
-</div>
-<!-- Data Table / List -->
-<div class="bg-surface-container-lowest rounded-xl border border-surface-variant shadow-sm overflow-hidden">
-<div class="overflow-x-auto">
-<table class="w-full text-left border-collapse">
-<thead>
-<tr class="bg-surface-container border-b border-surface-variant font-label-bold text-label-bold text-on-surface-variant">
-<th class="py-4 px-6 font-semibold">Customer</th>
-<th class="py-4 px-6 font-semibold">Dates</th>
-<th class="py-4 px-6 font-semibold">Apartment</th>
-<th class="py-4 px-6 font-semibold">Status</th>
-<th class="py-4 px-6 font-semibold text-right">Actions</th>
-</tr>
-</thead>
-<tbody class="font-body-md text-body-md text-on-surface divide-y divide-surface-variant">
-<!-- Row 1 -->
-<tr class="hover:bg-surface-container-low transition-colors group">
-<td class="py-4 px-6">
-<div class="flex items-center gap-3">
-<div class="w-8 h-8 rounded-full bg-tertiary-fixed text-on-tertiary-fixed flex items-center justify-center font-label-bold">JD</div>
-<div>
-<p class="font-medium text-on-surface">John Doe</p>
-<p class="text-caption text-on-surface-variant">ID: #B-7829</p>
-</div>
-</div>
-</td>
-<td class="py-4 px-6">
-<p>Oct 12 - Oct 15</p>
-<p class="text-caption text-on-surface-variant">3 nights</p>
-</td>
-<td class="py-4 px-6">
-<p>The Skyline Penthouse</p>
-</td>
-<td class="py-4 px-6">
-<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-caption font-medium bg-green-100 text-green-800">
-                                        Paid
-                                    </span>
-</td>
-<td class="py-4 px-6 text-right">
-<div class="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-<button class="p-2 text-on-surface-variant hover:text-primary transition-colors rounded-lg hover:bg-surface-variant" title="View Details">
-<span class="material-symbols-outlined text-[20px]">visibility</span>
-</button>
-<button class="p-2 text-error hover:bg-error-container transition-colors rounded-lg" title="Cancel Booking">
-<span class="material-symbols-outlined text-[20px]">cancel</span>
-</button>
-</div>
-</td>
-</tr>
-<!-- Row 2 -->
-<tr class="hover:bg-surface-container-low transition-colors group">
-<td class="py-4 px-6">
-<div class="flex items-center gap-3">
-<div class="w-8 h-8 rounded-full bg-secondary-fixed text-on-secondary-fixed flex items-center justify-center font-label-bold">ES</div>
-<div>
-<p class="font-medium text-on-surface">Emma Smith</p>
-<p class="text-caption text-on-surface-variant">ID: #B-7830</p>
-</div>
-</div>
-</td>
-<td class="py-4 px-6">
-<p>Oct 18 - Oct 22</p>
-<p class="text-caption text-on-surface-variant">4 nights</p>
-</td>
-<td class="py-4 px-6">
-<p>Oceanview Suite</p>
-</td>
-<td class="py-4 px-6">
-<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-caption font-medium bg-amber-100 text-amber-800">
-                                        Pending
-                                    </span>
-</td>
-<td class="py-4 px-6 text-right">
-<div class="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-<button class="p-2 text-green-600 hover:bg-green-50 transition-colors rounded-lg" title="Approve">
-<span class="material-symbols-outlined text-[20px]">check_circle</span>
-</button>
-<button class="p-2 text-on-surface-variant hover:text-primary transition-colors rounded-lg hover:bg-surface-variant" title="View Details">
-<span class="material-symbols-outlined text-[20px]">visibility</span>
-</button>
-</div>
-</td>
-</tr>
-<!-- Row 3 -->
-<tr class="hover:bg-surface-container-low transition-colors group">
-<td class="py-4 px-6">
-<div class="flex items-center gap-3">
-<div class="w-8 h-8 rounded-full bg-primary-fixed text-on-primary-fixed flex items-center justify-center font-label-bold">MJ</div>
-<div>
-<p class="font-medium text-on-surface">Michael Johnson</p>
-<p class="text-caption text-on-surface-variant">ID: #B-7831</p>
-</div>
-</div>
-</td>
-<td class="py-4 px-6">
-<p>Nov 01 - Nov 05</p>
-<p class="text-caption text-on-surface-variant">4 nights</p>
-</td>
-<td class="py-4 px-6">
-<p>The Skyline Penthouse</p>
-</td>
-<td class="py-4 px-6">
-<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-caption font-medium bg-green-100 text-green-800">
-                                        Paid
-                                    </span>
-</td>
-<td class="py-4 px-6 text-right">
-<div class="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-<button class="p-2 text-on-surface-variant hover:text-primary transition-colors rounded-lg hover:bg-surface-variant" title="View Details">
-<span class="material-symbols-outlined text-[20px]">visibility</span>
-</button>
-<button class="p-2 text-error hover:bg-error-container transition-colors rounded-lg" title="Cancel Booking">
-<span class="material-symbols-outlined text-[20px]">cancel</span>
-</button>
-</div>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-<!-- Pagination -->
-<div class="px-6 py-4 border-t border-surface-variant flex items-center justify-between bg-surface-container-lowest">
-<p class="font-caption text-caption text-on-surface-variant">Showing 1 to 3 of 45 entries</p>
-<div class="flex gap-1">
-<button class="w-8 h-8 flex items-center justify-center rounded-lg border border-surface-variant text-on-surface-variant hover:bg-surface-container disabled:opacity-50" disabled="">
-<span class="material-symbols-outlined text-[18px]">chevron_left</span>
-</button>
-<button class="w-8 h-8 flex items-center justify-center rounded-lg bg-primary text-on-primary font-label-bold text-caption">1</button>
-<button class="w-8 h-8 flex items-center justify-center rounded-lg border border-surface-variant text-on-surface hover:bg-surface-container font-label-bold text-caption">2</button>
-<button class="w-8 h-8 flex items-center justify-center rounded-lg border border-surface-variant text-on-surface hover:bg-surface-container font-label-bold text-caption">3</button>
-<button class="w-8 h-8 flex items-center justify-center rounded-lg border border-surface-variant text-on-surface hover:bg-surface-container">
-<span class="material-symbols-outlined text-[18px]">chevron_right</span>
-</button>
-</div>
-</div>
-</div>
-</div>
+<nav id="admin-mobile-menu" class="md:hidden fixed top-[94px] left-0 right-0 bg-brand-ink text-white z-30 px-3 py-3 hidden border-t border-white/10">
+  <a data-admin-link href="/admin-dashboard" class="px-3 py-2.5 rounded-lg flex items-center gap-2.5 text-zinc-300 hover:bg-white/5">Dashboard</a>
+  <a data-admin-link href="/admin-apartments" class="px-3 py-2.5 rounded-lg flex items-center gap-2.5 text-zinc-300 hover:bg-white/5">Apartments</a>
+  <a data-admin-link href="/admin-bookings" class="px-3 py-2.5 rounded-lg flex items-center gap-2.5 text-zinc-300 hover:bg-white/5">Bookings</a>
+  <a data-admin-link href="/admin-availability" class="px-3 py-2.5 rounded-lg flex items-center gap-2.5 text-zinc-300 hover:bg-white/5">Availability</a>
+</nav>
+
+<main class="md:ml-64 pt-[40px]">
+  <div class="md:hidden h-14"></div>
+  <div class="px-5 lg:px-10 py-8">
+    <header class="flex flex-wrap items-end justify-between gap-3 mb-6">
+      <div>
+        <h1 class="font-display-xl text-headline-lg text-brand-ink">Bookings</h1>
+        <p class="text-on-surface-variant text-sm">All guest bookings across your apartments</p>
+      </div>
+      <div class="flex flex-wrap gap-2 items-center">
+        <select id="filter-status" class="input-base w-auto h-10 text-sm">
+          <option value="all">All statuses</option>
+          <option value="paid">Paid</option>
+          <option value="pending_verification">Pending</option>
+          <option value="cancelled">Cancelled</option>
+          <option value="failed">Failed</option>
+        </select>
+        <input id="filter-search" placeholder="Search name or email…" class="input-base w-56 h-10 text-sm" />
+      </div>
+    </header>
+
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+      <div class="bg-white p-5 rounded-2xl shadow-card border border-zinc-100"><p class="text-xs uppercase tracking-wider text-on-surface-variant font-bold mb-2">Total bookings</p><p class="text-2xl font-bold" id="s-total">—</p></div>
+      <div class="bg-white p-5 rounded-2xl shadow-card border border-zinc-100"><p class="text-xs uppercase tracking-wider text-on-surface-variant font-bold mb-2">Paid</p><p class="text-2xl font-bold text-emerald-600" id="s-paid">—</p></div>
+      <div class="bg-white p-5 rounded-2xl shadow-card border border-zinc-100"><p class="text-xs uppercase tracking-wider text-on-surface-variant font-bold mb-2">Pending</p><p class="text-2xl font-bold text-amber-600" id="s-pending">—</p></div>
+      <div class="bg-white p-5 rounded-2xl shadow-card border border-zinc-100"><p class="text-xs uppercase tracking-wider text-on-surface-variant font-bold mb-2">Revenue</p><p class="text-2xl font-bold text-brand-ink" id="s-revenue">—</p></div>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow-card border border-zinc-100 overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead class="text-left text-xs text-on-surface-variant uppercase tracking-wider bg-surface-container-low">
+            <tr>
+              <th class="px-5 py-3">Booking ID</th>
+              <th class="px-5 py-3">Guest</th>
+              <th class="px-5 py-3">Apartment</th>
+              <th class="px-5 py-3">Dates</th>
+              <th class="px-5 py-3">Total</th>
+              <th class="px-5 py-3">Status</th>
+              <th class="px-5 py-3 text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="rows" class="divide-y divide-zinc-100"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </main>
-</body></html>
+
+<!-- Booking detail drawer -->
+<div id="drawer" class="fixed inset-0 bg-black/60 z-50 hidden items-stretch justify-end" role="dialog" aria-modal="true">
+  <div class="bg-white w-full sm:max-w-md h-full overflow-y-auto p-6">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="font-display-xl text-xl text-brand-ink">Booking details</h2>
+      <button id="drawer-close" class="p-2 hover:bg-surface-container-low rounded-full" aria-label="Close"><span class="material-symbols-outlined">close</span></button>
+    </div>
+    <div id="drawer-body" class="space-y-3 text-sm"></div>
+    <div class="border-t border-zinc-100 mt-6 pt-4 space-y-2" id="drawer-actions"></div>
+  </div>
+</div>
+
+<script type="module">
+  import "/assets/js/site.js";
+  import { highlightActiveAdminLink } from "/assets/js/admin.js";
+  import { getBookings, getApartmentBySlug, updateBookingStatus, deleteBooking, clearAllOverrides } from "/assets/js/data/store.js";
+  import { formatNGN } from "/assets/js/utils/currency.js";
+  import { formatDate, formatDateLong } from "/assets/js/utils/date.js";
+  import { toast } from "/assets/js/site.js";
+
+  highlightActiveAdminLink();
+  document.getElementById("admin-mobile-menu-btn")?.addEventListener("click", () => document.getElementById("admin-mobile-menu").classList.toggle("hidden"));
+  document.getElementById("reset-overrides-btn").addEventListener("click", () => {
+    if (confirm("Clear all admin changes (apartments, blocks, bookings) saved in this browser?")) { clearAllOverrides(); window.location.reload(); }
+  });
+
+  const state = { status: "all", q: "" };
+  document.getElementById("filter-status").addEventListener("change", (e) => { state.status = e.target.value; render(); });
+  document.getElementById("filter-search").addEventListener("input", (e) => { state.q = e.target.value.toLowerCase(); render(); });
+
+  function render() {
+    const all = getBookings();
+    const filtered = all.filter((b) => {
+      if (state.status !== "all" && b.paymentStatus !== state.status) return false;
+      if (state.q) {
+        const hay = (b.name + " " + b.email + " " + (b.paystackRef || "")).toLowerCase();
+        if (!hay.includes(state.q)) return false;
+      }
+      return true;
+    });
+
+    document.getElementById("s-total").textContent = all.length;
+    document.getElementById("s-paid").textContent = all.filter((b) => b.paymentStatus === "paid").length;
+    document.getElementById("s-pending").textContent = all.filter((b) => b.paymentStatus === "pending_verification").length;
+    document.getElementById("s-revenue").textContent = formatNGN(all.filter((b) => b.paymentStatus === "paid").reduce((s, b) => s + (b.totals?.total || 0), 0));
+
+    const rows = document.getElementById("rows");
+    if (filtered.length === 0) {
+      rows.innerHTML = `<tr><td colspan="7" class="px-5 py-12 text-center text-on-surface-variant">No bookings to show. Bookings appear here after a guest pays via Paystack.</td></tr>`;
+      return;
+    }
+    rows.innerHTML = filtered.map((b) => {
+      const apt = getApartmentBySlug(b.apartmentSlug);
+      return `<tr class="hover:bg-surface-container-low/60">
+        <td class="px-5 py-4 font-mono text-xs text-on-surface-variant">${escape(b.paystackRef || b.id)}</td>
+        <td class="px-5 py-4">
+          <div class="font-semibold text-brand-ink">${escape(b.name || "—")}</div>
+          <div class="text-xs text-on-surface-variant">${escape(b.email || "")} · ${escape(b.phone || "")}</div>
+        </td>
+        <td class="px-5 py-4 text-on-surface-variant">${escape(apt?.name || b.apartmentSlug)}</td>
+        <td class="px-5 py-4 text-on-surface-variant">${formatDate(b.checkin)} → ${formatDate(b.checkout)}</td>
+        <td class="px-5 py-4 font-semibold">${formatNGN(b.totals?.total || 0)}</td>
+        <td class="px-5 py-4">${statusBadge(b.paymentStatus)}</td>
+        <td class="px-5 py-4 text-right">
+          <button data-view="${b.id}" class="text-brand-ink font-semibold hover:text-brand-yellow-deep text-xs">View</button>
+        </td>
+      </tr>`;
+    }).join("");
+
+    rows.querySelectorAll("[data-view]").forEach((b) => b.addEventListener("click", () => openDrawer(b.dataset.view)));
+  }
+
+  function openDrawer(id) {
+    const b = getBookings().find((x) => x.id === id);
+    if (!b) return;
+    const apt = getApartmentBySlug(b.apartmentSlug);
+    const body = document.getElementById("drawer-body");
+    body.innerHTML = `
+      <div class="bg-surface-container-low p-3 rounded-xl">
+        <p class="text-xs uppercase tracking-wider text-on-surface-variant font-bold mb-1">Booking ID</p>
+        <p class="font-mono text-xs">${escape(b.paystackRef || b.id)}</p>
+      </div>
+      <p><strong>Apartment:</strong> ${escape(apt?.name || b.apartmentSlug)}</p>
+      <p><strong>Stay:</strong> ${formatDateLong(b.checkin)} → ${formatDateLong(b.checkout)}</p>
+      <p><strong>Guests:</strong> ${b.guests}</p>
+      <p><strong>Guest name:</strong> ${escape(b.name || "")}</p>
+      <p><strong>Phone:</strong> <a href="tel:${escape(b.phone || "")}" class="text-brand-ink underline">${escape(b.phone || "—")}</a></p>
+      <p><strong>Email:</strong> <a href="mailto:${escape(b.email || "")}" class="text-brand-ink underline break-all">${escape(b.email || "—")}</a></p>
+      ${b.notes ? `<p><strong>Notes:</strong> ${escape(b.notes)}</p>` : ""}
+      <div class="border-t border-zinc-100 pt-3 mt-3">
+        <p><strong>Total:</strong> ${formatNGN(b.totals?.total || 0)}</p>
+        <p><strong>Status:</strong> ${statusBadge(b.paymentStatus)}</p>
+      </div>
+    `;
+    const actions = document.getElementById("drawer-actions");
+    actions.innerHTML = `
+      ${b.paymentStatus !== "paid" ? `<button data-action="mark-paid" class="w-full py-2.5 bg-emerald-600 text-white font-semibold rounded-full hover:bg-emerald-700">Mark as paid</button>` : ""}
+      ${b.paymentStatus !== "cancelled" ? `<button data-action="cancel" class="w-full py-2.5 bg-white border border-zinc-200 text-brand-ink font-semibold rounded-full hover:bg-surface-container-low">Cancel booking</button>` : ""}
+      <button data-action="delete" class="w-full py-2.5 text-rose-600 font-semibold rounded-full hover:bg-rose-50">Delete record</button>
+    `;
+    actions.querySelectorAll("[data-action]").forEach((btn) => btn.addEventListener("click", () => doAction(btn.dataset.action, b.id)));
+    document.getElementById("drawer").classList.remove("hidden");
+    document.getElementById("drawer").classList.add("flex");
+  }
+
+  function doAction(act, id) {
+    if (act === "mark-paid") { updateBookingStatus(id, "paid"); toast("Marked as paid."); }
+    if (act === "cancel") { if (!confirm("Cancel this booking?")) return; updateBookingStatus(id, "cancelled"); toast("Booking cancelled."); }
+    if (act === "delete") { if (!confirm("Permanently delete this booking record?")) return; deleteBooking(id); toast("Booking deleted."); }
+    closeDrawer();
+    render();
+  }
+  function closeDrawer() { document.getElementById("drawer").classList.add("hidden"); document.getElementById("drawer").classList.remove("flex"); }
+  document.getElementById("drawer-close").addEventListener("click", closeDrawer);
+  document.getElementById("drawer").addEventListener("click", (e) => { if (e.target.id === "drawer") closeDrawer(); });
+
+  function statusBadge(s) {
+    const map = {
+      paid: '<span class="px-3 py-1 text-xs font-semibold rounded-full bg-emerald-50 text-emerald-700">Paid</span>',
+      pending_verification: '<span class="px-3 py-1 text-xs font-semibold rounded-full bg-amber-50 text-amber-700">Pending</span>',
+      cancelled: '<span class="px-3 py-1 text-xs font-semibold rounded-full bg-zinc-100 text-zinc-600">Cancelled</span>',
+      failed: '<span class="px-3 py-1 text-xs font-semibold rounded-full bg-rose-50 text-rose-700">Failed</span>'
+    };
+    return map[s] || `<span class="px-3 py-1 text-xs font-semibold rounded-full bg-zinc-100 text-zinc-600">${escape(s || "—")}</span>`;
+  }
+  function escape(s) { return String(s || "").replace(/[&<>"']/g, (c) => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c])); }
+
+  render();
+</script>
+
+</body>
+</html>

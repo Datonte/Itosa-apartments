@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Booking Confirmed | ITOSA Apartment</title>
+  <meta name="description" content="Your ITOSA Apartment booking is confirmed. Thank you for booking direct." />
+  <meta name="robots" content="noindex, nofollow" />
+
+  <link rel="icon" href="/assets/images/icons/favicon.svg" type="image/svg+xml" />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  <script src="/assets/js/tailwind.config.js"></script>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link rel="stylesheet" href="/assets/css/site.css" />
+</head>
+<body class="bg-brand-bg text-brand-ink antialiased min-h-screen flex flex-col font-body-md">
+
+<header class="fixed top-0 w-full z-50 bg-white/85 backdrop-blur-md border-b border-zinc-100">
+  <div class="max-w-container mx-auto flex justify-between items-center px-5 lg:px-8 h-20">
+    <a href="/" class="flex items-center gap-2">
+      <span class="material-symbols-outlined text-brand-ink filled" style="font-variation-settings:'FILL' 1;">apartment</span>
+      <span class="text-lg lg:text-xl font-bold tracking-[0.18em] text-brand-ink font-display-xl">ITOSA APARTMENT</span>
+    </a>
+  </div>
+</header>
+
+<main class="flex-grow pt-28 pb-20 px-5 lg:px-8" id="confirm-root">
+  <div class="max-w-2xl mx-auto">
+
+    <div class="text-center mb-8">
+      <div class="inline-flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100 text-emerald-600 mb-4">
+        <span class="material-symbols-outlined text-4xl filled" style="font-variation-settings:'FILL' 1;">check_circle</span>
+      </div>
+      <h1 class="font-display-xl text-headline-lg text-brand-ink mb-2">Booking confirmed!</h1>
+      <p class="text-on-surface-variant">A confirmation will be sent to your email shortly.</p>
+    </div>
+
+    <div id="missing-state" class="hidden text-center py-12 bg-white rounded-2xl border border-zinc-100">
+      <span class="material-symbols-outlined text-5xl text-zinc-300">help</span>
+      <p class="mt-3 text-on-surface-variant">No booking reference found in this URL.</p>
+      <a href="/browse" class="inline-flex items-center gap-2 px-6 py-3 mt-5 bg-brand-yellow text-brand-ink font-label-bold text-label-bold rounded-full">Back to apartments</a>
+    </div>
+
+    <div id="ok-state" class="hidden bg-white p-6 lg:p-8 rounded-2xl shadow-card border border-zinc-100">
+      <div class="flex flex-wrap justify-between items-start gap-3 mb-5 pb-5 border-b border-zinc-100">
+        <div>
+          <p class="text-xs uppercase tracking-wider text-on-surface-variant font-bold">Booking ID</p>
+          <p class="font-mono text-sm text-brand-ink" id="c-id">—</p>
+        </div>
+        <div class="text-right">
+          <p class="text-xs uppercase tracking-wider text-on-surface-variant font-bold">Status</p>
+          <p id="c-status" class="font-semibold text-emerald-600">—</p>
+        </div>
+      </div>
+
+      <div class="flex gap-4 mb-6">
+        <img id="c-image" alt="" class="w-20 h-20 rounded-lg object-cover bg-surface-container" />
+        <div>
+          <p class="text-xs uppercase tracking-wider text-brand-yellow-deep font-bold" id="c-location">—</p>
+          <h2 class="font-display-xl text-lg text-brand-ink" id="c-name">—</h2>
+          <p class="text-xs text-on-surface-variant" id="c-stay">—</p>
+        </div>
+      </div>
+
+      <dl class="grid grid-cols-2 gap-4 text-sm mb-6">
+        <div><dt class="text-on-surface-variant text-xs uppercase tracking-wider mb-1">Guest</dt><dd class="font-semibold text-brand-ink" id="c-guest">—</dd></div>
+        <div><dt class="text-on-surface-variant text-xs uppercase tracking-wider mb-1">Total paid</dt><dd class="font-semibold text-brand-ink" id="c-total">—</dd></div>
+        <div><dt class="text-on-surface-variant text-xs uppercase tracking-wider mb-1">Check-in</dt><dd class="font-semibold text-brand-ink">From 3:00 PM</dd></div>
+        <div><dt class="text-on-surface-variant text-xs uppercase tracking-wider mb-1">Check-out</dt><dd class="font-semibold text-brand-ink">By 11:00 AM</dd></div>
+      </dl>
+
+      <div class="bg-surface-container-low p-4 rounded-xl text-sm text-on-surface-variant mb-6">
+        <p class="font-semibold text-brand-ink mb-1">What's next?</p>
+        <ul class="space-y-1 list-disc list-inside">
+          <li>We'll confirm your check-in details on WhatsApp 24h before arrival.</li>
+          <li>Bring a valid ID for check-in verification.</li>
+          <li>Need to change something? Use the contact details below.</li>
+        </ul>
+      </div>
+
+      <!-- Verification status banner (driven by server-verify TODO) -->
+      <div id="verify-banner" class="bg-amber-50 border border-amber-200 text-amber-900 p-4 rounded-xl text-sm mb-6">
+        <p class="font-semibold mb-1 flex items-center gap-2"><span class="material-symbols-outlined text-[18px]">hourglass_top</span>Payment received — verification pending</p>
+        <p class="text-amber-900/80 leading-relaxed">
+          Your payment has been captured by Paystack. Final verification typically completes within a minute.
+          <span class="block mt-2 text-xs italic">[Owner note: until backend webhook is wired, status stays "pending verification". See TODO in <code>assets/js/payment.js</code>.]</span>
+        </p>
+      </div>
+
+      <div class="flex flex-col sm:flex-row gap-3 sm:justify-between">
+        <a href="/browse" class="text-center px-6 py-3 text-brand-ink font-semibold rounded-full hover:bg-surface-container-low border border-zinc-200">Back to apartments</a>
+        <a href="/contact" class="text-center px-8 py-3 bg-brand-yellow text-brand-ink font-label-bold text-label-bold rounded-full hover:bg-brand-ink hover:text-white transition-colors">Contact host</a>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer class="bg-brand-ink text-white mt-auto">
+  <div class="max-w-container mx-auto py-10 px-5 lg:px-8 text-center text-zinc-400 text-sm">
+    <p>&copy; <span data-bind="year">2026</span> ITOSA APARTMENT. Rest. Relax. Recharge.</p>
+  </div>
+</footer>
+
+<script type="module">
+  import "/assets/js/site.js";
+  import { saveBooking, getBookingByRef, getApartmentBySlug } from "/assets/js/data/store.js";
+  import { formatNGN } from "/assets/js/utils/currency.js";
+  import { formatDateLong } from "/assets/js/utils/date.js";
+  import { verifyPaymentOnServer } from "/assets/js/payment.js";
+
+  const params = new URLSearchParams(window.location.search);
+  const ref = params.get("ref");
+  if (!ref) {
+    document.getElementById("missing-state").classList.remove("hidden");
+  } else {
+    finalize(ref);
+  }
+
+  async function finalize(reference) {
+    // Try existing booking first (in case of refresh)
+    let booking = getBookingByRef(reference);
+
+    if (!booking) {
+      // Build booking from sessionStorage draft
+      const draft = JSON.parse(sessionStorage.getItem("itosa.bookingDraft") || "null");
+      if (!draft) {
+        document.getElementById("missing-state").classList.remove("hidden");
+        return;
+      }
+      booking = {
+        id: "B" + Date.now(),
+        paystackRef: reference,
+        paymentStatus: "pending_verification",
+        createdAt: Date.now(),
+        apartmentSlug: draft.slug,
+        checkin: draft.checkin,
+        checkout: draft.checkout,
+        guests: draft.guests,
+        name: draft.name,
+        phone: draft.phone,
+        email: draft.email,
+        notes: draft.notes,
+        totals: draft.totals
+      };
+      saveBooking(booking);
+      sessionStorage.removeItem("itosa.bookingDraft");
+    }
+
+    const apt = getApartmentBySlug(booking.apartmentSlug);
+    render(booking, apt);
+
+    // ============================================================
+    // TODO(backend): When you have a server, uncomment to verify the payment
+    // and update paymentStatus to "paid" or "failed".
+    //
+    // const result = await verifyPaymentOnServer(reference);
+    // if (result.status === "success") {
+    //   updateBookingStatus(booking.id, "paid");
+    //   document.getElementById("c-status").textContent = "Paid";
+    //   document.getElementById("verify-banner").remove();
+    // } else if (result.status === "failed") {
+    //   updateBookingStatus(booking.id, "failed");
+    //   document.getElementById("c-status").textContent = "Payment failed";
+    //   document.getElementById("c-status").className = "font-semibold text-error";
+    // }
+    // ============================================================
+  }
+
+  function render(b, a) {
+    document.getElementById("ok-state").classList.remove("hidden");
+    document.getElementById("c-id").textContent = b.paystackRef;
+    document.getElementById("c-status").textContent = "Pending verification";
+    document.getElementById("c-image").src = (a?.gallery && a.gallery[0]) || a?.galleryFallback || "";
+    document.getElementById("c-image").alt = a?.name || "";
+    document.getElementById("c-location").textContent = a?.location || "";
+    document.getElementById("c-name").textContent = a?.name || "Apartment";
+    document.getElementById("c-stay").textContent = `${formatDateLong(b.checkin)} → ${formatDateLong(b.checkout)} · ${b.guests} guest${b.guests > 1 ? "s" : ""}`;
+    document.getElementById("c-guest").textContent = b.name + " · " + b.email;
+    document.getElementById("c-total").textContent = formatNGN(b.totals?.total || 0);
+  }
+</script>
+
+</body>
+</html>

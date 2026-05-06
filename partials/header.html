@@ -1,0 +1,33 @@
+<!-- ============================================================
+     CANONICAL HEADER — copy-paste into every public page <body>.
+     If you edit this file, you MUST update all pages. See CONTRIBUTING.md.
+     ============================================================ -->
+<header class="fixed top-0 w-full z-50 bg-white/85 backdrop-blur-md border-b border-zinc-100">
+  <div class="max-w-container mx-auto flex justify-between items-center px-5 lg:px-8 h-20">
+    <a href="/" class="flex items-center gap-2" aria-label="ITOSA Apartment home">
+      <span class="material-symbols-outlined text-brand-ink filled" style="font-variation-settings:'FILL' 1;">apartment</span>
+      <span class="text-lg lg:text-xl font-bold tracking-[0.18em] text-brand-ink font-display-xl">ITOSA APARTMENT</span>
+    </a>
+    <nav class="hidden md:flex gap-10 items-center" aria-label="Primary">
+      <a href="/browse" class="nav-link text-sm font-semibold tracking-wide text-zinc-600 hover:text-brand-ink transition-colors">Apartments</a>
+      <a href="/faq" class="nav-link text-sm font-semibold tracking-wide text-zinc-600 hover:text-brand-ink transition-colors">FAQ</a>
+      <a href="/contact" class="nav-link text-sm font-semibold tracking-wide text-zinc-600 hover:text-brand-ink transition-colors">Contact</a>
+    </nav>
+    <a href="/browse" class="hidden md:inline-flex items-center gap-2 px-6 py-3 bg-brand-yellow text-brand-ink font-label-bold text-label-bold rounded-full hover:bg-brand-ink hover:text-white transition-all shadow-sm">
+      <span class="material-symbols-outlined text-[18px]">calendar_month</span>
+      Book Your Stay
+    </a>
+    <button id="mobile-menu-btn" class="md:hidden p-2 text-brand-ink" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+      <span class="material-symbols-outlined">menu</span>
+    </button>
+  </div>
+  <div id="mobile-menu" class="hidden md:hidden border-t border-zinc-100 bg-white">
+    <nav class="px-5 py-4 flex flex-col gap-1" aria-label="Mobile">
+      <a href="/" class="px-3 py-3 rounded-lg hover:bg-surface-container-low text-brand-ink font-medium">Home</a>
+      <a href="/browse" class="px-3 py-3 rounded-lg hover:bg-surface-container-low text-brand-ink font-medium">Apartments</a>
+      <a href="/faq" class="px-3 py-3 rounded-lg hover:bg-surface-container-low text-brand-ink font-medium">FAQ</a>
+      <a href="/contact" class="px-3 py-3 rounded-lg hover:bg-surface-container-low text-brand-ink font-medium">Contact</a>
+      <a href="/browse" class="mt-2 mx-3 px-5 py-3 bg-brand-yellow text-brand-ink font-label-bold text-label-bold rounded-full text-center">Book Your Stay</a>
+    </nav>
+  </div>
+</header>

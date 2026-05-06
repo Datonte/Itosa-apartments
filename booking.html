@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book Your Stay | ITOSA Apartment</title>
+  <meta name="description" content="Secure your shortlet booking with ITOSA Apartment. Direct booking, instant confirmation, no hidden fees." />
+  <meta name="robots" content="noindex, nofollow" />
+
+  <link rel="icon" href="/assets/images/icons/favicon.svg" type="image/svg+xml" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  <script src="/assets/js/tailwind.config.js"></script>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link rel="stylesheet" href="/assets/css/site.css" />
+  <script src="https://js.paystack.co/v1/inline.js"></script>
+</head>
+<body class="bg-brand-bg text-brand-ink antialiased min-h-screen flex flex-col font-body-md">
+
+<header class="fixed top-0 w-full z-50 bg-white/85 backdrop-blur-md border-b border-zinc-100">
+  <div class="max-w-container mx-auto flex justify-between items-center px-5 lg:px-8 h-20">
+    <a href="/" class="flex items-center gap-2" aria-label="ITOSA Apartment home">
+      <span class="material-symbols-outlined text-brand-ink filled" style="font-variation-settings:'FILL' 1;">apartment</span>
+      <span class="text-lg lg:text-xl font-bold tracking-[0.18em] text-brand-ink font-display-xl">ITOSA APARTMENT</span>
+    </a>
+    <a href="/contact" class="text-sm font-semibold text-zinc-600 hover:text-brand-ink">Need help?</a>
+  </div>
+</header>
+
+<main class="flex-grow pt-28 pb-20 px-5 lg:px-8" id="booking-root">
+  <div class="max-w-3xl mx-auto">
+    <!-- Progress steps -->
+    <ol class="flex items-center justify-center gap-2 mb-10" aria-label="Booking progress">
+      <li><span class="step-pill active" id="step-1">1. Review</span></li>
+      <li class="text-zinc-300">—</li>
+      <li><span class="step-pill" id="step-2">2. Your details</span></li>
+      <li class="text-zinc-300">—</li>
+      <li><span class="step-pill" id="step-3">3. Pay</span></li>
+    </ol>
+
+    <div id="invalid-state" class="hidden text-center py-16">
+      <span class="material-symbols-outlined text-5xl text-zinc-300">event_busy</span>
+      <h1 class="font-display-xl text-headline-lg text-brand-ink mt-3 mb-2">Booking link is invalid</h1>
+      <p class="text-on-surface-variant mb-6">The booking link is missing apartment or date information.</p>
+      <a href="/browse" class="inline-flex items-center gap-2 px-6 py-3 bg-brand-yellow text-brand-ink font-label-bold text-label-bold rounded-full">Browse apartments</a>
+    </div>
+
+    <!-- STEP 1: Review -->
+    <section id="panel-1" class="hidden bg-white p-6 lg:p-8 rounded-2xl shadow-card border border-zinc-100">
+      <h1 class="font-display-xl text-headline-lg text-brand-ink mb-1">Review your stay</h1>
+      <p class="text-on-surface-variant text-sm mb-6">Confirm the apartment and dates before continuing.</p>
+
+      <div class="flex gap-4 p-4 bg-surface-container-low rounded-xl mb-6">
+        <img id="r-image" alt="" class="w-24 h-24 rounded-lg object-cover bg-surface-container" />
+        <div class="flex-1">
+          <p class="text-xs uppercase tracking-wider text-brand-yellow-deep font-bold" id="r-location">—</p>
+          <h2 class="font-display-xl text-lg text-brand-ink" id="r-name">—</h2>
+          <p class="text-xs text-on-surface-variant" id="r-type">—</p>
+        </div>
+      </div>
+
+      <dl class="grid grid-cols-2 gap-4 text-sm mb-6">
+        <div><dt class="text-on-surface-variant text-xs uppercase tracking-wider mb-1">Check-in</dt><dd class="font-semibold text-brand-ink" id="r-checkin">—</dd></div>
+        <div><dt class="text-on-surface-variant text-xs uppercase tracking-wider mb-1">Check-out</dt><dd class="font-semibold text-brand-ink" id="r-checkout">—</dd></div>
+        <div><dt class="text-on-surface-variant text-xs uppercase tracking-wider mb-1">Nights</dt><dd class="font-semibold text-brand-ink" id="r-nights">—</dd></div>
+        <div><dt class="text-on-surface-variant text-xs uppercase tracking-wider mb-1">Guests</dt><dd class="font-semibold text-brand-ink" id="r-guests">—</dd></div>
+      </dl>
+
+      <div class="border-t border-zinc-100 pt-4 space-y-2 text-sm mb-6">
+        <div class="flex justify-between"><span class="text-on-surface-variant"><span id="r-rate">—</span> × <span id="r-nights2">—</span> nights</span><span id="r-subtotal">—</span></div>
+        <div class="flex justify-between"><span class="text-on-surface-variant">Cleaning fee</span><span id="r-cleaning">—</span></div>
+        <div class="flex justify-between"><span class="text-on-surface-variant">Service fee</span><span id="r-service">—</span></div>
+        <div class="flex justify-between font-bold text-brand-ink border-t border-zinc-100 pt-2"><span>Total</span><span id="r-total">—</span></div>
+      </div>
+
+      <div class="flex flex-col sm:flex-row gap-3 sm:justify-between">
+        <a href="javascript:history.back()" class="text-center px-6 py-3 text-brand-ink font-semibold rounded-full hover:bg-surface-container-low">Back</a>
+        <button class="px-8 py-3 bg-brand-yellow text-brand-ink font-label-bold text-label-bold rounded-full hover:bg-brand-ink hover:text-white transition-colors" data-go="2">Continue to your details</button>
+      </div>
+    </section>
+
+    <!-- STEP 2: Guest details -->
+    <section id="panel-2" class="hidden bg-white p-6 lg:p-8 rounded-2xl shadow-card border border-zinc-100">
+      <h1 class="font-display-xl text-headline-lg text-brand-ink mb-1">Your details</h1>
+      <p class="text-on-surface-variant text-sm mb-6">We'll only use this to confirm your booking and send your check-in instructions.</p>
+
+      <form id="guest-form" class="space-y-4" novalidate>
+        <div>
+          <label class="block text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-1.5" for="g-name">Full name</label>
+          <input id="g-name" name="name" class="input-base" autocomplete="name" required />
+          <p class="field-error" data-error-for="name"></p>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-1.5" for="g-phone">Phone (Nigeria)</label>
+            <input id="g-phone" name="phone" type="tel" class="input-base" placeholder="08012345678" autocomplete="tel" required />
+            <p class="field-error" data-error-for="phone"></p>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-1.5" for="g-email">Email</label>
+            <input id="g-email" name="email" type="email" class="input-base" placeholder="you@example.com" autocomplete="email" required />
+            <p class="field-error" data-error-for="email"></p>
+          </div>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-1.5" for="g-guests">Number of guests</label>
+          <select id="g-guests" name="guests" class="input-base" required></select>
+          <p class="field-error" data-error-for="guests"></p>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-1.5" for="g-notes">Special requests <span class="text-on-surface-variant normal-case font-normal">(optional)</span></label>
+          <textarea id="g-notes" name="notes" rows="3" class="input-base" style="height:auto; padding:0.75rem 1rem;"></textarea>
+        </div>
+
+        <label class="flex items-start gap-3 mt-2 p-4 bg-surface-container-low rounded-xl cursor-pointer">
+          <input id="g-agree" type="checkbox" class="mt-1 h-5 w-5 accent-brand-yellow" required />
+          <span class="text-sm text-on-surface-variant leading-relaxed">
+            I agree to the <a class="text-brand-ink underline" href="/terms" target="_blank">Terms &amp; Conditions</a> and <a class="text-brand-ink underline" href="/refund" target="_blank">Refund Policy</a>.
+          </span>
+        </label>
+        <p class="field-error" data-error-for="agree"></p>
+
+        <div class="flex flex-col sm:flex-row gap-3 sm:justify-between mt-6">
+          <button type="button" class="text-center px-6 py-3 text-brand-ink font-semibold rounded-full hover:bg-surface-container-low" data-go="1">Back</button>
+          <button type="submit" class="px-8 py-3 bg-brand-yellow text-brand-ink font-label-bold text-label-bold rounded-full hover:bg-brand-ink hover:text-white transition-colors">Continue to payment</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- STEP 3: Pay -->
+    <section id="panel-3" class="hidden bg-white p-6 lg:p-8 rounded-2xl shadow-card border border-zinc-100">
+      <h1 class="font-display-xl text-headline-lg text-brand-ink mb-1">Pay securely</h1>
+      <p class="text-on-surface-variant text-sm mb-6">Powered by Paystack — Nigeria's most trusted payment gateway. Your card details never touch our servers.</p>
+
+      <div class="bg-surface-container-low p-5 rounded-xl mb-6">
+        <h2 class="font-display-xl text-lg text-brand-ink mb-3">Booking summary</h2>
+        <dl class="space-y-2 text-sm">
+          <div class="flex justify-between"><dt class="text-on-surface-variant">Apartment</dt><dd class="font-semibold text-right" id="p-apartment">—</dd></div>
+          <div class="flex justify-between"><dt class="text-on-surface-variant">Stay</dt><dd class="font-semibold text-right" id="p-stay">—</dd></div>
+          <div class="flex justify-between"><dt class="text-on-surface-variant">Guests</dt><dd class="font-semibold" id="p-guests">—</dd></div>
+          <div class="flex justify-between"><dt class="text-on-surface-variant">Guest</dt><dd class="font-semibold text-right" id="p-guest">—</dd></div>
+        </dl>
+        <div class="border-t border-zinc-200 mt-4 pt-4 space-y-1 text-sm">
+          <div class="flex justify-between"><span class="text-on-surface-variant"><span id="p-rate">—</span> × <span id="p-nights">—</span> nights</span><span id="p-subtotal">—</span></div>
+          <div class="flex justify-between"><span class="text-on-surface-variant">Cleaning fee</span><span id="p-cleaning">—</span></div>
+          <div class="flex justify-between"><span class="text-on-surface-variant">Service fee</span><span id="p-service">—</span></div>
+          <div class="flex justify-between font-bold text-lg text-brand-ink border-t border-zinc-200 pt-2 mt-2"><span>Total to pay</span><span id="p-total">—</span></div>
+        </div>
+      </div>
+
+      <div class="trust-strip mb-6 rounded-xl border border-zinc-100">
+        <div class="trust-item"><span class="material-symbols-outlined">lock</span>SSL encrypted</div>
+        <div class="trust-item"><span class="material-symbols-outlined">verified_user</span>Paystack verified</div>
+        <div class="trust-item"><span class="material-symbols-outlined">payments</span>No hidden fees</div>
+        <div class="trust-item"><span class="material-symbols-outlined">undo</span>Free 48h cancel</div>
+      </div>
+
+      <div class="flex flex-col sm:flex-row gap-3 sm:justify-between">
+        <button type="button" class="text-center px-6 py-3 text-brand-ink font-semibold rounded-full hover:bg-surface-container-low" data-go="2">Back</button>
+        <button id="pay-btn" type="button" class="px-8 py-3 bg-brand-yellow text-brand-ink font-label-bold text-label-bold rounded-full hover:bg-brand-ink hover:text-white transition-colors">
+          <span class="inline-flex items-center gap-2">
+            <span class="material-symbols-outlined text-[18px]">lock</span>
+            Pay <span id="p-total-btn">—</span>
+          </span>
+        </button>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer class="bg-brand-ink text-white mt-auto">
+  <div class="max-w-container mx-auto py-10 px-5 lg:px-8 text-center text-zinc-400 text-sm">
+    <p>&copy; <span data-bind="year">2026</span> ITOSA APARTMENT. Secure booking via Paystack.</p>
+  </div>
+</footer>
+
+<script type="module">
+  import "/assets/js/site.js";
+  import { getApartmentBySlug } from "/assets/js/data/store.js";
+  import { formatNGN } from "/assets/js/utils/currency.js";
+  import { calcTotal } from "/assets/js/utils/price.js";
+  import { nightsBetween, formatDateLong } from "/assets/js/utils/date.js";
+  import { validateName, validateEmail, validatePhoneNG, validateGuests, validateDates } from "/assets/js/utils/validation.js";
+  import { payWithPaystack } from "/assets/js/payment.js";
+
+  const params = new URLSearchParams(window.location.search);
+  const slug = params.get("slug");
+  const checkin = params.get("checkin");
+  const checkout = params.get("checkout");
+  const guests = Number(params.get("guests") || 1);
+
+  const apt = slug ? getApartmentBySlug(slug) : null;
+  const dateValid = validateDates(checkin, checkout).ok;
+
+  if (!apt || !dateValid) {
+    document.getElementById("invalid-state").classList.remove("hidden");
+  } else {
+    init(apt);
+  }
+
+  function init(a) {
+    const nights = nightsBetween(checkin, checkout);
+    const totals = calcTotal({ rate: a.pricePerNight, nights });
+
+    // Populate review step
+    document.getElementById("r-image").src = (a.gallery && a.gallery[0]) || a.galleryFallback || "";
+    document.getElementById("r-image").alt = a.name;
+    document.getElementById("r-location").textContent = a.location;
+    document.getElementById("r-name").textContent = a.name;
+    document.getElementById("r-type").textContent = a.type || "";
+    document.getElementById("r-checkin").textContent = formatDateLong(checkin);
+    document.getElementById("r-checkout").textContent = formatDateLong(checkout);
+    document.getElementById("r-nights").textContent = nights;
+    document.getElementById("r-guests").textContent = guests;
+    document.getElementById("r-rate").textContent = formatNGN(a.pricePerNight);
+    document.getElementById("r-nights2").textContent = nights;
+    document.getElementById("r-subtotal").textContent = formatNGN(totals.subtotal);
+    document.getElementById("r-cleaning").textContent = formatNGN(totals.cleaning);
+    document.getElementById("r-service").textContent = formatNGN(totals.service);
+    document.getElementById("r-total").textContent = formatNGN(totals.total);
+
+    // Populate guests dropdown in step 2
+    const gSel = document.getElementById("g-guests");
+    gSel.innerHTML = Array.from({ length: a.maxGuests }, (_, i) =>
+      `<option value="${i + 1}" ${i + 1 === guests ? "selected" : ""}>${i + 1} guest${i ? "s" : ""}</option>`
+    ).join("");
+
+    // Restore draft from sessionStorage if present
+    const draft = JSON.parse(sessionStorage.getItem("itosa.bookingDraft") || "null") || {};
+    if (draft.slug === slug && draft.checkin === checkin && draft.checkout === checkout) {
+      ["name", "phone", "email", "notes"].forEach((k) => {
+        const el = document.getElementById("g-" + k);
+        if (el && draft[k]) el.value = draft[k];
+      });
+      if (draft.guests) gSel.value = String(draft.guests);
+    }
+
+    // Step navigation
+    document.querySelectorAll("[data-go]").forEach((btn) => {
+      btn.addEventListener("click", () => goTo(Number(btn.dataset.go)));
+    });
+    goTo(1);
+
+    // Form validation + draft save
+    document.getElementById("guest-form").addEventListener("submit", (e) => {
+      e.preventDefault();
+      clearErrors();
+      const name = document.getElementById("g-name").value;
+      const phone = document.getElementById("g-phone").value;
+      const email = document.getElementById("g-email").value;
+      const numGuests = Number(gSel.value);
+      const notes = document.getElementById("g-notes").value;
+      const agree = document.getElementById("g-agree").checked;
+
+      const checks = [
+        ["name", validateName(name)],
+        ["phone", validatePhoneNG(phone)],
+        ["email", validateEmail(email)],
+        ["guests", validateGuests(numGuests, a.maxGuests)]
+      ];
+      let ok = true;
+      checks.forEach(([k, r]) => { if (!r.ok) { showError(k, r.msg); ok = false; } });
+      if (!agree) { showError("agree", "You must agree to the terms to continue."); ok = false; }
+      if (!ok) return;
+
+      const draft = { slug, checkin, checkout, guests: numGuests, name, phone, email, notes, totals };
+      sessionStorage.setItem("itosa.bookingDraft", JSON.stringify(draft));
+      populateStep3(a, draft, totals);
+      goTo(3);
+    });
+
+    document.getElementById("pay-btn").addEventListener("click", () => payNow(a, totals));
+  }
+
+  function populateStep3(a, draft, totals) {
+    document.getElementById("p-apartment").textContent = a.name;
+    document.getElementById("p-stay").textContent = `${formatDateLong(draft.checkin)} → ${formatDateLong(draft.checkout)}`;
+    document.getElementById("p-guests").textContent = draft.guests;
+    document.getElementById("p-guest").textContent = draft.name + " · " + draft.email;
+    document.getElementById("p-rate").textContent = formatNGN(a.pricePerNight);
+    document.getElementById("p-nights").textContent = totals.nights;
+    document.getElementById("p-subtotal").textContent = formatNGN(totals.subtotal);
+    document.getElementById("p-cleaning").textContent = formatNGN(totals.cleaning);
+    document.getElementById("p-service").textContent = formatNGN(totals.service);
+    document.getElementById("p-total").textContent = formatNGN(totals.total);
+    document.getElementById("p-total-btn").textContent = formatNGN(totals.total);
+  }
+
+  function payNow(a, totals) {
+    const draft = JSON.parse(sessionStorage.getItem("itosa.bookingDraft") || "null");
+    if (!draft) { alert("Booking session lost — please go back and re-enter your details."); return; }
+
+    payWithPaystack({
+      email: draft.email,
+      amountNaira: totals.total,
+      metadata: {
+        apartment: a.name,
+        slug: a.slug,
+        checkin: draft.checkin,
+        checkout: draft.checkout,
+        guests: draft.guests,
+        guest_name: draft.name,
+        guest_phone: draft.phone
+      },
+      onSuccess: (reference) => {
+        // Persist draft so confirmation.html can rebuild the booking
+        sessionStorage.setItem("itosa.lastPayRef", reference);
+        window.location.href = "/confirmation?ref=" + encodeURIComponent(reference);
+      },
+      onClose: () => {
+        // user dismissed — keep them on the pay step
+      }
+    });
+  }
+
+  function goTo(step) {
+    [1, 2, 3].forEach((s) => {
+      document.getElementById("panel-" + s).classList.toggle("hidden", s !== step);
+      const pill = document.getElementById("step-" + s);
+      pill.classList.toggle("active", s === step);
+      pill.classList.toggle("done", s < step);
+    });
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function showError(name, msg) {
+    const el = document.querySelector(`[data-error-for="${name}"]`);
+    if (el) el.textContent = msg;
+    const input = document.querySelector(`[name="${name}"]`) || document.getElementById("g-" + name);
+    if (input) input.setAttribute("aria-invalid", "true");
+  }
+  function clearErrors() {
+    document.querySelectorAll(".field-error").forEach((e) => (e.textContent = ""));
+    document.querySelectorAll("[aria-invalid]").forEach((e) => e.removeAttribute("aria-invalid"));
+  }
+</script>
+
+</body>
+</html>

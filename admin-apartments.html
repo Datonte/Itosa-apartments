@@ -1,274 +1,269 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="light" lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>ITOSA Admin - Apartments</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-<script>
-tailwind.config={darkMode:"class",theme:{extend:{colors:{"surface-tint":"#5f5e5e","surface-container-low":"#f7f3f2","error":"#ba1a1a","outline":"#747878","secondary":"#795900","on-surface":"#1c1b1b","inverse-surface":"#313030","tertiary-fixed":"#c9e6ff","on-surface-variant":"#444748","secondary-fixed-dim":"#f9bd22","on-primary":"#ffffff","on-secondary-container":"#6f5100","surface-container-high":"#ebe7e7","primary-fixed":"#e4e2e1","on-primary-fixed":"#1b1c1c","on-error-container":"#93000a","tertiary":"#001a2a","on-primary-fixed-variant":"#474747","background":"#fdf8f8","surface-container":"#f1edec","primary":"#181919","outline-variant":"#c4c7c7","primary-container":"#2d2d2d","surface-container-lowest":"#ffffff","surface-container-highest":"#e5e2e1","inverse-primary":"#c8c6c6","secondary-container":"#ffc329","surface-variant":"#e5e2e1","on-error":"#ffffff","on-secondary-fixed-variant":"#5c4300","surface-dim":"#ddd9d8","on-secondary":"#ffffff","secondary-fixed":"#ffdf9f","on-background":"#1c1b1b","surface":"#fdf8f8","tertiary-fixed-dim":"#89ceff","on-secondary-fixed":"#261a00","surface-bright":"#fdf8f8","on-tertiary-container":"#009ddf"},fontFamily:{"caption":["Be Vietnam Pro"],"body-md":["Be Vietnam Pro"],"headline-md":["Manrope"],"headline-lg":["Manrope"],"label-bold":["Be Vietnam Pro"],"display-xl":["Manrope"]},fontSize:{"caption":["12px",{"lineHeight":"1.4","fontWeight":"400"}],"body-md":["16px",{"lineHeight":"1.6","fontWeight":"400"}],"headline-md":["24px",{"lineHeight":"1.3","fontWeight":"600"}],"headline-lg":["32px",{"lineHeight":"1.2","fontWeight":"700"}],"label-bold":["14px",{"lineHeight":"1.4","letterSpacing":"0.05em","fontWeight":"600"}],"display-xl":["48px",{"lineHeight":"1.1","letterSpacing":"-0.02em","fontWeight":"800"}]}}}}
-</script>
-<style>
-.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;}
-.nav-link{transition:all .2s;}
-.apt-row{transition:background .15s;}
-.modal-overlay{transition:opacity .2s;}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Apartments | ITOSA Admin</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" href="/assets/images/icons/favicon.svg" type="image/svg+xml" />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  <script src="/assets/js/tailwind.config.js"></script>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link rel="stylesheet" href="/assets/css/site.css" />
 </head>
-<body class="bg-background text-on-background font-body-md min-h-screen">
+<body class="bg-surface-container-low text-brand-ink antialiased min-h-screen font-body-md">
 
-<!-- Sidebar -->
-<aside class="h-screen w-64 fixed left-0 top-0 border-r border-surface-variant bg-surface-container-lowest flex flex-col z-50 hidden md:flex">
-  <div class="p-6 border-b border-surface-variant flex items-center gap-3">
-    <span class="material-symbols-outlined text-primary text-[28px]" style="font-variation-settings:'FILL' 1;">apartment</span>
-    <div><h2 class="text-lg font-bold text-primary leading-tight">ITOSA Admin</h2><p class="text-caption font-caption text-on-surface-variant">Property Management</p></div>
-  </div>
-  <nav class="flex-1 py-6 flex flex-col gap-1 overflow-y-auto px-3">
-    <a href="/admin-dashboard" class="nav-link flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container hover:text-primary rounded-xl"><span class="material-symbols-outlined">dashboard</span><span>Overview</span></a>
-    <a href="/admin-apartments" class="nav-link flex items-center gap-3 px-4 py-3 text-primary font-semibold bg-surface-container rounded-xl"><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">apartment</span><span>Apartments</span></a>
-    <a href="/admin-bookings" class="nav-link flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container hover:text-primary rounded-xl"><span class="material-symbols-outlined">event_available</span><span>Bookings</span></a>
-    <a href="/admin-availability" class="nav-link flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container hover:text-primary rounded-xl"><span class="material-symbols-outlined">calendar_month</span><span>Availability</span></a>
+<div class="demo-banner">
+  Demo mode — all changes save to your browser only. <a href="/" class="underline font-semibold">Return to site</a> ·
+  <button id="reset-overrides-btn" class="underline font-semibold ml-1">Reset to defaults</button>
+</div>
+
+<aside class="hidden md:flex flex-col fixed left-0 top-[40px] bottom-0 w-64 bg-brand-ink text-white p-6 z-30">
+  <a href="/" class="flex items-center gap-2 mb-10"><span class="material-symbols-outlined text-brand-yellow filled" style="font-variation-settings:'FILL' 1;">apartment</span><span class="text-base font-bold tracking-[0.18em] font-display-xl">ITOSA · ADMIN</span></a>
+  <nav class="flex flex-col gap-1 text-sm" aria-label="Admin">
+    <a data-admin-link href="/admin-dashboard" class="px-3 py-2.5 rounded-lg flex items-center gap-2.5 text-zinc-400 hover:text-white hover:bg-white/5"><span class="material-symbols-outlined text-[20px]">dashboard</span>Dashboard</a>
+    <a data-admin-link href="/admin-apartments" class="px-3 py-2.5 rounded-lg flex items-center gap-2.5 text-zinc-400 hover:text-white hover:bg-white/5"><span class="material-symbols-outlined text-[20px]">apartment</span>Apartments</a>
+    <a data-admin-link href="/admin-bookings" class="px-3 py-2.5 rounded-lg flex items-center gap-2.5 text-zinc-400 hover:text-white hover:bg-white/5"><span class="material-symbols-outlined text-[20px]">receipt_long</span>Bookings</a>
+    <a data-admin-link href="/admin-availability" class="px-3 py-2.5 rounded-lg flex items-center gap-2.5 text-zinc-400 hover:text-white hover:bg-white/5"><span class="material-symbols-outlined text-[20px]">event_available</span>Availability</a>
   </nav>
-  <div class="p-5 border-t border-surface-variant flex flex-col gap-4">
-    <button onclick="openModal()" class="w-full bg-primary text-on-primary py-3 px-4 rounded-xl font-label-bold text-label-bold hover:bg-primary-container transition-all shadow-md flex items-center justify-center gap-2">
-      <span class="material-symbols-outlined text-[18px]">add</span> Add New Property
-    </button>
-    <div class="flex items-center gap-3 px-2 pt-2 border-t border-surface-variant">
-      <div class="w-9 h-9 rounded-full bg-secondary-container flex items-center justify-center font-label-bold text-sm text-primary">AD</div>
-      <div><p class="font-label-bold text-sm text-primary">Admin User</p><p class="text-caption text-on-surface-variant">admin@itosa.ng</p></div>
-    </div>
-  </div>
 </aside>
 
-<!-- Top Bar -->
-<header class="fixed top-0 right-0 left-0 md:left-64 h-16 border-b border-surface-variant bg-surface-container-lowest/90 backdrop-blur-xl z-40 flex justify-between items-center px-8">
-  <h1 class="font-headline-md text-primary tracking-tight font-bold">ITOSA APARTMENT</h1>
-  <div class="flex items-center gap-5">
-    <button class="text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined">notifications</span></button>
-    <button class="text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined">apps</span></button>
-    <div class="w-9 h-9 rounded-full bg-secondary-container flex items-center justify-center font-label-bold text-sm text-primary">AD</div>
-  </div>
+<header class="md:hidden fixed top-[40px] left-0 right-0 bg-brand-ink text-white z-30 px-5 h-14 flex items-center justify-between">
+  <a href="/admin-dashboard" class="flex items-center gap-2"><span class="material-symbols-outlined text-brand-yellow filled" style="font-variation-settings:'FILL' 1;">apartment</span><span class="text-sm font-bold tracking-[0.18em]">ITOSA · ADMIN</span></a>
+  <button id="admin-mobile-menu-btn" class="p-2" aria-label="Open admin menu"><span class="material-symbols-outlined">menu</span></button>
 </header>
+<nav id="admin-mobile-menu" class="md:hidden fixed top-[94px] left-0 right-0 bg-brand-ink text-white z-30 px-3 py-3 hidden border-t border-white/10">
+  <a data-admin-link href="/admin-dashboard" class="px-3 py-2.5 rounded-lg flex items-center gap-2.5 text-zinc-300 hover:bg-white/5">Dashboard</a>
+  <a data-admin-link href="/admin-apartments" class="px-3 py-2.5 rounded-lg flex items-center gap-2.5 text-zinc-300 hover:bg-white/5">Apartments</a>
+  <a data-admin-link href="/admin-bookings" class="px-3 py-2.5 rounded-lg flex items-center gap-2.5 text-zinc-300 hover:bg-white/5">Bookings</a>
+  <a data-admin-link href="/admin-availability" class="px-3 py-2.5 rounded-lg flex items-center gap-2.5 text-zinc-300 hover:bg-white/5">Availability</a>
+</nav>
 
-<!-- Main -->
-<main class="md:ml-64 pt-24 px-4 md:px-8 pb-12">
-  <div class="max-w-[1280px] mx-auto">
-    <!-- Page Header -->
-    <div class="flex justify-between items-end mb-8 flex-wrap gap-4">
+<main class="md:ml-64 pt-[40px]">
+  <div class="md:hidden h-14"></div>
+  <div class="px-5 lg:px-10 py-8">
+    <header class="flex flex-wrap items-end justify-between gap-3 mb-8">
       <div>
-        <h2 class="font-headline-lg text-headline-lg text-on-surface mb-1">Apartments</h2>
-        <p class="font-body-md text-on-surface-variant">Manage your property portfolio, pricing, and availability.</p>
+        <h1 class="font-display-xl text-headline-lg text-brand-ink">Apartments</h1>
+        <p class="text-on-surface-variant text-sm">Manage your shortlet inventory</p>
       </div>
-      <button onclick="openModal()" class="bg-primary text-on-primary px-6 py-3 rounded-xl font-label-bold text-label-bold flex items-center gap-2 hover:bg-primary-container transition-colors shadow-sm">
-        <span class="material-symbols-outlined text-[18px]">add</span> Add New Apartment
-      </button>
+      <div class="flex flex-wrap gap-2">
+        <button id="export-changes-btn" class="px-4 py-2.5 bg-white border border-zinc-200 text-brand-ink text-sm font-semibold rounded-full hover:bg-surface-container-low">
+          <span class="inline-flex items-center gap-1.5"><span class="material-symbols-outlined text-[18px]">file_copy</span>Export changes</span>
+        </button>
+        <button id="add-new-btn" class="px-4 py-2.5 bg-brand-yellow text-brand-ink text-sm font-semibold rounded-full hover:bg-brand-ink hover:text-white">
+          <span class="inline-flex items-center gap-1.5"><span class="material-symbols-outlined text-[18px]">add</span>New apartment</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Stats -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      <div class="bg-white p-5 rounded-2xl shadow-card border border-zinc-100"><p class="text-xs uppercase tracking-wider text-on-surface-variant font-bold mb-2">Total</p><p class="text-2xl font-bold" id="s-total">—</p></div>
+      <div class="bg-white p-5 rounded-2xl shadow-card border border-zinc-100"><p class="text-xs uppercase tracking-wider text-on-surface-variant font-bold mb-2">Available</p><p class="text-2xl font-bold text-emerald-600" id="s-avail">—</p></div>
+      <div class="bg-white p-5 rounded-2xl shadow-card border border-zinc-100"><p class="text-xs uppercase tracking-wider text-on-surface-variant font-bold mb-2">Booked</p><p class="text-2xl font-bold text-zinc-600" id="s-booked">—</p></div>
+      <div class="bg-white p-5 rounded-2xl shadow-card border border-zinc-100"><p class="text-xs uppercase tracking-wider text-on-surface-variant font-bold mb-2">Renovation</p><p class="text-2xl font-bold text-amber-600" id="s-reno">—</p></div>
     </div>
 
-    <!-- Banner Image -->
-    <div class="w-full h-48 rounded-2xl overflow-hidden mb-8 relative border border-surface-variant shadow-sm">
-      <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1200&q=80" alt="Luxury apartment portfolio" class="w-full h-full object-cover"/>
-      <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-      <div class="absolute bottom-5 left-6">
-        <p class="text-white font-label-bold text-caption uppercase tracking-wider opacity-80 mb-1">Featured Property</p>
-        <h3 class="text-white font-headline-md text-headline-md">Skyline Executive Suite</h3>
-      </div>
-    </div>
-
-    <!-- Stats row -->
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-      <div class="bg-surface-container-lowest rounded-xl p-4 border border-surface-variant text-center">
-        <p class="text-[28px] font-extrabold text-primary font-display-xl">15</p>
-        <p class="text-caption text-on-surface-variant">Total Properties</p>
-      </div>
-      <div class="bg-surface-container-lowest rounded-xl p-4 border border-surface-variant text-center">
-        <p class="text-[28px] font-extrabold text-emerald-600 font-display-xl">12</p>
-        <p class="text-caption text-on-surface-variant">Available</p>
-      </div>
-      <div class="bg-surface-container-lowest rounded-xl p-4 border border-surface-variant text-center">
-        <p class="text-[28px] font-extrabold text-amber-600 font-display-xl">2</p>
-        <p class="text-caption text-on-surface-variant">Occupied</p>
-      </div>
-      <div class="bg-surface-container-lowest rounded-xl p-4 border border-surface-variant text-center">
-        <p class="text-[28px] font-extrabold text-on-surface-variant font-display-xl">1</p>
-        <p class="text-caption text-on-surface-variant">Under Renovation</p>
-      </div>
-    </div>
-
-    <!-- Search & filter bar -->
-    <div class="flex gap-3 mb-5 flex-wrap">
-      <div class="relative flex-1 min-w-[200px]">
-        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span>
-        <input type="text" placeholder="Search apartments..." class="w-full pl-10 pr-4 py-2.5 bg-surface-container-lowest border border-surface-variant rounded-xl font-body-md text-sm text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"/>
-      </div>
-      <select class="px-4 py-2.5 bg-surface-container-lowest border border-surface-variant rounded-xl font-body-md text-sm text-on-surface outline-none focus:border-primary">
-        <option>All Status</option><option>Available</option><option>Booked</option><option>Renovation</option>
-      </select>
-      <select class="px-4 py-2.5 bg-surface-container-lowest border border-surface-variant rounded-xl font-body-md text-sm text-on-surface outline-none focus:border-primary">
-        <option>All Locations</option><option>Lekki</option><option>Victoria Island</option><option>Ikoyi</option>
-      </select>
-    </div>
-
-    <!-- Properties Table -->
-    <div class="bg-surface-container-lowest rounded-2xl border border-surface-variant shadow-sm overflow-hidden">
-      <div class="overflow-x-auto">
-        <table class="w-full text-left">
-          <thead>
-            <tr class="bg-surface-container-low border-b border-surface-variant">
-              <th class="py-4 px-6 font-label-bold text-label-bold text-on-surface-variant">Apartment Details</th>
-              <th class="py-4 px-6 font-label-bold text-label-bold text-on-surface-variant">Location</th>
-              <th class="py-4 px-6 font-label-bold text-label-bold text-on-surface-variant">Price / Night</th>
-              <th class="py-4 px-6 font-label-bold text-label-bold text-on-surface-variant">Status</th>
-              <th class="py-4 px-6 font-label-bold text-label-bold text-on-surface-variant text-right">Actions</th>
-            </tr>
-          </thead>
-          <tbody class="font-body-md text-on-surface divide-y divide-surface-variant">
-            <!-- Row 1 -->
-            <tr class="apt-row hover:bg-surface-container-low group">
-              <td class="py-4 px-6">
-                <div class="flex items-center gap-3">
-                  <div class="w-12 h-12 rounded-lg overflow-hidden flex-shrink-0 bg-surface-container"><img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=100&q=80" alt="" class="w-full h-full object-cover"/></div>
-                  <div><p class="font-semibold text-on-surface">Skyline Executive Suite</p><p class="text-caption text-on-surface-variant">2 Bed · 2 Bath · 1,200 sqft</p></div>
-                </div>
-              </td>
-              <td class="py-4 px-6 text-on-surface-variant">Downtown District</td>
-              <td class="py-4 px-6 font-semibold">₦120,000</td>
-              <td class="py-4 px-6">
-                <span class="inline-flex items-center px-3 py-1 rounded-full bg-amber-50 text-amber-700 font-label-bold text-caption border border-amber-100">
-                  <span class="w-2 h-2 rounded-full bg-amber-400 mr-2"></span>Booked
-                </span>
-              </td>
-              <td class="py-4 px-6 text-right">
-                <div class="flex justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <button class="p-2 text-on-surface-variant hover:text-primary rounded-lg hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-[20px]">visibility</span></button>
-                  <button class="p-2 text-on-surface-variant hover:text-primary rounded-lg hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-[20px]">edit</span></button>
-                  <button class="p-2 text-error hover:bg-error-container rounded-lg transition-colors"><span class="material-symbols-outlined text-[20px]">delete</span></button>
-                </div>
-              </td>
-            </tr>
-            <!-- Row 2 -->
-            <tr class="apt-row hover:bg-surface-container-low group">
-              <td class="py-4 px-6">
-                <div class="flex items-center gap-3">
-                  <div class="w-12 h-12 rounded-lg overflow-hidden flex-shrink-0 bg-surface-container"><img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=100&q=80" alt="" class="w-full h-full object-cover"/></div>
-                  <div><p class="font-semibold text-on-surface">Coastal Retreat Loft</p><p class="text-caption text-on-surface-variant">1 Bed · 1 Bath · 850 sqft</p></div>
-                </div>
-              </td>
-              <td class="py-4 px-6 text-on-surface-variant">Victoria Island</td>
-              <td class="py-4 px-6 font-semibold">₦65,000</td>
-              <td class="py-4 px-6">
-                <span class="inline-flex items-center px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 font-label-bold text-caption border border-emerald-100">
-                  <span class="w-2 h-2 rounded-full bg-emerald-500 mr-2"></span>Available
-                </span>
-              </td>
-              <td class="py-4 px-6 text-right">
-                <div class="flex justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <button class="p-2 text-on-surface-variant hover:text-primary rounded-lg hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-[20px]">visibility</span></button>
-                  <button class="p-2 text-on-surface-variant hover:text-primary rounded-lg hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-[20px]">edit</span></button>
-                  <button class="p-2 text-error hover:bg-error-container rounded-lg transition-colors"><span class="material-symbols-outlined text-[20px]">delete</span></button>
-                </div>
-              </td>
-            </tr>
-            <!-- Row 3 -->
-            <tr class="apt-row hover:bg-surface-container-low group">
-              <td class="py-4 px-6">
-                <div class="flex items-center gap-3">
-                  <div class="w-12 h-12 rounded-lg overflow-hidden flex-shrink-0 bg-surface-container"><img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=100&q=80" alt="" class="w-full h-full object-cover"/></div>
-                  <div><p class="font-semibold text-on-surface">Urban Oasis Penthouse</p><p class="text-caption text-on-surface-variant">3 Bed · 3.5 Bath · 2,500 sqft</p></div>
-                </div>
-              </td>
-              <td class="py-4 px-6 text-on-surface-variant">Lekki Phase 1</td>
-              <td class="py-4 px-6 font-semibold">₦250,000</td>
-              <td class="py-4 px-6">
-                <span class="inline-flex items-center px-3 py-1 rounded-full bg-surface-container-high text-on-surface-variant font-label-bold text-caption border border-outline-variant">
-                  <span class="w-2 h-2 rounded-full bg-outline mr-2"></span>Under Renovation
-                </span>
-              </td>
-              <td class="py-4 px-6 text-right">
-                <div class="flex justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <button class="p-2 text-on-surface-variant hover:text-primary rounded-lg hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-[20px]">visibility</span></button>
-                  <button class="p-2 text-on-surface-variant hover:text-primary rounded-lg hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-[20px]">edit</span></button>
-                  <button class="p-2 text-error hover:bg-error-container rounded-lg transition-colors"><span class="material-symbols-outlined text-[20px]">delete</span></button>
-                </div>
-              </td>
-            </tr>
-            <!-- Row 4 -->
-            <tr class="apt-row hover:bg-surface-container-low group">
-              <td class="py-4 px-6">
-                <div class="flex items-center gap-3">
-                  <div class="w-12 h-12 rounded-lg overflow-hidden flex-shrink-0 bg-surface-container"><img src="https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?w=100&q=80" alt="" class="w-full h-full object-cover"/></div>
-                  <div><p class="font-semibold text-on-surface">The Sanctuary</p><p class="text-caption text-on-surface-variant">1 Bed · 1 Bath · 700 sqft</p></div>
-                </div>
-              </td>
-              <td class="py-4 px-6 text-on-surface-variant">Ikoyi</td>
-              <td class="py-4 px-6 font-semibold">₦85,000</td>
-              <td class="py-4 px-6">
-                <span class="inline-flex items-center px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 font-label-bold text-caption border border-emerald-100">
-                  <span class="w-2 h-2 rounded-full bg-emerald-500 mr-2"></span>Available
-                </span>
-              </td>
-              <td class="py-4 px-6 text-right">
-                <div class="flex justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <button class="p-2 text-on-surface-variant hover:text-primary rounded-lg hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-[20px]">visibility</span></button>
-                  <button class="p-2 text-on-surface-variant hover:text-primary rounded-lg hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-[20px]">edit</span></button>
-                  <button class="p-2 text-error hover:bg-error-container rounded-lg transition-colors"><span class="material-symbols-outlined text-[20px]">delete</span></button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <!-- Pagination -->
-      <div class="p-5 border-t border-surface-variant flex justify-between items-center">
-        <span class="text-caption text-on-surface-variant">Showing 1 to 4 of 15 properties</span>
-        <div class="flex gap-2">
-          <button disabled class="px-3 py-1.5 border border-surface-variant rounded-lg text-caption text-on-surface-variant disabled:opacity-40">← Prev</button>
-          <button class="px-3 py-1.5 bg-primary text-on-primary rounded-lg text-caption font-bold">1</button>
-          <button class="px-3 py-1.5 border border-surface-variant rounded-lg text-caption text-on-surface hover:bg-surface-container">2</button>
-          <button class="px-3 py-1.5 border border-surface-variant rounded-lg text-caption text-on-surface hover:bg-surface-container">3</button>
-          <button class="px-3 py-1.5 border border-surface-variant rounded-lg text-caption text-on-surface hover:bg-surface-container">Next →</button>
-        </div>
-      </div>
-    </div>
+    <!-- Apartment list -->
+    <div id="apt-list" class="space-y-4"></div>
   </div>
 </main>
 
-<!-- Add Property Modal -->
-<div id="modal" class="fixed inset-0 z-[100] hidden">
-  <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" onclick="closeModal()"></div>
-  <div class="absolute inset-0 flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg p-8 relative">
-      <button onclick="closeModal()" class="absolute top-4 right-4 text-on-surface-variant hover:text-primary"><span class="material-symbols-outlined">close</span></button>
-      <h3 class="font-headline-md text-headline-md text-primary mb-6">Add New Apartment</h3>
-      <div class="space-y-4">
-        <div><label class="block font-label-bold text-caption uppercase text-on-surface-variant mb-1">Apartment Name</label><input type="text" placeholder="e.g. The Obsidian Suite" class="w-full px-4 py-3 border border-surface-variant rounded-xl font-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none"/></div>
-        <div class="grid grid-cols-2 gap-4">
-          <div><label class="block font-label-bold text-caption uppercase text-on-surface-variant mb-1">Location</label>
-            <select class="w-full px-4 py-3 border border-surface-variant rounded-xl font-body-md text-on-surface outline-none focus:border-primary appearance-none">
-              <option>Lekki Phase 1</option><option>Victoria Island</option><option>Ikoyi</option>
-            </select>
-          </div>
-          <div><label class="block font-label-bold text-caption uppercase text-on-surface-variant mb-1">Price / Night</label><input type="text" placeholder="₦0" class="w-full px-4 py-3 border border-surface-variant rounded-xl font-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none"/></div>
-        </div>
-        <div class="grid grid-cols-3 gap-4">
-          <div><label class="block font-label-bold text-caption uppercase text-on-surface-variant mb-1">Beds</label><input type="number" value="1" min="0" class="w-full px-4 py-3 border border-surface-variant rounded-xl font-body-md text-on-surface focus:border-primary outline-none"/></div>
-          <div><label class="block font-label-bold text-caption uppercase text-on-surface-variant mb-1">Baths</label><input type="number" value="1" min="0" class="w-full px-4 py-3 border border-surface-variant rounded-xl font-body-md text-on-surface focus:border-primary outline-none"/></div>
-          <div><label class="block font-label-bold text-caption uppercase text-on-surface-variant mb-1">Sqft</label><input type="text" placeholder="0" class="w-full px-4 py-3 border border-surface-variant rounded-xl font-body-md text-on-surface focus:border-primary outline-none"/></div>
-        </div>
-        <div><label class="block font-label-bold text-caption uppercase text-on-surface-variant mb-1">Description</label><textarea rows="3" placeholder="Describe the apartment..." class="w-full px-4 py-3 border border-surface-variant rounded-xl font-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none resize-none"></textarea></div>
-      </div>
-      <div class="flex gap-3 mt-6">
-        <button onclick="closeModal()" class="flex-1 py-3 border border-surface-variant text-on-surface rounded-xl font-label-bold hover:bg-surface-container transition-colors">Cancel</button>
-        <button class="flex-1 py-3 bg-primary text-on-primary rounded-xl font-label-bold hover:bg-primary-container transition-colors shadow-sm">Add Apartment</button>
-      </div>
+<!-- Apartment edit/create modal -->
+<div id="apt-modal" class="fixed inset-0 bg-black/60 z-50 hidden items-center justify-center p-5" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="bg-white rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+    <div class="flex items-center justify-between p-5 border-b border-zinc-100 sticky top-0 bg-white">
+      <h2 id="modal-title" class="font-display-xl text-xl text-brand-ink">Add apartment</h2>
+      <button id="modal-close" class="p-2 hover:bg-surface-container-low rounded-full" aria-label="Close"><span class="material-symbols-outlined">close</span></button>
     </div>
+    <form id="apt-form" class="p-5 space-y-4">
+      <input type="hidden" id="f-id" />
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div><label class="block text-xs font-semibold uppercase tracking-wider mb-1.5" for="f-name">Name</label><input id="f-name" class="input-base" required /></div>
+        <div><label class="block text-xs font-semibold uppercase tracking-wider mb-1.5" for="f-slug">Slug</label><input id="f-slug" class="input-base" placeholder="e.g. surulere-1-bedroom" required /></div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div><label class="block text-xs font-semibold uppercase tracking-wider mb-1.5" for="f-location">Location</label><input id="f-location" class="input-base" placeholder="Surulere" required /></div>
+        <div><label class="block text-xs font-semibold uppercase tracking-wider mb-1.5" for="f-type">Type</label><input id="f-type" class="input-base" placeholder="1 Bedroom Apartment" /></div>
+      </div>
+      <div><label class="block text-xs font-semibold uppercase tracking-wider mb-1.5" for="f-address">Address</label><input id="f-address" class="input-base" placeholder="Street, area, Lagos" /></div>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <div><label class="block text-xs font-semibold uppercase tracking-wider mb-1.5" for="f-price">Price /night ₦</label><input id="f-price" class="input-base" type="number" min="0" required /></div>
+        <div><label class="block text-xs font-semibold uppercase tracking-wider mb-1.5" for="f-beds">Beds</label><input id="f-beds" class="input-base" type="number" min="0" value="1" /></div>
+        <div><label class="block text-xs font-semibold uppercase tracking-wider mb-1.5" for="f-baths">Baths</label><input id="f-baths" class="input-base" type="number" min="0" value="1" /></div>
+        <div><label class="block text-xs font-semibold uppercase tracking-wider mb-1.5" for="f-guests">Max guests</label><input id="f-guests" class="input-base" type="number" min="1" value="2" /></div>
+      </div>
+      <div><label class="block text-xs font-semibold uppercase tracking-wider mb-1.5" for="f-desc">Description</label><textarea id="f-desc" class="input-base" rows="3" style="height:auto;padding:0.75rem 1rem"></textarea></div>
+      <div><label class="block text-xs font-semibold uppercase tracking-wider mb-1.5" for="f-status">Status</label>
+        <select id="f-status" class="input-base">
+          <option value="available">Available</option>
+          <option value="renovation">Under renovation</option>
+        </select>
+      </div>
+      <div><label class="block text-xs font-semibold uppercase tracking-wider mb-1.5">Amenities</label>
+        <div id="f-amenities" class="grid grid-cols-2 gap-2 text-sm"></div>
+      </div>
+      <div><label class="block text-xs font-semibold uppercase tracking-wider mb-1.5" for="f-gallery">Image URLs (one per line)</label>
+        <textarea id="f-gallery" class="input-base" rows="4" style="height:auto;padding:0.75rem 1rem" placeholder="/assets/images/placeholders/your-slug-1.jpg
+/assets/images/placeholders/your-slug-2.jpg"></textarea>
+      </div>
+      <div class="flex justify-end gap-2 pt-4 border-t border-zinc-100">
+        <button type="button" id="modal-cancel" class="px-5 py-2.5 text-brand-ink font-semibold rounded-full hover:bg-surface-container-low">Cancel</button>
+        <button type="submit" class="px-6 py-2.5 bg-brand-yellow text-brand-ink font-label-bold text-label-bold rounded-full hover:bg-brand-ink hover:text-white">Save apartment</button>
+      </div>
+    </form>
   </div>
 </div>
 
-<script>
-function openModal(){document.getElementById('modal').classList.remove('hidden');}
-function closeModal(){document.getElementById('modal').classList.add('hidden');}
+<script type="module">
+  import "/assets/js/site.js";
+  import { highlightActiveAdminLink, wireExportButton } from "/assets/js/admin.js";
+  import { getApartments, saveApartment, deleteApartment, clearAllOverrides } from "/assets/js/data/store.js";
+  import { AMENITY_CATALOG } from "/assets/js/data/apartments.js";
+  import { formatNGN } from "/assets/js/utils/currency.js";
+  import { slugify } from "/assets/js/utils/slug.js";
+  import { toast } from "/assets/js/site.js";
+
+  highlightActiveAdminLink();
+  wireExportButton();
+
+  document.getElementById("admin-mobile-menu-btn")?.addEventListener("click", () => {
+    document.getElementById("admin-mobile-menu").classList.toggle("hidden");
+  });
+  document.getElementById("reset-overrides-btn").addEventListener("click", () => {
+    if (confirm("Clear all admin changes in this browser and revert to defaults?")) { clearAllOverrides(); window.location.reload(); }
+  });
+
+  // Render amenities checkboxes
+  document.getElementById("f-amenities").innerHTML = Object.entries(AMENITY_CATALOG).map(([k, v]) =>
+    `<label class="flex items-center gap-2 p-2 bg-surface-container-low rounded-lg cursor-pointer">
+       <input type="checkbox" name="amenity" value="${k}" class="accent-brand-yellow" />
+       <span class="material-symbols-outlined text-[18px] text-brand-yellow-deep">${v.icon}</span>
+       <span class="text-sm">${v.label}</span>
+     </label>`
+  ).join("");
+
+  let editingSlug = null;
+
+  function render() {
+    const apts = getApartments();
+    document.getElementById("s-total").textContent = apts.length;
+    document.getElementById("s-avail").textContent = apts.filter((a) => a.status === "available").length;
+    document.getElementById("s-booked").textContent = apts.filter((a) => a.status === "booked").length;
+    document.getElementById("s-reno").textContent = apts.filter((a) => a.status === "renovation").length;
+
+    const list = document.getElementById("apt-list");
+    if (apts.length === 0) {
+      list.innerHTML = `<div class="p-8 bg-white rounded-2xl text-center text-on-surface-variant">No apartments yet. Click "New apartment" to add one.</div>`;
+      return;
+    }
+    list.innerHTML = apts.map((a) => `
+      <div class="bg-white rounded-2xl shadow-card border border-zinc-100 p-5 flex flex-col md:flex-row gap-5 items-start md:items-center">
+        <img src="${(a.gallery && a.gallery[0]) || a.galleryFallback || ""}" alt="" class="w-full md:w-32 h-32 md:h-24 rounded-xl object-cover bg-surface-container" onerror="this.src='${a.galleryFallback || ""}'" />
+        <div class="flex-1 min-w-0">
+          <p class="text-xs uppercase tracking-wider text-brand-yellow-deep font-bold">${escape(a.location)}</p>
+          <h3 class="font-display-xl text-lg text-brand-ink truncate">${escape(a.name)}</h3>
+          <p class="text-sm text-on-surface-variant line-clamp-1">${escape(a.description)}</p>
+          <div class="flex flex-wrap gap-3 text-xs text-on-surface-variant mt-2">
+            <span><strong class="text-brand-ink">${formatNGN(a.pricePerNight)}</strong> /night</span>
+            <span>${a.beds} bed</span>
+            <span>${a.baths} bath</span>
+            <span>${a.maxGuests} guests</span>
+            <span class="px-2 py-0.5 rounded-full ${statusClass(a.status)}">${escape(a.status)}</span>
+          </div>
+        </div>
+        <div class="flex gap-2 self-stretch md:self-center">
+          <a href="/apartments/${a.slug}" target="_blank" class="px-3 py-2 text-sm font-semibold text-brand-ink hover:bg-surface-container-low rounded-full" title="View public page"><span class="material-symbols-outlined text-[20px] align-middle">open_in_new</span></a>
+          <button data-edit="${a.slug}" class="px-3 py-2 text-sm font-semibold text-brand-ink hover:bg-surface-container-low rounded-full"><span class="material-symbols-outlined text-[20px] align-middle">edit</span></button>
+          <button data-delete="${a.slug}" class="px-3 py-2 text-sm font-semibold text-rose-600 hover:bg-rose-50 rounded-full"><span class="material-symbols-outlined text-[20px] align-middle">delete</span></button>
+        </div>
+      </div>
+    `).join("");
+
+    list.querySelectorAll("[data-edit]").forEach((b) => b.addEventListener("click", () => openEdit(b.dataset.edit)));
+    list.querySelectorAll("[data-delete]").forEach((b) => b.addEventListener("click", () => confirmDelete(b.dataset.delete)));
+  }
+
+  function openEdit(slug) {
+    editingSlug = slug;
+    const a = getApartments().find((x) => x.slug === slug);
+    if (!a) return;
+    document.getElementById("modal-title").textContent = "Edit apartment";
+    document.getElementById("f-id").value = a.id || "";
+    setVal("f-name", a.name); setVal("f-slug", a.slug); setVal("f-location", a.location); setVal("f-type", a.type);
+    setVal("f-address", a.address); setVal("f-price", a.pricePerNight); setVal("f-beds", a.beds);
+    setVal("f-baths", a.baths); setVal("f-guests", a.maxGuests); setVal("f-desc", a.description);
+    document.getElementById("f-status").value = a.status || "available";
+    document.querySelectorAll('[name="amenity"]').forEach((cb) => { cb.checked = (a.amenities || []).includes(cb.value); });
+    document.getElementById("f-gallery").value = (a.gallery || []).join("\n");
+    document.getElementById("apt-modal").classList.remove("hidden");
+    document.getElementById("apt-modal").classList.add("flex");
+  }
+
+  function openCreate() {
+    editingSlug = null;
+    document.getElementById("modal-title").textContent = "Add apartment";
+    document.getElementById("apt-form").reset();
+    document.getElementById("f-status").value = "available";
+    document.getElementById("apt-modal").classList.remove("hidden");
+    document.getElementById("apt-modal").classList.add("flex");
+  }
+
+  function closeModal() {
+    document.getElementById("apt-modal").classList.add("hidden");
+    document.getElementById("apt-modal").classList.remove("flex");
+  }
+
+  function confirmDelete(slug) {
+    if (!confirm("Delete this apartment? This cannot be undone (in this browser).")) return;
+    deleteApartment(slug);
+    toast("Apartment deleted.");
+    render();
+  }
+
+  document.getElementById("add-new-btn").addEventListener("click", openCreate);
+  document.getElementById("modal-close").addEventListener("click", closeModal);
+  document.getElementById("modal-cancel").addEventListener("click", closeModal);
+  document.getElementById("apt-modal").addEventListener("click", (e) => { if (e.target.id === "apt-modal") closeModal(); });
+
+  document.getElementById("apt-form").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const slugInput = document.getElementById("f-slug").value || slugify(document.getElementById("f-name").value);
+    const amenities = Array.from(document.querySelectorAll('[name="amenity"]:checked')).map((c) => c.value);
+    const gallery = document.getElementById("f-gallery").value.split("\n").map((s) => s.trim()).filter(Boolean);
+    const apt = {
+      id: document.getElementById("f-id").value || ("apt-" + Date.now()),
+      slug: slugify(slugInput),
+      name: document.getElementById("f-name").value.trim(),
+      type: document.getElementById("f-type").value.trim(),
+      location: document.getElementById("f-location").value.trim(),
+      address: document.getElementById("f-address").value.trim(),
+      pricePerNight: Number(document.getElementById("f-price").value || 0),
+      currency: "NGN",
+      beds: Number(document.getElementById("f-beds").value || 1),
+      baths: Number(document.getElementById("f-baths").value || 1),
+      maxGuests: Number(document.getElementById("f-guests").value || 2),
+      description: document.getElementById("f-desc").value.trim(),
+      status: document.getElementById("f-status").value,
+      amenities,
+      gallery
+    };
+    saveApartment(apt);
+    toast(editingSlug ? "Apartment updated." : "Apartment added.");
+    closeModal();
+    render();
+  });
+
+  function setVal(id, v) { const el = document.getElementById(id); if (el) el.value = v == null ? "" : v; }
+  function statusClass(s) {
+    return ({ available: "bg-emerald-50 text-emerald-700", renovation: "bg-amber-50 text-amber-700", booked: "bg-zinc-100 text-zinc-600" }[s] || "bg-zinc-100 text-zinc-600");
+  }
+  function escape(s) { return String(s || "").replace(/[&<>"']/g, (c) => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c])); }
+
+  render();
 </script>
+
 </body>
 </html>

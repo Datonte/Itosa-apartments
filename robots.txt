@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /admin-dashboard
+Disallow: /admin-apartments
+Disallow: /admin-bookings
+Disallow: /admin-availability
+Disallow: /booking
+Disallow: /confirmation
+
+Sitemap: https://itosaapartment.com/sitemap.xml

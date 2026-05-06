@@ -1,0 +1,290 @@
+/* ITOSA Apartment — shared component styles
+   Loaded after Tailwind. Use Tailwind utilities in markup wherever possible;
+   this file is for repeated patterns and small UI primitives only. */
+
+/* Material Symbols default weight/optical size */
+.material-symbols-outlined {
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+}
+.material-symbols-outlined.filled {
+  font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24;
+}
+
+/* Hide scrollbars on horizontal chip rows */
+.hide-scrollbar::-webkit-scrollbar { display: none; }
+.hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Filter chips */
+.filter-chip {
+  padding: 0.625rem 1.25rem;
+  border-radius: 9999px;
+  border: 1px solid #c4c7c7;
+  background: #f7f3f2;
+  color: #444748;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.filter-chip:hover { background: #181919; color: #fff; border-color: #181919; }
+.filter-chip.active { background: #181919; color: #fff; border-color: #181919; }
+
+/* Apartment cards */
+.apt-card {
+  transition: transform 0.4s cubic-bezier(.22,.68,0,1.2), box-shadow 0.3s;
+}
+.apt-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+}
+
+/* Bento gallery */
+.gallery-thumb {
+  transition: transform 0.5s ease, filter 0.3s ease;
+  cursor: pointer;
+}
+.gallery-thumb:hover { transform: scale(1.03); filter: brightness(1.04); }
+
+/* Day cells (admin availability calendar) */
+.day-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 56px;
+  border: 1px solid #e5e2e1;
+  background: #fff;
+  cursor: pointer;
+  font-weight: 500;
+  color: #1c1b1b;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+.day-cell:hover:not(.booked):not(.blocked):not(.empty) { background: #fff8df; border-color: #f9bd22; }
+.day-cell.empty { background: transparent; border-color: transparent; cursor: default; }
+.day-cell.today { outline: 2px solid #181919; outline-offset: -2px; font-weight: 700; }
+.day-cell.selected { background: #f9bd22; color: #181919; border-color: #f9bd22; }
+.day-cell.booked { background: #e5f1ff; color: #6b7280; border-color: #c9e6ff; cursor: not-allowed; }
+.day-cell.blocked { background: #1c1b1b; color: #ddd; border-color: #1c1b1b; cursor: not-allowed; }
+
+/* Litepicker overrides */
+.litepicker .container__months .month-item-header div > .month-item-name,
+.litepicker .container__months .month-item-header div > .month-item-year {
+  font-family: "Manrope", system-ui, sans-serif;
+  font-weight: 700;
+}
+.litepicker .container__days .day-item.is-locked {
+  text-decoration: line-through;
+  color: #c4c7c7 !important;
+  background: #f7f3f2 !important;
+}
+.litepicker .container__days .day-item.is-start-date,
+.litepicker .container__days .day-item.is-end-date,
+.litepicker .container__days .day-item.is-in-range {
+  background-color: #fff8df !important;
+  color: #181919 !important;
+}
+.litepicker .container__days .day-item.is-start-date,
+.litepicker .container__days .day-item.is-end-date {
+  background-color: #f9bd22 !important;
+  color: #181919 !important;
+  font-weight: 700;
+}
+
+/* Lightbox */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.92);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+.lightbox.open { opacity: 1; pointer-events: auto; }
+.lightbox img { max-width: min(92vw, 1400px); max-height: 88vh; object-fit: contain; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+.lightbox-close, .lightbox-nav {
+  position: absolute;
+  background: rgba(255,255,255,0.12);
+  color: #fff;
+  border: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+}
+.lightbox-close { top: 24px; right: 24px; }
+.lightbox-nav.prev { left: 24px; top: 50%; transform: translateY(-50%); }
+.lightbox-nav.next { right: 24px; top: 50%; transform: translateY(-50%); }
+.lightbox-nav:hover, .lightbox-close:hover { background: rgba(255,255,255,0.25); }
+
+/* Trust strip */
+.trust-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem 1rem;
+  border-top: 1px solid #e5e2e1;
+  border-bottom: 1px solid #e5e2e1;
+  background: #fff;
+}
+.trust-strip .trust-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #444748;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+.trust-strip .trust-item .material-symbols-outlined { color: #3a8b6a; font-size: 20px; }
+
+/* Step pills (booking flow) */
+.step-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  background: #f1edec;
+  color: #444748;
+  font-weight: 600;
+  font-size: 0.8125rem;
+}
+.step-pill.active { background: #181919; color: #fff; }
+.step-pill.done { background: #3a8b6a; color: #fff; }
+
+/* FAQ accordion */
+details.faq {
+  border-bottom: 1px solid #e5e2e1;
+  padding: 1.25rem 0;
+}
+details.faq summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: "Manrope", system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 1.0625rem;
+  color: #181919;
+}
+details.faq summary::-webkit-details-marker { display: none; }
+details.faq summary::after {
+  content: "+";
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: #444748;
+  transition: transform 0.2s ease;
+}
+details.faq[open] summary::after { content: "−"; }
+details.faq .answer {
+  margin-top: 0.75rem;
+  color: #444748;
+  line-height: 1.7;
+}
+
+/* Sticky mobile booking bar */
+.mobile-book-bar {
+  position: fixed;
+  bottom: 64px;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border-top: 1px solid #e5e2e1;
+  padding: 0.75rem 1rem;
+  z-index: 40;
+  display: none;
+}
+@media (max-width: 1023px) {
+  .mobile-book-bar { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; }
+}
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: #181919;
+  color: #fff;
+  padding: 0.875rem 1.5rem;
+  border-radius: 0.75rem;
+  font-weight: 500;
+  font-size: 0.875rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  z-index: 60;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.25);
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* Field & form helpers */
+.field-error {
+  color: #ba1a1a;
+  font-size: 0.8125rem;
+  margin-top: 0.25rem;
+  min-height: 1rem;
+}
+.input-base {
+  width: 100%;
+  height: 3rem;
+  padding: 0 1rem;
+  border: 1px solid #c4c7c7;
+  border-radius: 0.75rem;
+  background: #fff;
+  font-family: "Be Vietnam Pro", system-ui, sans-serif;
+  font-size: 1rem;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.input-base:focus {
+  outline: none;
+  border-color: #181919;
+  box-shadow: 0 0 0 4px rgba(249,189,34,0.18);
+}
+.input-base[aria-invalid="true"] {
+  border-color: #ba1a1a;
+  box-shadow: 0 0 0 4px rgba(186,26,26,0.12);
+}
+
+/* Placeholder banner (visible at top of admin pages) */
+.demo-banner {
+  background: #fff8df;
+  border-bottom: 1px solid #f9bd22;
+  color: #5c4300;
+  padding: 0.625rem 1rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+/* Skeleton placeholders for missing photos */
+.placeholder-tile {
+  background: linear-gradient(135deg, #f1edec 0%, #ddd9d8 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #747878;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  text-align: center;
+  padding: 1rem;
+}
+
+/* Print */
+@media print {
+  header, footer, .mobile-book-bar, .lightbox, .toast { display: none !important; }
+  body { background: #fff !important; }
+}
