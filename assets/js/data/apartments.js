@@ -46,8 +46,8 @@ export const APARTMENTS = [
     type: "1 Bedroom Apartment",
     location: "Surulere",
     city: "Lagos",
-    address: "PLACEHOLDER_STREET, Surulere, Lagos",
-    coords: { lat: 6.5009, lng: 3.3582 },          // Surulere centroid — update with exact location
+    address: "SD 7, Colindale Park Estate, Surulere, Lagos 101241",
+    coords: { lat: 6.5009, lng: 3.3582 },
     pricePerNight: 65000,
     currency: "NGN",
     minStayNights: 1,
@@ -60,16 +60,32 @@ export const APARTMENTS = [
       "A calm, modern 1-bedroom retreat in the heart of Surulere — minutes from the National Stadium and Barracks. Designed for guests who want quiet, secure rest after a long day in Lagos.",
     amenities: ["wifi", "ac", "kitchen", "smart_tv", "parking", "security", "inverter", "water"],
     landmarks: [
-      { name: "National Stadium", distanceKm: 1.2 },
-      { name: "Barracks",         distanceKm: 0.8 },
-      { name: "Stadium Hotel",    distanceKm: 1.5 }
+      { name: "Femi Gbajabiamila General Hospital", distanceKm: 0.3,  travelByCar: "2 min" },
+      { name: "National Stadium",                   distanceKm: 2.0,  travelByCar: "8 min" },
+      { name: "National Theatre",                   distanceKm: 8.5,  travelByCar: "21 min" },
+      { name: "NTA Lagos",                          distanceKm: 9.0,  travelByCar: "22 min" },
+      { name: "Lagos International Airport",        distanceKm: 20.0, travelByCar: "25 min" },
+      { name: "Lekki",                              distanceKm: 22.0, travelByCar: "30 min" },
+      { name: "Victoria Island",                    distanceKm: 28.0, travelByCar: "45 min" }
     ],
     gallery: [
       "/assets/images/placeholders/surulere-1-bedroom-1.jpg",
       "/assets/images/placeholders/surulere-1-bedroom-2.jpg",
       "/assets/images/placeholders/surulere-1-bedroom-3.jpg",
       "/assets/images/placeholders/surulere-1-bedroom-4.jpg",
-      "/assets/images/placeholders/surulere-1-bedroom-5.jpg"
+      "/assets/images/placeholders/surulere-1-bedroom-5.jpg",
+      "/assets/images/placeholders/surulere-1-bedroom-6.jpg",
+      "/assets/images/placeholders/surulere-1-bedroom-7.jpg",
+      "/assets/images/placeholders/surulere-1-bedroom-8.jpg",
+      "/assets/images/placeholders/surulere-1-bedroom-9.jpg",
+      "/assets/images/placeholders/surulere-1-bedroom-10.jpg",
+      "/assets/images/placeholders/surulere-1-bedroom-11.jpg",
+      "/assets/images/placeholders/surulere-1-bedroom-12.jpg",
+      "/assets/images/placeholders/surulere-1-bedroom-13.jpg",
+      "/assets/images/placeholders/surulere-1-bedroom-14.jpg",
+      "/assets/images/placeholders/surulere-1-bedroom-15.jpg",
+      "/assets/images/placeholders/surulere-1-bedroom-16.jpg",
+      "/assets/images/placeholders/surulere-1-bedroom-17.jpg"
     ],
     galleryFallback: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1200&q=80",
     houseRules: HOUSE_RULES_DEFAULT,

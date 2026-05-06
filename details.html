@@ -338,7 +338,7 @@
     document.getElementById("landmarks-list").innerHTML = (a.landmarks || []).map((l) =>
       `<li class="flex items-center justify-between p-3 rounded-xl bg-surface-container-low">
          <span class="flex items-center gap-2"><span class="material-symbols-outlined text-brand-yellow-deep">place</span>${l.name}</span>
-         <span class="text-sm text-on-surface-variant">${l.distanceKm} km</span>
+         <span class="text-sm text-on-surface-variant">${l.travelByCar ? l.travelByCar + " drive" : l.distanceKm + " km"}</span>
        </li>`
     ).join("") || `<li class="text-sm text-on-surface-variant italic">[Add nearby landmarks in apartments.js]</li>`;
 
