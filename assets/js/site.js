@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
   bindMobileMenu();
   highlightActiveNav();
   highlightMobileNav();
+  initDarkMode();
 });
 
 function bindBrand() {
@@ -89,6 +90,26 @@ function highlightMobileNav() {
       link.classList.add("text-brand-yellow");
       link.querySelector(".material-symbols-outlined")?.style.setProperty("font-variation-settings", "'FILL' 1");
     }
+  });
+}
+
+function initDarkMode() {
+  // Inject toggle button into desktop nav and mobile menu
+  const btn = document.createElement("button");
+  btn.id = "theme-toggle";
+  btn.setAttribute("aria-label", "Toggle dark mode");
+  btn.className = "theme-toggle-btn";
+  btn.innerHTML = `<span class="material-symbols-outlined" id="theme-icon">${document.documentElement.classList.contains("dark") ? "light_mode" : "dark_mode"}</span>`;
+
+  // Insert before the "Book Your Stay" CTA in desktop nav
+  const desktopCTA = document.querySelector("header a[href='/browse'].hidden.md\\:inline-flex");
+  if (desktopCTA) desktopCTA.before(btn);
+
+  btn.addEventListener("click", () => {
+    const isDark = document.documentElement.classList.toggle("dark");
+    document.documentElement.classList.toggle("light", !isDark);
+    document.getElementById("theme-icon").textContent = isDark ? "light_mode" : "dark_mode";
+    localStorage.setItem("itosa.theme", isDark ? "dark" : "light");
   });
 }
 

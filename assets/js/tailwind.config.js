@@ -1,3 +1,12 @@
+// Apply dark/light class immediately — before Tailwind parses anything — to prevent flash.
+(function () {
+  const saved = localStorage.getItem("itosa.theme");
+  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  const dark = saved === "dark" || (!saved && prefersDark);
+  document.documentElement.classList.toggle("dark", dark);
+  document.documentElement.classList.toggle("light", !dark);
+})();
+
 // Single source of truth for the ITOSA design system.
 // Loaded BEFORE the Tailwind CDN script so `tailwind.config` is read at boot.
 window.tailwind = window.tailwind || {};

@@ -288,3 +288,174 @@ details.faq .answer {
   header, footer, .mobile-book-bar, .lightbox, .toast { display: none !important; }
   body { background: #fff !important; }
 }
+
+/* =====================================================
+   DARK MODE TOGGLE BUTTON
+   ===================================================== */
+.theme-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 9999px;
+  border: 1px solid #e5e2e1;
+  background: transparent;
+  color: #444748;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  flex-shrink: 0;
+}
+.theme-toggle-btn:hover { background: #f1edec; }
+html.dark .theme-toggle-btn { border-color: #3a3b3c; color: #d4d4d8; }
+html.dark .theme-toggle-btn:hover { background: #2d2e30; }
+
+/* =====================================================
+   DARK MODE OVERRIDES
+   Core surfaces, text, and borders for html.dark
+   ===================================================== */
+
+/* Page background */
+html.dark body { background-color: #111213 !important; color: #e4e4e7 !important; }
+
+/* White surfaces → dark cards */
+html.dark .bg-white { background-color: #1c1d1e !important; }
+html.dark .bg-brand-bg,
+html.dark .bg-background { background-color: #111213 !important; }
+html.dark .bg-zinc-50 { background-color: #1a1b1c !important; }
+html.dark .bg-zinc-100 { background-color: #242526 !important; }
+html.dark .bg-zinc-200 { background-color: #2d2e30 !important; }
+
+/* Borders */
+html.dark .border-zinc-100 { border-color: #2d2e30 !important; }
+html.dark .border-zinc-200 { border-color: #3a3b3c !important; }
+html.dark .border-zinc-300 { border-color: #4a4b4d !important; }
+
+/* Text colours */
+html.dark .text-brand-ink { color: #f4f4f5 !important; }
+html.dark .text-on-surface-variant { color: #a1a1aa !important; }
+html.dark .text-zinc-600 { color: #a1a1aa !important; }
+html.dark .text-zinc-500 { color: #71717a !important; }
+html.dark .text-zinc-400 { color: #52525b !important; }
+html.dark .text-zinc-900 { color: #f4f4f5 !important; }
+html.dark .text-zinc-800 { color: #e4e4e7 !important; }
+html.dark .text-zinc-700 { color: #d4d4d8 !important; }
+
+/* Header */
+html.dark header { background-color: rgba(28, 29, 30, 0.92) !important; border-bottom-color: #2d2e30 !important; }
+html.dark #mobile-menu { background-color: #1c1d1e !important; border-top-color: #2d2e30 !important; }
+
+/* Footer stays dark — just lighten border */
+html.dark footer { background-color: #0d0e0f !important; }
+
+/* Bottom mobile nav */
+html.dark nav[aria-label="Mobile bottom navigation"] {
+  background-color: #1c1d1e !important;
+  border-top-color: #2d2e30 !important;
+}
+
+/* Cards and raised surfaces */
+html.dark .shadow-card,
+html.dark .shadow-lift {
+  box-shadow: 0 8px 30px rgba(0,0,0,0.35) !important;
+}
+
+/* Inputs */
+html.dark .input-base {
+  background: #242526 !important;
+  border-color: #3a3b3c !important;
+  color: #f4f4f5 !important;
+}
+html.dark .input-base:focus {
+  border-color: #f9bd22 !important;
+}
+html.dark textarea,
+html.dark select {
+  background-color: #242526 !important;
+  border-color: #3a3b3c !important;
+  color: #f4f4f5 !important;
+}
+
+/* Filter chips */
+html.dark .filter-chip {
+  background: #242526 !important;
+  border-color: #3a3b3c !important;
+  color: #d4d4d8 !important;
+}
+html.dark .filter-chip:hover,
+html.dark .filter-chip.active {
+  background: #f9bd22 !important;
+  color: #111213 !important;
+  border-color: #f9bd22 !important;
+}
+
+/* Trust strip */
+html.dark .trust-strip {
+  background: #1c1d1e !important;
+  border-color: #2d2e30 !important;
+}
+html.dark .trust-strip .trust-item { color: #a1a1aa !important; }
+
+/* Step pills */
+html.dark .step-pill { background: #242526 !important; color: #a1a1aa !important; }
+html.dark .step-pill.active { background: #f9bd22 !important; color: #111213 !important; }
+html.dark .step-pill.done { background: #3a8b6a !important; color: #fff !important; }
+
+/* FAQ */
+html.dark details.faq { border-bottom-color: #2d2e30 !important; }
+html.dark details.faq summary { color: #f4f4f5 !important; }
+html.dark details.faq summary::after { color: #a1a1aa !important; }
+html.dark details.faq .answer { color: #a1a1aa !important; }
+
+/* Mobile booking bar */
+html.dark .mobile-book-bar {
+  background: #1c1d1e !important;
+  border-top-color: #2d2e30 !important;
+}
+
+/* Demo/admin banner */
+html.dark .demo-banner {
+  background: #2a2100 !important;
+  border-color: #795900 !important;
+  color: #ffdf9f !important;
+}
+
+/* Placeholder tile */
+html.dark .placeholder-tile {
+  background: linear-gradient(135deg, #242526 0%, #1a1b1c 100%) !important;
+  color: #71717a !important;
+}
+
+/* Calendar day cells */
+html.dark .day-cell {
+  background: #1c1d1e !important;
+  border-color: #2d2e30 !important;
+  color: #e4e4e7 !important;
+}
+html.dark .day-cell:hover:not(.booked):not(.blocked):not(.empty) {
+  background: #2a2100 !important;
+  border-color: #f9bd22 !important;
+}
+html.dark .day-cell.today { outline-color: #f9bd22 !important; }
+html.dark .day-cell.booked { background: #1a2535 !important; color: #52525b !important; border-color: #1e3048 !important; }
+
+/* Info / amber banners */
+html.dark .bg-amber-50 { background-color: #2a2100 !important; }
+html.dark .border-amber-200 { border-color: #795900 !important; }
+html.dark .text-amber-900 { color: #ffdf9f !important; }
+html.dark .text-amber-700 { color: #f9bd22 !important; }
+html.dark .bg-emerald-50 { background-color: #0d2318 !important; }
+html.dark .border-emerald-200 { border-color: #1a4a30 !important; }
+html.dark .text-emerald-900\/80 { color: #6ee7b7 !important; }
+html.dark .bg-rose-50 { background-color: #2a0d0d !important; }
+html.dark .border-rose-200 { border-color: #4a1a1a !important; }
+html.dark .text-rose-900\/80 { color: #fca5a5 !important; }
+
+/* Tables inside articles */
+html.dark table td,
+html.dark table th { border-color: #2d2e30 !important; }
+html.dark thead tr { background-color: #242526 !important; }
+html.dark tbody tr.bg-zinc-50 { background-color: #1a1b1c !important; }
+
+/* Apt cards hover shadow in dark */
+html.dark .apt-card:hover { box-shadow: 0 20px 40px rgba(0,0,0,0.5) !important; }
