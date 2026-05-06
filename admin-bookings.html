@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="light" lang="en">
 <head>
   <meta charset="utf-8" />
@@ -15,12 +15,12 @@
 <body class="bg-surface-container-low text-brand-ink antialiased min-h-screen font-body-md">
 
 <div class="demo-banner">
-  Bookings &amp; availability sync to Supabase. Apartment edits save to this browser only. <a href="/" class="underline font-semibold">Return to site</a> Â·
+  Bookings &amp; availability sync to Supabase. Apartment edits save to this browser only. <a href="/" class="underline font-semibold">Return to site</a> ·
   <button id="reset-overrides-btn" class="underline font-semibold ml-1">Reset to defaults</button>
 </div>
 
 <aside class="hidden md:flex flex-col fixed left-0 top-[40px] bottom-0 w-64 bg-brand-ink text-white p-6 z-30">
-  <a href="/" class="flex items-center gap-2 mb-10"><span class="material-symbols-outlined text-brand-yellow filled" style="font-variation-settings:'FILL' 1;">apartment</span><span class="text-base font-bold tracking-[0.18em] font-display-xl">ITOSA Â· ADMIN</span></a>
+  <a href="/" class="flex items-center gap-2 mb-10"><span class="material-symbols-outlined text-brand-yellow filled" style="font-variation-settings:'FILL' 1;">apartment</span><span class="text-base font-bold tracking-[0.18em] font-display-xl">ITOSA · ADMIN</span></a>
   <nav class="flex flex-col gap-1 text-sm" aria-label="Admin">
     <a data-admin-link href="/admin-dashboard" class="px-3 py-2.5 rounded-lg flex items-center gap-2.5 text-zinc-400 hover:text-white hover:bg-white/5"><span class="material-symbols-outlined text-[20px]">dashboard</span>Dashboard</a>
     <a data-admin-link href="/admin-apartments" class="px-3 py-2.5 rounded-lg flex items-center gap-2.5 text-zinc-400 hover:text-white hover:bg-white/5"><span class="material-symbols-outlined text-[20px]">apartment</span>Apartments</a>
@@ -30,7 +30,7 @@
 </aside>
 
 <header class="md:hidden fixed top-[40px] left-0 right-0 bg-brand-ink text-white z-30 px-5 h-14 flex items-center justify-between">
-  <a href="/admin-dashboard" class="flex items-center gap-2"><span class="material-symbols-outlined text-brand-yellow filled" style="font-variation-settings:'FILL' 1;">apartment</span><span class="text-sm font-bold tracking-[0.18em]">ITOSA Â· ADMIN</span></a>
+  <a href="/admin-dashboard" class="flex items-center gap-2"><span class="material-symbols-outlined text-brand-yellow filled" style="font-variation-settings:'FILL' 1;">apartment</span><span class="text-sm font-bold tracking-[0.18em]">ITOSA · ADMIN</span></a>
   <button id="admin-mobile-menu-btn" class="p-2" aria-label="Open admin menu"><span class="material-symbols-outlined">menu</span></button>
 </header>
 <nav id="admin-mobile-menu" class="md:hidden fixed top-[94px] left-0 right-0 bg-brand-ink text-white z-30 px-3 py-3 hidden border-t border-white/10">
@@ -56,15 +56,15 @@
           <option value="cancelled">Cancelled</option>
           <option value="failed">Failed</option>
         </select>
-        <input id="filter-search" placeholder="Search name or emailâ€¦" class="input-base w-56 h-10 text-sm" />
+        <input id="filter-search" placeholder="Search name or email…" class="input-base w-56 h-10 text-sm" />
       </div>
     </header>
 
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-      <div class="bg-white p-5 rounded-2xl shadow-card border border-zinc-100"><p class="text-xs uppercase tracking-wider text-on-surface-variant font-bold mb-2">Total bookings</p><p class="text-2xl font-bold" id="s-total">â€”</p></div>
-      <div class="bg-white p-5 rounded-2xl shadow-card border border-zinc-100"><p class="text-xs uppercase tracking-wider text-on-surface-variant font-bold mb-2">Paid</p><p class="text-2xl font-bold text-emerald-600" id="s-paid">â€”</p></div>
-      <div class="bg-white p-5 rounded-2xl shadow-card border border-zinc-100"><p class="text-xs uppercase tracking-wider text-on-surface-variant font-bold mb-2">Pending</p><p class="text-2xl font-bold text-amber-600" id="s-pending">â€”</p></div>
-      <div class="bg-white p-5 rounded-2xl shadow-card border border-zinc-100"><p class="text-xs uppercase tracking-wider text-on-surface-variant font-bold mb-2">Revenue</p><p class="text-2xl font-bold text-brand-ink" id="s-revenue">â€”</p></div>
+      <div class="bg-white p-5 rounded-2xl shadow-card border border-zinc-100"><p class="text-xs uppercase tracking-wider text-on-surface-variant font-bold mb-2">Total bookings</p><p class="text-2xl font-bold" id="s-total">—</p></div>
+      <div class="bg-white p-5 rounded-2xl shadow-card border border-zinc-100"><p class="text-xs uppercase tracking-wider text-on-surface-variant font-bold mb-2">Paid</p><p class="text-2xl font-bold text-emerald-600" id="s-paid">—</p></div>
+      <div class="bg-white p-5 rounded-2xl shadow-card border border-zinc-100"><p class="text-xs uppercase tracking-wider text-on-surface-variant font-bold mb-2">Pending</p><p class="text-2xl font-bold text-amber-600" id="s-pending">—</p></div>
+      <div class="bg-white p-5 rounded-2xl shadow-card border border-zinc-100"><p class="text-xs uppercase tracking-wider text-on-surface-variant font-bold mb-2">Revenue</p><p class="text-2xl font-bold text-brand-ink" id="s-revenue">—</p></div>
     </div>
 
     <div class="bg-white rounded-2xl shadow-card border border-zinc-100 overflow-hidden">
@@ -144,11 +144,11 @@
       return `<tr class="hover:bg-surface-container-low/60">
         <td class="px-5 py-4 font-mono text-xs text-on-surface-variant">${escape(b.paystackRef || b.id)}</td>
         <td class="px-5 py-4">
-          <div class="font-semibold text-brand-ink">${escape(b.name || "â€”")}</div>
-          <div class="text-xs text-on-surface-variant">${escape(b.email || "")} Â· ${escape(b.phone || "")}</div>
+          <div class="font-semibold text-brand-ink">${escape(b.name || "—")}</div>
+          <div class="text-xs text-on-surface-variant">${escape(b.email || "")} · ${escape(b.phone || "")}</div>
         </td>
         <td class="px-5 py-4 text-on-surface-variant">${escape(apt?.name || b.apartmentSlug)}</td>
-        <td class="px-5 py-4 text-on-surface-variant">${formatDate(b.checkin)} â†’ ${formatDate(b.checkout)}</td>
+        <td class="px-5 py-4 text-on-surface-variant">${formatDate(b.checkin)} → ${formatDate(b.checkout)}</td>
         <td class="px-5 py-4 font-semibold">${formatNGN(b.totals?.total || 0)}</td>
         <td class="px-5 py-4">${statusBadge(b.paymentStatus)}</td>
         <td class="px-5 py-4 text-right">
@@ -172,11 +172,11 @@
         <p class="font-mono text-xs">${escape(b.paystackRef || b.id)}</p>
       </div>
       <p><strong>Apartment:</strong> ${escape(apt?.name || b.apartmentSlug)}</p>
-      <p><strong>Stay:</strong> ${formatDateLong(b.checkin)} â†’ ${formatDateLong(b.checkout)}</p>
+      <p><strong>Stay:</strong> ${formatDateLong(b.checkin)} → ${formatDateLong(b.checkout)}</p>
       <p><strong>Guests:</strong> ${b.guests}</p>
       <p><strong>Guest name:</strong> ${escape(b.name || "")}</p>
-      <p><strong>Phone:</strong> <a href="tel:${escape(b.phone || "")}" class="text-brand-ink underline">${escape(b.phone || "â€”")}</a></p>
-      <p><strong>Email:</strong> <a href="mailto:${escape(b.email || "")}" class="text-brand-ink underline break-all">${escape(b.email || "â€”")}</a></p>
+      <p><strong>Phone:</strong> <a href="tel:${escape(b.phone || "")}" class="text-brand-ink underline">${escape(b.phone || "—")}</a></p>
+      <p><strong>Email:</strong> <a href="mailto:${escape(b.email || "")}" class="text-brand-ink underline break-all">${escape(b.email || "—")}</a></p>
       ${b.notes ? `<p><strong>Notes:</strong> ${escape(b.notes)}</p>` : ""}
       <div class="border-t border-zinc-100 pt-3 mt-3">
         <p><strong>Total:</strong> ${formatNGN(b.totals?.total || 0)}</p>
@@ -212,7 +212,7 @@
       cancelled: '<span class="px-3 py-1 text-xs font-semibold rounded-full bg-zinc-100 text-zinc-600">Cancelled</span>',
       failed: '<span class="px-3 py-1 text-xs font-semibold rounded-full bg-rose-50 text-rose-700">Failed</span>'
     };
-    return map[s] || `<span class="px-3 py-1 text-xs font-semibold rounded-full bg-zinc-100 text-zinc-600">${escape(s || "â€”")}</span>`;
+    return map[s] || `<span class="px-3 py-1 text-xs font-semibold rounded-full bg-zinc-100 text-zinc-600">${escape(s || "—")}</span>`;
   }
   function escape(s) { return String(s || "").replace(/[&<>"']/g, (c) => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c])); }
 

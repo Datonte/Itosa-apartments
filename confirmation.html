@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="light" lang="en">
 <head>
   <meta charset="utf-8" />
@@ -46,26 +46,26 @@
       <div class="flex flex-wrap justify-between items-start gap-3 mb-5 pb-5 border-b border-zinc-100">
         <div>
           <p class="text-xs uppercase tracking-wider text-on-surface-variant font-bold">Booking ID</p>
-          <p class="font-mono text-sm text-brand-ink" id="c-id">â€”</p>
+          <p class="font-mono text-sm text-brand-ink" id="c-id">—</p>
         </div>
         <div class="text-right">
           <p class="text-xs uppercase tracking-wider text-on-surface-variant font-bold">Status</p>
-          <p id="c-status" class="font-semibold text-emerald-600">â€”</p>
+          <p id="c-status" class="font-semibold text-emerald-600">—</p>
         </div>
       </div>
 
       <div class="flex gap-4 mb-6">
         <img id="c-image" alt="" class="w-20 h-20 rounded-lg object-cover bg-surface-container" />
         <div>
-          <p class="text-xs uppercase tracking-wider text-brand-yellow-deep font-bold" id="c-location">â€”</p>
-          <h2 class="font-display-xl text-lg text-brand-ink" id="c-name">â€”</h2>
-          <p class="text-xs text-on-surface-variant" id="c-stay">â€”</p>
+          <p class="text-xs uppercase tracking-wider text-brand-yellow-deep font-bold" id="c-location">—</p>
+          <h2 class="font-display-xl text-lg text-brand-ink" id="c-name">—</h2>
+          <p class="text-xs text-on-surface-variant" id="c-stay">—</p>
         </div>
       </div>
 
       <dl class="grid grid-cols-2 gap-4 text-sm mb-6">
-        <div><dt class="text-on-surface-variant text-xs uppercase tracking-wider mb-1">Guest</dt><dd class="font-semibold text-brand-ink" id="c-guest">â€”</dd></div>
-        <div><dt class="text-on-surface-variant text-xs uppercase tracking-wider mb-1">Total paid</dt><dd class="font-semibold text-brand-ink" id="c-total">â€”</dd></div>
+        <div><dt class="text-on-surface-variant text-xs uppercase tracking-wider mb-1">Guest</dt><dd class="font-semibold text-brand-ink" id="c-guest">—</dd></div>
+        <div><dt class="text-on-surface-variant text-xs uppercase tracking-wider mb-1">Total paid</dt><dd class="font-semibold text-brand-ink" id="c-total">—</dd></div>
         <div><dt class="text-on-surface-variant text-xs uppercase tracking-wider mb-1">Check-in</dt><dd class="font-semibold text-brand-ink">From 3:00 PM</dd></div>
         <div><dt class="text-on-surface-variant text-xs uppercase tracking-wider mb-1">Check-out</dt><dd class="font-semibold text-brand-ink">By 11:00 AM</dd></div>
       </dl>
@@ -81,7 +81,7 @@
 
       <!-- Verification status banner (driven by server-verify TODO) -->
       <div id="verify-banner" class="bg-amber-50 border border-amber-200 text-amber-900 p-4 rounded-xl text-sm mb-6">
-        <p class="font-semibold mb-1 flex items-center gap-2"><span class="material-symbols-outlined text-[18px]">hourglass_top</span>Payment received â€” verification pending</p>
+        <p class="font-semibold mb-1 flex items-center gap-2"><span class="material-symbols-outlined text-[18px]">hourglass_top</span>Payment received — verification pending</p>
         <p class="text-amber-900/80 leading-relaxed">
           Your payment has been captured by Paystack. Final verification typically completes within a minute.
           <span class="block mt-2 text-xs italic">[Owner note: until backend webhook is wired, status stays "pending verification". See TODO in <code>assets/js/payment.js</code>.]</span>
@@ -176,8 +176,8 @@
     document.getElementById("c-image").alt = a?.name || "";
     document.getElementById("c-location").textContent = a?.location || "";
     document.getElementById("c-name").textContent = a?.name || "Apartment";
-    document.getElementById("c-stay").textContent = `${formatDateLong(b.checkin)} â†’ ${formatDateLong(b.checkout)} Â· ${b.guests} guest${b.guests > 1 ? "s" : ""}`;
-    document.getElementById("c-guest").textContent = b.name + " Â· " + b.email;
+    document.getElementById("c-stay").textContent = `${formatDateLong(b.checkin)} → ${formatDateLong(b.checkout)} · ${b.guests} guest${b.guests > 1 ? "s" : ""}`;
+    document.getElementById("c-guest").textContent = b.name + " · " + b.email;
     document.getElementById("c-total").textContent = formatNGN(b.totals?.total || 0);
   }
 </script>
