@@ -1,0 +1,14 @@
+# Claude Code local settings — per-machine, do not commit
+.claude/
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Editor backups & logs
+*.swp
+*.swo
+*.log
+.git-commit-msg.tmp
