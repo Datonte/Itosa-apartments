@@ -1,0 +1,14 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "routes": [
+    { "src": "/", "dest": "/index.html" },
+    { "src": "/browse", "dest": "/browse.html" },
+    { "src": "/details", "dest": "/details.html" },
+    { "src": "/admin", "dest": "/admin-dashboard.html" },
+    { "src": "/admin-dashboard", "dest": "/admin-dashboard.html" },
+    { "src": "/admin-apartments", "dest": "/admin-apartments.html" },
+    { "src": "/admin-bookings", "dest": "/admin-bookings.html" },
+    { "src": "/admin-availability", "dest": "/admin-availability.html" }
+  ]
+}
