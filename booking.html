@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html class="light" lang="en">
 <head>
   <meta charset="utf-8" />
@@ -7,7 +7,7 @@
   <meta name="description" content="Secure your shortlet booking with ITOSA Apartment. Direct booking, instant confirmation, no hidden fees." />
   <meta name="robots" content="noindex, nofollow" />
 
-  <link rel="icon" href="/assets/images/icons/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="/assets/images/logo.jpeg" type="image/jpeg" />
 
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
@@ -21,7 +21,7 @@
 <header class="fixed top-0 w-full z-50 bg-white/85 backdrop-blur-md border-b border-zinc-100">
   <div class="max-w-container mx-auto flex justify-between items-center px-5 lg:px-8 h-20">
     <a href="/" class="flex items-center gap-2" aria-label="ITOSA Apartment home">
-      <span class="material-symbols-outlined text-brand-ink filled" style="font-variation-settings:'FILL' 1;">apartment</span>
+      <img src="/assets/images/logo.jpeg" alt="ITOSA Apartment" class="h-10 w-auto rounded-md" />
       <span class="text-lg lg:text-xl font-bold tracking-[0.18em] text-brand-ink font-display-xl">ITOSA APARTMENT</span>
     </a>
     <a href="/contact" class="text-sm font-semibold text-zinc-600 hover:text-brand-ink">Need help?</a>
@@ -33,9 +33,9 @@
     <!-- Progress steps -->
     <ol class="flex items-center justify-center gap-2 mb-10" aria-label="Booking progress">
       <li><span class="step-pill active" id="step-1">1. Review</span></li>
-      <li class="text-zinc-300">—</li>
+      <li class="text-zinc-300">â€”</li>
       <li><span class="step-pill" id="step-2">2. Your details</span></li>
-      <li class="text-zinc-300">—</li>
+      <li class="text-zinc-300">â€”</li>
       <li><span class="step-pill" id="step-3">3. Pay</span></li>
     </ol>
 
@@ -54,24 +54,24 @@
       <div class="flex gap-4 p-4 bg-surface-container-low rounded-xl mb-6">
         <img id="r-image" alt="" class="w-24 h-24 rounded-lg object-cover bg-surface-container" />
         <div class="flex-1">
-          <p class="text-xs uppercase tracking-wider text-brand-yellow-deep font-bold" id="r-location">—</p>
-          <h2 class="font-display-xl text-lg text-brand-ink" id="r-name">—</h2>
-          <p class="text-xs text-on-surface-variant" id="r-type">—</p>
+          <p class="text-xs uppercase tracking-wider text-brand-yellow-deep font-bold" id="r-location">â€”</p>
+          <h2 class="font-display-xl text-lg text-brand-ink" id="r-name">â€”</h2>
+          <p class="text-xs text-on-surface-variant" id="r-type">â€”</p>
         </div>
       </div>
 
       <dl class="grid grid-cols-2 gap-4 text-sm mb-6">
-        <div><dt class="text-on-surface-variant text-xs uppercase tracking-wider mb-1">Check-in</dt><dd class="font-semibold text-brand-ink" id="r-checkin">—</dd></div>
-        <div><dt class="text-on-surface-variant text-xs uppercase tracking-wider mb-1">Check-out</dt><dd class="font-semibold text-brand-ink" id="r-checkout">—</dd></div>
-        <div><dt class="text-on-surface-variant text-xs uppercase tracking-wider mb-1">Nights</dt><dd class="font-semibold text-brand-ink" id="r-nights">—</dd></div>
-        <div><dt class="text-on-surface-variant text-xs uppercase tracking-wider mb-1">Guests</dt><dd class="font-semibold text-brand-ink" id="r-guests">—</dd></div>
+        <div><dt class="text-on-surface-variant text-xs uppercase tracking-wider mb-1">Check-in</dt><dd class="font-semibold text-brand-ink" id="r-checkin">â€”</dd></div>
+        <div><dt class="text-on-surface-variant text-xs uppercase tracking-wider mb-1">Check-out</dt><dd class="font-semibold text-brand-ink" id="r-checkout">â€”</dd></div>
+        <div><dt class="text-on-surface-variant text-xs uppercase tracking-wider mb-1">Nights</dt><dd class="font-semibold text-brand-ink" id="r-nights">â€”</dd></div>
+        <div><dt class="text-on-surface-variant text-xs uppercase tracking-wider mb-1">Guests</dt><dd class="font-semibold text-brand-ink" id="r-guests">â€”</dd></div>
       </dl>
 
       <div class="border-t border-zinc-100 pt-4 space-y-2 text-sm mb-6">
-        <div class="flex justify-between"><span class="text-on-surface-variant"><span id="r-rate">—</span> × <span id="r-nights2">—</span> nights</span><span id="r-subtotal">—</span></div>
-        <div class="flex justify-between"><span class="text-on-surface-variant">Cleaning fee</span><span id="r-cleaning">—</span></div>
-        <div class="flex justify-between"><span class="text-on-surface-variant">Service fee</span><span id="r-service">—</span></div>
-        <div class="flex justify-between font-bold text-brand-ink border-t border-zinc-100 pt-2"><span>Total</span><span id="r-total">—</span></div>
+        <div class="flex justify-between"><span class="text-on-surface-variant"><span id="r-rate">â€”</span> Ã— <span id="r-nights2">â€”</span> nights</span><span id="r-subtotal">â€”</span></div>
+        <div class="flex justify-between"><span class="text-on-surface-variant">Cleaning fee</span><span id="r-cleaning">â€”</span></div>
+        <div class="flex justify-between"><span class="text-on-surface-variant">Service fee</span><span id="r-service">â€”</span></div>
+        <div class="flex justify-between font-bold text-brand-ink border-t border-zinc-100 pt-2"><span>Total</span><span id="r-total">â€”</span></div>
       </div>
 
       <div class="flex flex-col sm:flex-row gap-3 sm:justify-between">
@@ -131,21 +131,21 @@
     <!-- STEP 3: Pay -->
     <section id="panel-3" class="hidden bg-white p-6 lg:p-8 rounded-2xl shadow-card border border-zinc-100">
       <h1 class="font-display-xl text-headline-lg text-brand-ink mb-1">Pay securely</h1>
-      <p class="text-on-surface-variant text-sm mb-6">Powered by Paystack — Nigeria's most trusted payment gateway. Your card details never touch our servers.</p>
+      <p class="text-on-surface-variant text-sm mb-6">Powered by Paystack â€” Nigeria's most trusted payment gateway. Your card details never touch our servers.</p>
 
       <div class="bg-surface-container-low p-5 rounded-xl mb-6">
         <h2 class="font-display-xl text-lg text-brand-ink mb-3">Booking summary</h2>
         <dl class="space-y-2 text-sm">
-          <div class="flex justify-between"><dt class="text-on-surface-variant">Apartment</dt><dd class="font-semibold text-right" id="p-apartment">—</dd></div>
-          <div class="flex justify-between"><dt class="text-on-surface-variant">Stay</dt><dd class="font-semibold text-right" id="p-stay">—</dd></div>
-          <div class="flex justify-between"><dt class="text-on-surface-variant">Guests</dt><dd class="font-semibold" id="p-guests">—</dd></div>
-          <div class="flex justify-between"><dt class="text-on-surface-variant">Guest</dt><dd class="font-semibold text-right" id="p-guest">—</dd></div>
+          <div class="flex justify-between"><dt class="text-on-surface-variant">Apartment</dt><dd class="font-semibold text-right" id="p-apartment">â€”</dd></div>
+          <div class="flex justify-between"><dt class="text-on-surface-variant">Stay</dt><dd class="font-semibold text-right" id="p-stay">â€”</dd></div>
+          <div class="flex justify-between"><dt class="text-on-surface-variant">Guests</dt><dd class="font-semibold" id="p-guests">â€”</dd></div>
+          <div class="flex justify-between"><dt class="text-on-surface-variant">Guest</dt><dd class="font-semibold text-right" id="p-guest">â€”</dd></div>
         </dl>
         <div class="border-t border-zinc-200 mt-4 pt-4 space-y-1 text-sm">
-          <div class="flex justify-between"><span class="text-on-surface-variant"><span id="p-rate">—</span> × <span id="p-nights">—</span> nights</span><span id="p-subtotal">—</span></div>
-          <div class="flex justify-between"><span class="text-on-surface-variant">Cleaning fee</span><span id="p-cleaning">—</span></div>
-          <div class="flex justify-between"><span class="text-on-surface-variant">Service fee</span><span id="p-service">—</span></div>
-          <div class="flex justify-between font-bold text-lg text-brand-ink border-t border-zinc-200 pt-2 mt-2"><span>Total to pay</span><span id="p-total">—</span></div>
+          <div class="flex justify-between"><span class="text-on-surface-variant"><span id="p-rate">â€”</span> Ã— <span id="p-nights">â€”</span> nights</span><span id="p-subtotal">â€”</span></div>
+          <div class="flex justify-between"><span class="text-on-surface-variant">Cleaning fee</span><span id="p-cleaning">â€”</span></div>
+          <div class="flex justify-between"><span class="text-on-surface-variant">Service fee</span><span id="p-service">â€”</span></div>
+          <div class="flex justify-between font-bold text-lg text-brand-ink border-t border-zinc-200 pt-2 mt-2"><span>Total to pay</span><span id="p-total">â€”</span></div>
         </div>
       </div>
 
@@ -161,7 +161,7 @@
         <button id="pay-btn" type="button" class="px-8 py-3 bg-brand-yellow text-brand-ink font-label-bold text-label-bold rounded-full hover:bg-brand-ink hover:text-white transition-colors">
           <span class="inline-flex items-center gap-2">
             <span class="material-symbols-outlined text-[18px]">lock</span>
-            Pay <span id="p-total-btn">—</span>
+            Pay <span id="p-total-btn">â€”</span>
           </span>
         </button>
       </div>
@@ -275,9 +275,9 @@
 
   function populateStep3(a, draft, totals) {
     document.getElementById("p-apartment").textContent = a.name;
-    document.getElementById("p-stay").textContent = `${formatDateLong(draft.checkin)} → ${formatDateLong(draft.checkout)}`;
+    document.getElementById("p-stay").textContent = `${formatDateLong(draft.checkin)} â†’ ${formatDateLong(draft.checkout)}`;
     document.getElementById("p-guests").textContent = draft.guests;
-    document.getElementById("p-guest").textContent = draft.name + " · " + draft.email;
+    document.getElementById("p-guest").textContent = draft.name + " Â· " + draft.email;
     document.getElementById("p-rate").textContent = formatNGN(a.pricePerNight);
     document.getElementById("p-nights").textContent = totals.nights;
     document.getElementById("p-subtotal").textContent = formatNGN(totals.subtotal);
@@ -289,7 +289,7 @@
 
   function payNow(a, totals) {
     const draft = JSON.parse(sessionStorage.getItem("itosa.bookingDraft") || "null");
-    if (!draft) { alert("Booking session lost — please go back and re-enter your details."); return; }
+    if (!draft) { alert("Booking session lost â€” please go back and re-enter your details."); return; }
 
     payWithPaystack({
       email: draft.email,
@@ -309,7 +309,7 @@
         window.location.href = "/confirmation?ref=" + encodeURIComponent(reference);
       },
       onClose: () => {
-        // user dismissed — keep them on the pay step
+        // user dismissed â€” keep them on the pay step
       }
     });
   }

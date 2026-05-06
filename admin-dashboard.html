@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html class="light" lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dashboard | ITOSA Admin</title>
   <meta name="robots" content="noindex, nofollow" />
-  <link rel="icon" href="/assets/images/icons/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="/assets/images/logo.jpeg" type="image/jpeg" />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
   <script src="/assets/js/tailwind.config.js"></script>
@@ -16,13 +16,13 @@
 
 <!-- Demo banner -->
 <div class="demo-banner">
-  Bookings &amp; availability sync to Supabase. Apartment edits save to this browser only. <a href="/" class="underline font-semibold">Return to site</a> ·
+  Bookings &amp; availability sync to Supabase. Apartment edits save to this browser only. <a href="/" class="underline font-semibold">Return to site</a> Â·
   <button id="reset-overrides-btn" class="underline font-semibold ml-1">Reset to defaults</button>
 </div>
 
 <!-- Sidebar -->
 <aside class="hidden md:flex flex-col fixed left-0 top-[40px] bottom-0 w-64 bg-brand-ink text-white p-6 z-30">
-  <a href="/" class="flex items-center gap-2 mb-10"><span class="material-symbols-outlined text-brand-yellow filled" style="font-variation-settings:'FILL' 1;">apartment</span><span class="text-base font-bold tracking-[0.18em] font-display-xl">ITOSA · ADMIN</span></a>
+  <a href="/" class="flex items-center gap-2 mb-10"><span class="material-symbols-outlined text-brand-yellow filled" style="font-variation-settings:'FILL' 1;">apartment</span><span class="text-base font-bold tracking-[0.18em] font-display-xl">ITOSA Â· ADMIN</span></a>
   <nav class="flex flex-col gap-1 text-sm" aria-label="Admin">
     <a data-admin-link href="/admin-dashboard" class="px-3 py-2.5 rounded-lg flex items-center gap-2.5 text-zinc-400 hover:text-white hover:bg-white/5"><span class="material-symbols-outlined text-[20px]">dashboard</span>Dashboard</a>
     <a data-admin-link href="/admin-apartments" class="px-3 py-2.5 rounded-lg flex items-center gap-2.5 text-zinc-400 hover:text-white hover:bg-white/5"><span class="material-symbols-outlined text-[20px]">apartment</span>Apartments</a>
@@ -31,12 +31,12 @@
   </nav>
   <div class="mt-auto pt-6 border-t border-white/10 text-xs text-zinc-500">
     <p>Logged in as <strong class="text-white">Owner</strong></p>
-    <p class="text-zinc-500/80 mt-1">No backend yet — see CONTRIBUTING.md.</p>
+    <p class="text-zinc-500/80 mt-1">No backend yet â€” see CONTRIBUTING.md.</p>
   </div>
 </aside>
 
 <header class="md:hidden fixed top-[40px] left-0 right-0 bg-brand-ink text-white z-30 px-5 h-14 flex items-center justify-between">
-  <a href="/admin-dashboard" class="flex items-center gap-2"><span class="material-symbols-outlined text-brand-yellow filled" style="font-variation-settings:'FILL' 1;">apartment</span><span class="text-sm font-bold tracking-[0.18em]">ITOSA · ADMIN</span></a>
+  <a href="/admin-dashboard" class="flex items-center gap-2"><span class="material-symbols-outlined text-brand-yellow filled" style="font-variation-settings:'FILL' 1;">apartment</span><span class="text-sm font-bold tracking-[0.18em]">ITOSA Â· ADMIN</span></a>
   <button id="admin-mobile-menu-btn" class="p-2" aria-label="Open admin menu" aria-expanded="false"><span class="material-symbols-outlined">menu</span></button>
 </header>
 <nav id="admin-mobile-menu" class="md:hidden fixed top-[94px] left-0 right-0 bg-brand-ink text-white z-30 px-3 py-3 hidden border-t border-white/10">
@@ -67,24 +67,24 @@
           <span class="text-xs text-on-surface-variant uppercase tracking-wider font-bold">Total apartments</span>
           <span class="material-symbols-outlined text-brand-yellow-deep">apartment</span>
         </div>
-        <p class="text-3xl font-bold text-brand-ink" id="m-apartments">—</p>
-        <p class="text-xs text-on-surface-variant mt-1"><span id="m-available">—</span> available</p>
+        <p class="text-3xl font-bold text-brand-ink" id="m-apartments">â€”</p>
+        <p class="text-xs text-on-surface-variant mt-1"><span id="m-available">â€”</span> available</p>
       </div>
       <div class="bg-brand-ink text-white p-6 rounded-2xl shadow-card">
         <div class="flex items-center justify-between mb-3">
           <span class="text-xs text-zinc-400 uppercase tracking-wider font-bold">Total revenue</span>
           <span class="material-symbols-outlined text-brand-yellow">payments</span>
         </div>
-        <p class="text-3xl font-bold" id="m-revenue">—</p>
-        <p class="text-xs text-zinc-400 mt-1">From <span id="m-paid-count">—</span> paid bookings</p>
+        <p class="text-3xl font-bold" id="m-revenue">â€”</p>
+        <p class="text-xs text-zinc-400 mt-1">From <span id="m-paid-count">â€”</span> paid bookings</p>
       </div>
       <div class="bg-white p-6 rounded-2xl shadow-card border border-zinc-100">
         <div class="flex items-center justify-between mb-3">
           <span class="text-xs text-on-surface-variant uppercase tracking-wider font-bold">Total bookings</span>
           <span class="material-symbols-outlined text-brand-yellow-deep">receipt_long</span>
         </div>
-        <p class="text-3xl font-bold text-brand-ink" id="m-bookings">—</p>
-        <p class="text-xs text-on-surface-variant mt-1"><span id="m-pending">—</span> pending verification</p>
+        <p class="text-3xl font-bold text-brand-ink" id="m-bookings">â€”</p>
+        <p class="text-xs text-on-surface-variant mt-1"><span id="m-pending">â€”</span> pending verification</p>
       </div>
     </div>
 
@@ -92,7 +92,7 @@
     <div class="bg-white rounded-2xl shadow-card border border-zinc-100 mb-8">
       <div class="flex items-center justify-between p-5 border-b border-zinc-100">
         <h2 class="font-display-xl text-lg text-brand-ink">Recent bookings</h2>
-        <a href="/admin-bookings" class="text-sm font-semibold text-brand-ink hover:text-brand-yellow-deep">View all →</a>
+        <a href="/admin-bookings" class="text-sm font-semibold text-brand-ink hover:text-brand-yellow-deep">View all â†’</a>
       </div>
       <div class="overflow-x-auto">
         <table class="w-full text-sm">
@@ -160,11 +160,11 @@
         const badge = statusBadge(b.paymentStatus);
         return `<tr>
           <td class="px-5 py-4">
-            <div class="font-semibold text-brand-ink">${escape(b.name || "—")}</div>
+            <div class="font-semibold text-brand-ink">${escape(b.name || "â€”")}</div>
             <div class="text-xs text-on-surface-variant">${escape(b.email || "")}</div>
           </td>
           <td class="px-5 py-4 text-on-surface-variant">${escape(apt?.name || b.apartmentSlug)}</td>
-          <td class="px-5 py-4 text-on-surface-variant">${formatDate(b.checkin)} → ${formatDate(b.checkout)}</td>
+          <td class="px-5 py-4 text-on-surface-variant">${formatDate(b.checkin)} â†’ ${formatDate(b.checkout)}</td>
           <td class="px-5 py-4 font-semibold">${formatNGN(b.totals?.total || 0)}</td>
           <td class="px-5 py-4">${badge}</td>
         </tr>`;
@@ -179,7 +179,7 @@
           <img src="${(a.gallery && a.gallery[0]) || a.galleryFallback || ""}" alt="" class="w-14 h-14 rounded-lg object-cover bg-surface-container" onerror="this.src='${a.galleryFallback || ""}'" />
           <div>
             <p class="font-semibold text-brand-ink">${escape(a.name)}</p>
-            <p class="text-xs text-on-surface-variant">${escape(a.location)} · ${formatNGN(a.pricePerNight)} / night</p>
+            <p class="text-xs text-on-surface-variant">${escape(a.location)} Â· ${formatNGN(a.pricePerNight)} / night</p>
           </div>
         </div>
         <span class="text-xs px-3 py-1 rounded-full font-semibold ${statusClass(a.status)}">${escape(a.status)}</span>
@@ -194,7 +194,7 @@
       cancelled: '<span class="px-3 py-1 text-xs font-semibold rounded-full bg-zinc-100 text-zinc-600">Cancelled</span>',
       failed: '<span class="px-3 py-1 text-xs font-semibold rounded-full bg-rose-50 text-rose-700">Failed</span>'
     };
-    return map[s] || `<span class="px-3 py-1 text-xs font-semibold rounded-full bg-zinc-100 text-zinc-600">${escape(s || "—")}</span>`;
+    return map[s] || `<span class="px-3 py-1 text-xs font-semibold rounded-full bg-zinc-100 text-zinc-600">${escape(s || "â€”")}</span>`;
   }
   function statusClass(s) {
     return ({ available: "bg-emerald-50 text-emerald-700", renovation: "bg-amber-50 text-amber-700", booked: "bg-zinc-100 text-zinc-600" }[s] || "bg-zinc-100 text-zinc-600");

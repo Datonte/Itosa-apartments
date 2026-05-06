@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html class="light" lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Availability | ITOSA Admin</title>
   <meta name="robots" content="noindex, nofollow" />
-  <link rel="icon" href="/assets/images/icons/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="/assets/images/logo.jpeg" type="image/jpeg" />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
   <script src="/assets/js/tailwind.config.js"></script>
@@ -15,12 +15,12 @@
 <body class="bg-surface-container-low text-brand-ink antialiased min-h-screen font-body-md">
 
 <div class="demo-banner">
-  Bookings &amp; availability sync to Supabase. Apartment edits save to this browser only. <a href="/" class="underline font-semibold">Return to site</a> ·
+  Bookings &amp; availability sync to Supabase. Apartment edits save to this browser only. <a href="/" class="underline font-semibold">Return to site</a> Â·
   <button id="reset-overrides-btn" class="underline font-semibold ml-1">Reset to defaults</button>
 </div>
 
 <aside class="hidden md:flex flex-col fixed left-0 top-[40px] bottom-0 w-64 bg-brand-ink text-white p-6 z-30">
-  <a href="/" class="flex items-center gap-2 mb-10"><span class="material-symbols-outlined text-brand-yellow filled" style="font-variation-settings:'FILL' 1;">apartment</span><span class="text-base font-bold tracking-[0.18em] font-display-xl">ITOSA · ADMIN</span></a>
+  <a href="/" class="flex items-center gap-2 mb-10"><span class="material-symbols-outlined text-brand-yellow filled" style="font-variation-settings:'FILL' 1;">apartment</span><span class="text-base font-bold tracking-[0.18em] font-display-xl">ITOSA Â· ADMIN</span></a>
   <nav class="flex flex-col gap-1 text-sm" aria-label="Admin">
     <a data-admin-link href="/admin-dashboard" class="px-3 py-2.5 rounded-lg flex items-center gap-2.5 text-zinc-400 hover:text-white hover:bg-white/5"><span class="material-symbols-outlined text-[20px]">dashboard</span>Dashboard</a>
     <a data-admin-link href="/admin-apartments" class="px-3 py-2.5 rounded-lg flex items-center gap-2.5 text-zinc-400 hover:text-white hover:bg-white/5"><span class="material-symbols-outlined text-[20px]">apartment</span>Apartments</a>
@@ -30,7 +30,7 @@
 </aside>
 
 <header class="md:hidden fixed top-[40px] left-0 right-0 bg-brand-ink text-white z-30 px-5 h-14 flex items-center justify-between">
-  <a href="/admin-dashboard" class="flex items-center gap-2"><span class="material-symbols-outlined text-brand-yellow filled" style="font-variation-settings:'FILL' 1;">apartment</span><span class="text-sm font-bold tracking-[0.18em]">ITOSA · ADMIN</span></a>
+  <a href="/admin-dashboard" class="flex items-center gap-2"><span class="material-symbols-outlined text-brand-yellow filled" style="font-variation-settings:'FILL' 1;">apartment</span><span class="text-sm font-bold tracking-[0.18em]">ITOSA Â· ADMIN</span></a>
   <button id="admin-mobile-menu-btn" class="p-2" aria-label="Open admin menu"><span class="material-symbols-outlined">menu</span></button>
 </header>
 <nav id="admin-mobile-menu" class="md:hidden fixed top-[94px] left-0 right-0 bg-brand-ink text-white z-30 px-3 py-3 hidden border-t border-white/10">
@@ -67,10 +67,10 @@
       <section class="lg:col-span-9">
         <div class="bg-white p-5 rounded-2xl shadow-card border border-zinc-100">
           <div class="flex items-center justify-between mb-4">
-            <h2 class="font-display-xl text-xl text-brand-ink" id="cal-apt-name">—</h2>
+            <h2 class="font-display-xl text-xl text-brand-ink" id="cal-apt-name">â€”</h2>
             <div class="flex items-center gap-2">
               <button id="cal-prev" class="p-2 rounded-full hover:bg-surface-container-low" aria-label="Previous month"><span class="material-symbols-outlined">chevron_left</span></button>
-              <span id="cal-month-label" class="font-semibold min-w-[140px] text-center">—</span>
+              <span id="cal-month-label" class="font-semibold min-w-[140px] text-center">â€”</span>
               <button id="cal-next" class="p-2 rounded-full hover:bg-surface-container-low" aria-label="Next month"><span class="material-symbols-outlined">chevron_right</span></button>
             </div>
           </div>
@@ -135,7 +135,7 @@
 
     async function renderCalendar() {
       const apt = apts.find((a) => a.slug === activeSlug);
-      document.getElementById("cal-apt-name").textContent = apt?.name || "—";
+      document.getElementById("cal-apt-name").textContent = apt?.name || "â€”";
       const monthLabel = viewMonth.toLocaleDateString("en-NG", { month: "long", year: "numeric" });
       document.getElementById("cal-month-label").textContent = monthLabel;
 

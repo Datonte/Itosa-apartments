@@ -1,21 +1,21 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html class="light" lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Browse Shortlet Apartments — Lagos, Surulere & Isheri | ITOSA</title>
+  <title>Browse Shortlet Apartments â€” Lagos, Surulere & Isheri | ITOSA</title>
   <meta name="description" content="Browse premium shortlet apartments in Lagos. Compare apartments in Surulere and Isheri. Real photos, real prices, real availability." />
   <meta name="keywords" content="browse shortlet apartments lagos, surulere apartment, isheri apartment, itosa apartments" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://itosaapartment.com/browse" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Browse Shortlet Apartments — Lagos | ITOSA" />
+  <meta property="og:title" content="Browse Shortlet Apartments â€” Lagos | ITOSA" />
   <meta property="og:description" content="Compare premium shortlets in Surulere & Isheri. Direct booking, no logins." />
   <meta property="og:url" content="https://itosaapartment.com/browse" />
   <meta property="og:image" content="https://itosaapartment.com/assets/images/icons/og-default.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
 
-  <link rel="icon" href="/assets/images/icons/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="/assets/images/logo.jpeg" type="image/jpeg" />
 
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
@@ -29,7 +29,7 @@
 <header class="fixed top-0 w-full z-50 bg-white/85 backdrop-blur-md border-b border-zinc-100">
   <div class="max-w-container mx-auto flex justify-between items-center px-5 lg:px-8 h-20">
     <a href="/" class="flex items-center gap-2" aria-label="ITOSA Apartment home">
-      <span class="material-symbols-outlined text-brand-ink filled" style="font-variation-settings:'FILL' 1;">apartment</span>
+      <img src="/assets/images/logo.jpeg" alt="ITOSA Apartment" class="h-10 w-auto rounded-md" />
       <span class="text-lg lg:text-xl font-bold tracking-[0.18em] text-brand-ink font-display-xl">ITOSA APARTMENT</span>
     </a>
     <nav class="hidden md:flex gap-10 items-center" aria-label="Primary">
@@ -62,7 +62,7 @@
     <nav class="text-xs text-on-surface-variant mb-3" aria-label="Breadcrumb">
       <a href="/" class="hover:text-brand-ink">Home</a> <span class="mx-1">/</span> <span class="text-brand-ink font-semibold">Browse</span>
     </nav>
-    <h1 class="font-display-xl text-headline-lg text-brand-ink mb-2">Shortlet Apartments in Lagos — Surulere &amp; Isheri</h1>
+    <h1 class="font-display-xl text-headline-lg text-brand-ink mb-2">Shortlet Apartments in Lagos â€” Surulere &amp; Isheri</h1>
     <p class="font-body-md text-on-surface-variant max-w-2xl">Find a clean, secure shortlet for your next Lagos stay. Direct booking, instant confirmation, no hidden fees.</p>
   </section>
 
@@ -77,9 +77,9 @@
       <div class="relative">
         <select id="filter-price" class="input-base pr-10 appearance-none">
           <option value="all">Any price</option>
-          <option value="0-50000">Under ₦50,000</option>
-          <option value="50000-100000">₦50,000 - ₦100,000</option>
-          <option value="100000-Infinity">₦100,000+</option>
+          <option value="0-50000">Under â‚¦50,000</option>
+          <option value="50000-100000">â‚¦50,000 - â‚¦100,000</option>
+          <option value="100000-Infinity">â‚¦100,000+</option>
         </select>
         <span class="material-symbols-outlined absolute right-3 top-3 text-outline pointer-events-none">expand_more</span>
       </div>
@@ -105,7 +105,7 @@
 
   <!-- Results -->
   <section>
-    <p class="text-sm text-on-surface-variant mb-6"><span id="result-count">—</span> apartments available</p>
+    <p class="text-sm text-on-surface-variant mb-6"><span id="result-count">â€”</span> apartments available</p>
     <div id="apartment-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
       <!-- Cards rendered by JS -->
     </div>
@@ -247,7 +247,7 @@
     return `
       <a href="/apartments/${a.slug}" class="apt-card group bg-white border border-zinc-200 rounded-3xl overflow-hidden shadow-card block">
         <div class="relative aspect-[4/3] overflow-hidden bg-surface-container">
-          <img loading="lazy" src="${img}" alt="${a.name} — ${a.location}, Lagos" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 ${isAvail ? "" : "grayscale-[0.3]"}" onerror="this.onerror=null;this.src='${a.galleryFallback || ""}'" />
+          <img loading="lazy" src="${img}" alt="${a.name} â€” ${a.location}, Lagos" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 ${isAvail ? "" : "grayscale-[0.3]"}" onerror="this.onerror=null;this.src='${a.galleryFallback || ""}'" />
           <div class="absolute top-4 left-4">${badge}</div>
         </div>
         <div class="p-6">
