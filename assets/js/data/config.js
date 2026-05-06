@@ -40,6 +40,11 @@ export const FEES = {
   cautionDeposit: 0      // optional refundable damage deposit; set > 0 to add to total
 };
 
+export const SUPABASE = {
+  url: "https://hbruquongmzndoztctwo.supabase.co",
+  anonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhicnVxdW9uZ216bmRvenRjdHdvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgwODc4NjIsImV4cCI6MjA5MzY2Mzg2Mn0.mXlJO8xszhTGP5Wljn1_jZKV7KZaoWuUHibAQmlMQKo"
+};
+
 export const POLICIES = {
   checkInTime: "3:00 PM",
   checkOutTime: "11:00 AM",

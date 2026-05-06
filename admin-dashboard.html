@@ -16,7 +16,7 @@
 
 <!-- Demo banner -->
 <div class="demo-banner">
-  Demo mode — all changes save to your browser only. <a href="/" class="underline font-semibold">Return to site</a> ·
+  Bookings &amp; availability sync to Supabase. Apartment edits save to this browser only. <a href="/" class="underline font-semibold">Return to site</a> ·
   <button id="reset-overrides-btn" class="underline font-semibold ml-1">Reset to defaults</button>
 </div>
 
@@ -135,55 +135,57 @@
     }
   });
 
-  const apts = getApartments();
-  const bookings = getBookings();
-  const paid = bookings.filter((b) => b.paymentStatus === "paid");
-  const pending = bookings.filter((b) => b.paymentStatus === "pending_verification");
-  const revenue = paid.reduce((sum, b) => sum + (b.totals?.total || 0), 0);
+  (async () => {
+    const apts = getApartments();
+    const bookings = await getBookings();
+    const paid = bookings.filter((b) => b.paymentStatus === "paid");
+    const pending = bookings.filter((b) => b.paymentStatus === "pending_verification");
+    const revenue = paid.reduce((sum, b) => sum + (b.totals?.total || 0), 0);
 
-  document.getElementById("m-apartments").textContent = apts.length;
-  document.getElementById("m-available").textContent = apts.filter((a) => a.status === "available").length;
-  document.getElementById("m-revenue").textContent = formatNGN(revenue);
-  document.getElementById("m-paid-count").textContent = paid.length;
-  document.getElementById("m-bookings").textContent = bookings.length;
-  document.getElementById("m-pending").textContent = pending.length;
+    document.getElementById("m-apartments").textContent = apts.length;
+    document.getElementById("m-available").textContent = apts.filter((a) => a.status === "available").length;
+    document.getElementById("m-revenue").textContent = formatNGN(revenue);
+    document.getElementById("m-paid-count").textContent = paid.length;
+    document.getElementById("m-bookings").textContent = bookings.length;
+    document.getElementById("m-pending").textContent = pending.length;
 
-  // Recent bookings
-  const recent = bookings.slice(0, 5);
-  const rows = document.getElementById("recent-bookings-rows");
-  if (recent.length === 0) {
-    rows.innerHTML = `<tr><td colspan="5" class="px-5 py-10 text-center text-on-surface-variant">No bookings yet. They'll appear here once guests start booking.</td></tr>`;
-  } else {
-    rows.innerHTML = recent.map((b) => {
-      const apt = apts.find((a) => a.slug === b.apartmentSlug);
-      const badge = statusBadge(b.paymentStatus);
-      return `<tr>
-        <td class="px-5 py-4">
-          <div class="font-semibold text-brand-ink">${escape(b.name || "—")}</div>
-          <div class="text-xs text-on-surface-variant">${escape(b.email || "")}</div>
-        </td>
-        <td class="px-5 py-4 text-on-surface-variant">${escape(apt?.name || b.apartmentSlug)}</td>
-        <td class="px-5 py-4 text-on-surface-variant">${formatDate(b.checkin)} → ${formatDate(b.checkout)}</td>
-        <td class="px-5 py-4 font-semibold">${formatNGN(b.totals?.total || 0)}</td>
-        <td class="px-5 py-4">${badge}</td>
-      </tr>`;
-    }).join("");
-  }
+    // Recent bookings
+    const recent = bookings.slice(0, 5);
+    const rows = document.getElementById("recent-bookings-rows");
+    if (recent.length === 0) {
+      rows.innerHTML = `<tr><td colspan="5" class="px-5 py-10 text-center text-on-surface-variant">No bookings yet. They'll appear here once guests start booking.</td></tr>`;
+    } else {
+      rows.innerHTML = recent.map((b) => {
+        const apt = apts.find((a) => a.slug === b.apartmentSlug);
+        const badge = statusBadge(b.paymentStatus);
+        return `<tr>
+          <td class="px-5 py-4">
+            <div class="font-semibold text-brand-ink">${escape(b.name || "—")}</div>
+            <div class="text-xs text-on-surface-variant">${escape(b.email || "")}</div>
+          </td>
+          <td class="px-5 py-4 text-on-surface-variant">${escape(apt?.name || b.apartmentSlug)}</td>
+          <td class="px-5 py-4 text-on-surface-variant">${formatDate(b.checkin)} → ${formatDate(b.checkout)}</td>
+          <td class="px-5 py-4 font-semibold">${formatNGN(b.totals?.total || 0)}</td>
+          <td class="px-5 py-4">${badge}</td>
+        </tr>`;
+      }).join("");
+    }
 
-  // Apartments at a glance
-  const glance = document.getElementById("apt-glance");
-  glance.innerHTML = apts.map((a) => `
-    <li class="flex items-center justify-between p-5">
-      <div class="flex items-center gap-4">
-        <img src="${(a.gallery && a.gallery[0]) || a.galleryFallback || ""}" alt="" class="w-14 h-14 rounded-lg object-cover bg-surface-container" onerror="this.src='${a.galleryFallback || ""}'" />
-        <div>
-          <p class="font-semibold text-brand-ink">${escape(a.name)}</p>
-          <p class="text-xs text-on-surface-variant">${escape(a.location)} · ${formatNGN(a.pricePerNight)} / night</p>
+    // Apartments at a glance
+    const glance = document.getElementById("apt-glance");
+    glance.innerHTML = apts.map((a) => `
+      <li class="flex items-center justify-between p-5">
+        <div class="flex items-center gap-4">
+          <img src="${(a.gallery && a.gallery[0]) || a.galleryFallback || ""}" alt="" class="w-14 h-14 rounded-lg object-cover bg-surface-container" onerror="this.src='${a.galleryFallback || ""}'" />
+          <div>
+            <p class="font-semibold text-brand-ink">${escape(a.name)}</p>
+            <p class="text-xs text-on-surface-variant">${escape(a.location)} · ${formatNGN(a.pricePerNight)} / night</p>
+          </div>
         </div>
-      </div>
-      <span class="text-xs px-3 py-1 rounded-full font-semibold ${statusClass(a.status)}">${escape(a.status)}</span>
-    </li>
-  `).join("");
+        <span class="text-xs px-3 py-1 rounded-full font-semibold ${statusClass(a.status)}">${escape(a.status)}</span>
+      </li>
+    `).join("");
+  })();
 
   function statusBadge(s) {
     const map = {

@@ -362,13 +362,13 @@
     const reserveBtn = document.getElementById("reserve-btn");
     let chosenStart = null, chosenEnd = null;
 
-    const tryInitPicker = () => {
+    const tryInitPicker = async () => {
       if (!window.Litepicker) { setTimeout(tryInitPicker, 50); return; }
       initRangePicker({
         inputEl: dateInput,
         startInput: checkinIso,
         endInput: checkoutIso,
-        blockedRanges: getEffectiveBlockedDates(a.slug),
+        blockedRanges: await getEffectiveBlockedDates(a.slug),
         onSelect: (start, end) => {
           chosenStart = start; chosenEnd = end;
           if (!start || !end) return;

@@ -1,17 +1,18 @@
 // ============================================================
 // STORE — single read/write surface for apartments, bookings,
-// and availability. Reads from data modules first, mirrors any
-// mutations to localStorage. THIS IS THE SWAP-IN-A-BACKEND SEAM:
-// every page imports from here, never from the raw data modules
-// (except the data modules themselves).
+// and availability.
 //
-// To swap in a real backend later, replace the bodies of these
-// functions with fetch() calls — keep the same signatures and
-// nothing else needs to change.
+// Apartments: sync (static JS module) — admin overrides in localStorage.
+// Bookings: async — primary store is Supabase, fallback to localStorage.
+// Availability: async — primary store is Supabase, fallback to localStorage.
+//
+// Every page imports from here. To swap to a different backend,
+// replace the Supabase calls inside each function — signatures stay the same.
 // ============================================================
 
 import { APARTMENTS as DEFAULT_APARTMENTS } from "./apartments.js";
 import { BOOKED_RANGES as DEFAULT_BLOCKED } from "./availability.js";
+import { db } from "./supabase.js";
 
 const KEYS = {
   apartments: "itosa.apartments_overrides",
@@ -19,7 +20,7 @@ const KEYS = {
   bookings: "itosa.bookings"
 };
 
-// ---------- internal helpers ----------
+// ---------- localStorage helpers ----------
 function readJSON(key, fallback) {
   try {
     const raw = localStorage.getItem(key);
@@ -37,18 +38,60 @@ function writeJSON(key, value) {
   }
 }
 
-// ---------- apartments ----------
-// Strategy: defaults from the data file are the baseline; localStorage
-// holds an "overrides" map keyed by slug that wins over the default.
-// Apartments created in admin live entirely in localStorage with a slug.
+// ---------- row mappers (JS camelCase ↔ Supabase snake_case) ----------
+function bookingToRow(b) {
+  return {
+    id: b.id,
+    apartment_slug: b.apartmentSlug,
+    guest_name: b.name,
+    guest_email: b.email,
+    guest_phone: b.phone,
+    guests: b.guests,
+    checkin: b.checkin,
+    checkout: b.checkout,
+    nights: b.nights,
+    subtotal: b.totals?.subtotal ?? 0,
+    cleaning_fee: b.totals?.cleaningFee ?? 0,
+    service_fee: b.totals?.serviceFee ?? 0,
+    total: b.totals?.total ?? 0,
+    special_requests: b.specialRequests || null,
+    paystack_ref: b.paystackRef || null,
+    payment_status: b.paymentStatus || "pending_verification",
+    created_at: b.createdAt ? new Date(b.createdAt).toISOString() : new Date().toISOString()
+  };
+}
+
+function rowToBooking(row) {
+  return {
+    id: row.id,
+    apartmentSlug: row.apartment_slug,
+    name: row.guest_name,
+    email: row.guest_email,
+    phone: row.guest_phone,
+    guests: row.guests,
+    checkin: row.checkin,
+    checkout: row.checkout,
+    nights: row.nights,
+    totals: {
+      subtotal: row.subtotal,
+      cleaningFee: row.cleaning_fee,
+      serviceFee: row.service_fee,
+      total: row.total
+    },
+    specialRequests: row.special_requests,
+    paystackRef: row.paystack_ref,
+    paymentStatus: row.payment_status,
+    createdAt: new Date(row.created_at).getTime()
+  };
+}
+
+// ---------- apartments (sync — static data + localStorage overrides) ----------
 export function getApartments() {
   const overrides = readJSON(KEYS.apartments, {});
   const merged = DEFAULT_APARTMENTS.map((a) => ({ ...a, ...(overrides[a.slug] || {}) }));
-  // Add any pure-localStorage additions (slugs not in defaults)
   Object.values(overrides).forEach((a) => {
     if (a && a.slug && !merged.find((m) => m.slug === a.slug)) merged.push(a);
   });
-  // Filter out hard-deleted apartments (override with __deleted: true)
   return merged.filter((a) => !a.__deleted);
 }
 
@@ -66,8 +109,6 @@ export function saveApartment(apt) {
 
 export function deleteApartment(slug) {
   const overrides = readJSON(KEYS.apartments, {});
-  // For a default apartment, mark deleted so it filters out.
-  // For a localStorage-only apartment, simply remove the override.
   const isDefault = DEFAULT_APARTMENTS.find((a) => a.slug === slug);
   if (isDefault) {
     overrides[slug] = { slug, __deleted: true };
@@ -78,42 +119,170 @@ export function deleteApartment(slug) {
 }
 
 export function exportApartmentsAsCode() {
-  // For the admin "Export changes" button.
-  // Produces a JS snippet the maintainer can paste into apartments.js.
-  const apts = getApartments();
-  return "export const APARTMENTS = " + JSON.stringify(apts, null, 2) + ";";
+  return "export const APARTMENTS = " + JSON.stringify(getApartments(), null, 2) + ";";
 }
 
-// ---------- availability ----------
-export function getBlockedDates(slug) {
-  const overrides = readJSON(KEYS.blocked, {});
-  const fromDefault = DEFAULT_BLOCKED[slug] || [];
-  const fromOverride = overrides[slug];
-  // Override fully replaces if present
-  return fromOverride !== undefined ? fromOverride : fromDefault;
+// ---------- bookings (async — Supabase primary, localStorage fallback) ----------
+export async function getBookings() {
+  try {
+    const { data, error } = await db
+      .from("bookings")
+      .select("*")
+      .order("created_at", { ascending: false });
+    if (error) throw error;
+    const bookings = data.map(rowToBooking);
+    writeJSON(KEYS.bookings, bookings);
+    return bookings;
+  } catch (err) {
+    console.warn("[store] getBookings: Supabase failed, using localStorage", err);
+    return readJSON(KEYS.bookings, []);
+  }
 }
 
-export function setBlockedDates(slug, ranges) {
+export async function saveBooking(booking) {
+  if (!booking || !booking.id) throw new Error("saveBooking: id is required");
+  const row = bookingToRow(booking);
+  try {
+    const { error } = await db.from("bookings").upsert(row, { onConflict: "id" });
+    if (error) throw error;
+  } catch (err) {
+    console.warn("[store] saveBooking: Supabase failed, writing to localStorage", err);
+    const all = readJSON(KEYS.bookings, []);
+    const idx = all.findIndex((b) => b.id === booking.id);
+    if (idx >= 0) all[idx] = { ...all[idx], ...booking };
+    else all.unshift(booking);
+    writeJSON(KEYS.bookings, all);
+  }
+  return booking;
+}
+
+export async function getBookingById(id) {
+  try {
+    const { data, error } = await db
+      .from("bookings")
+      .select("*")
+      .eq("id", id)
+      .maybeSingle();
+    if (error) throw error;
+    return data ? rowToBooking(data) : null;
+  } catch (err) {
+    console.warn("[store] getBookingById: Supabase failed, using localStorage", err);
+    return readJSON(KEYS.bookings, []).find((b) => b.id === id) || null;
+  }
+}
+
+export async function getBookingByRef(ref) {
+  try {
+    const { data, error } = await db
+      .from("bookings")
+      .select("*")
+      .eq("paystack_ref", ref)
+      .maybeSingle();
+    if (error) throw error;
+    return data ? rowToBooking(data) : null;
+  } catch (err) {
+    console.warn("[store] getBookingByRef: Supabase failed, using localStorage", err);
+    return readJSON(KEYS.bookings, []).find((b) => b.paystackRef === ref) || null;
+  }
+}
+
+export async function deleteBooking(id) {
+  try {
+    const { error } = await db.from("bookings").delete().eq("id", id);
+    if (error) throw error;
+  } catch (err) {
+    console.warn("[store] deleteBooking: Supabase failed, deleting from localStorage", err);
+    const all = readJSON(KEYS.bookings, []).filter((b) => b.id !== id);
+    writeJSON(KEYS.bookings, all);
+  }
+}
+
+export async function updateBookingStatus(id, status) {
+  try {
+    const { data, error } = await db
+      .from("bookings")
+      .update({ payment_status: status })
+      .eq("id", id)
+      .select()
+      .maybeSingle();
+    if (error) throw error;
+    return data ? rowToBooking(data) : null;
+  } catch (err) {
+    console.warn("[store] updateBookingStatus: Supabase failed, using localStorage", err);
+    const all = readJSON(KEYS.bookings, []);
+    const b = all.find((x) => x.id === id);
+    if (!b) return null;
+    b.paymentStatus = status;
+    writeJSON(KEYS.bookings, all);
+    return b;
+  }
+}
+
+// ---------- availability (async — Supabase primary, localStorage fallback) ----------
+export async function getBlockedDates(slug) {
+  try {
+    const { data, error } = await db
+      .from("blocked_dates")
+      .select("start_date, end_date")
+      .eq("apartment_slug", slug);
+    if (error) throw error;
+    const ranges = data.map((r) => ({ start: r.start_date, end: r.end_date }));
+    // Cache in localStorage
+    const cache = readJSON(KEYS.blocked, {});
+    cache[slug] = ranges;
+    writeJSON(KEYS.blocked, cache);
+    return ranges;
+  } catch (err) {
+    console.warn("[store] getBlockedDates: Supabase failed, using fallback", err);
+    const overrides = readJSON(KEYS.blocked, {});
+    return overrides[slug] !== undefined ? overrides[slug] : (DEFAULT_BLOCKED[slug] || []);
+  }
+}
+
+export async function setBlockedDates(slug, ranges) {
+  try {
+    // Replace all rows for this slug
+    const { error: delErr } = await db
+      .from("blocked_dates")
+      .delete()
+      .eq("apartment_slug", slug);
+    if (delErr) throw delErr;
+
+    if (ranges.length > 0) {
+      const rows = ranges.map((r) => ({
+        apartment_slug: slug,
+        start_date: r.start,
+        end_date: r.end
+      }));
+      const { error: insErr } = await db.from("blocked_dates").insert(rows);
+      if (insErr) throw insErr;
+    }
+  } catch (err) {
+    console.warn("[store] setBlockedDates: Supabase failed, writing to localStorage", err);
+  }
+  // Always update localStorage cache too
   const overrides = readJSON(KEYS.blocked, {});
   overrides[slug] = ranges;
   writeJSON(KEYS.blocked, overrides);
 }
 
-export function getAllBlockedRanges() {
-  // Returns merged map { slug: ranges[] } across defaults + overrides
+export async function getAllBlockedRanges() {
   const overrides = readJSON(KEYS.blocked, {});
   const out = { ...DEFAULT_BLOCKED };
   Object.keys(overrides).forEach((k) => { out[k] = overrides[k]; });
   return out;
 }
 
-// Effective blocked = manually blocked + booked (paid or pending) bookings
-export function getEffectiveBlockedDates(slug) {
-  const blocked = getBlockedDates(slug) || [];
-  const bookings = getBookings()
+// Effective blocked = manually blocked dates + confirmed/pending bookings
+export async function getEffectiveBlockedDates(slug) {
+  const [blocked, bookings] = await Promise.all([
+    getBlockedDates(slug),
+    getBookings()
+  ]);
+  const fromBookings = bookings
     .filter((b) => b.apartmentSlug === slug && b.paymentStatus !== "cancelled" && b.paymentStatus !== "failed")
-    .map((b) => ({ start: b.checkin, end: subOneDay(b.checkout) })); // checkout day is free
-  return [...blocked, ...bookings];
+    .map((b) => ({ start: b.checkin, end: subOneDay(b.checkout) }));
+  return [...(blocked || []), ...fromBookings];
 }
 
 function subOneDay(iso) {
@@ -122,43 +291,7 @@ function subOneDay(iso) {
   return d.toISOString().slice(0, 10);
 }
 
-// ---------- bookings ----------
-export function getBookings() {
-  return readJSON(KEYS.bookings, []);
-}
-
-export function saveBooking(booking) {
-  if (!booking || !booking.id) throw new Error("saveBooking: id is required");
-  const all = getBookings();
-  const idx = all.findIndex((b) => b.id === booking.id);
-  if (idx >= 0) all[idx] = { ...all[idx], ...booking };
-  else all.unshift(booking);
-  writeJSON(KEYS.bookings, all);
-  return booking;
-}
-
-export function getBookingById(id) {
-  return getBookings().find((b) => b.id === id) || null;
-}
-
-export function getBookingByRef(ref) {
-  return getBookings().find((b) => b.paystackRef === ref) || null;
-}
-
-export function deleteBooking(id) {
-  const all = getBookings().filter((b) => b.id !== id);
-  writeJSON(KEYS.bookings, all);
-}
-
-export function updateBookingStatus(id, status) {
-  const b = getBookingById(id);
-  if (!b) return null;
-  b.paymentStatus = status;
-  return saveBooking(b);
-}
-
 // ---------- demo helpers ----------
 export function clearAllOverrides() {
-  // Used by admin "Reset to defaults" button.
   Object.values(KEYS).forEach((k) => localStorage.removeItem(k));
 }

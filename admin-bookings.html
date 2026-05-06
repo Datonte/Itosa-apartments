@@ -15,7 +15,7 @@
 <body class="bg-surface-container-low text-brand-ink antialiased min-h-screen font-body-md">
 
 <div class="demo-banner">
-  Demo mode — all changes save to your browser only. <a href="/" class="underline font-semibold">Return to site</a> ·
+  Bookings &amp; availability sync to Supabase. Apartment edits save to this browser only. <a href="/" class="underline font-semibold">Return to site</a> ·
   <button id="reset-overrides-btn" class="underline font-semibold ml-1">Reset to defaults</button>
 </div>
 
@@ -118,8 +118,8 @@
   document.getElementById("filter-status").addEventListener("change", (e) => { state.status = e.target.value; render(); });
   document.getElementById("filter-search").addEventListener("input", (e) => { state.q = e.target.value.toLowerCase(); render(); });
 
-  function render() {
-    const all = getBookings();
+  async function render() {
+    const all = await getBookings();
     const filtered = all.filter((b) => {
       if (state.status !== "all" && b.paymentStatus !== state.status) return false;
       if (state.q) {
@@ -160,8 +160,9 @@
     rows.querySelectorAll("[data-view]").forEach((b) => b.addEventListener("click", () => openDrawer(b.dataset.view)));
   }
 
-  function openDrawer(id) {
-    const b = getBookings().find((x) => x.id === id);
+  async function openDrawer(id) {
+    const all = await getBookings();
+    const b = all.find((x) => x.id === id);
     if (!b) return;
     const apt = getApartmentBySlug(b.apartmentSlug);
     const body = document.getElementById("drawer-body");
@@ -193,10 +194,10 @@
     document.getElementById("drawer").classList.add("flex");
   }
 
-  function doAction(act, id) {
-    if (act === "mark-paid") { updateBookingStatus(id, "paid"); toast("Marked as paid."); }
-    if (act === "cancel") { if (!confirm("Cancel this booking?")) return; updateBookingStatus(id, "cancelled"); toast("Booking cancelled."); }
-    if (act === "delete") { if (!confirm("Permanently delete this booking record?")) return; deleteBooking(id); toast("Booking deleted."); }
+  async function doAction(act, id) {
+    if (act === "mark-paid") { await updateBookingStatus(id, "paid"); toast("Marked as paid."); }
+    if (act === "cancel") { if (!confirm("Cancel this booking?")) return; await updateBookingStatus(id, "cancelled"); toast("Booking cancelled."); }
+    if (act === "delete") { if (!confirm("Permanently delete this booking record?")) return; await deleteBooking(id); toast("Booking deleted."); }
     closeDrawer();
     render();
   }

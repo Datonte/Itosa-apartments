@@ -15,7 +15,7 @@
 <body class="bg-surface-container-low text-brand-ink antialiased min-h-screen font-body-md">
 
 <div class="demo-banner">
-  Demo mode — all changes save to your browser only. <a href="/" class="underline font-semibold">Return to site</a> ·
+  Bookings &amp; availability sync to Supabase. Apartment edits save to this browser only. <a href="/" class="underline font-semibold">Return to site</a> ·
   <button id="reset-overrides-btn" class="underline font-semibold ml-1">Reset to defaults</button>
 </div>
 
@@ -117,6 +117,7 @@
     document.getElementById("cal-prev").addEventListener("click", () => { viewMonth = new Date(viewMonth.getFullYear(), viewMonth.getMonth() - 1, 1); renderCalendar(); });
     document.getElementById("cal-next").addEventListener("click", () => { viewMonth = new Date(viewMonth.getFullYear(), viewMonth.getMonth() + 1, 1); renderCalendar(); });
 
+
     function renderProperties() {
       const list = document.getElementById("prop-list");
       list.innerHTML = apts.map((a) => `
@@ -132,14 +133,18 @@
       );
     }
 
-    function renderCalendar() {
+    async function renderCalendar() {
       const apt = apts.find((a) => a.slug === activeSlug);
       document.getElementById("cal-apt-name").textContent = apt?.name || "—";
       const monthLabel = viewMonth.toLocaleDateString("en-NG", { month: "long", year: "numeric" });
       document.getElementById("cal-month-label").textContent = monthLabel;
 
-      const blocked = new Set((getBlockedDates(activeSlug) || []).flatMap((r) => expandRange(r.start, r.end)));
-      const effective = new Set(getEffectiveBlockedDates(activeSlug).flatMap((r) => expandRange(r.start, r.end)));
+      const [blockedRanges, effectiveRanges] = await Promise.all([
+        getBlockedDates(activeSlug),
+        getEffectiveBlockedDates(activeSlug)
+      ]);
+      const blocked = new Set((blockedRanges || []).flatMap((r) => expandRange(r.start, r.end)));
+      const effective = new Set((effectiveRanges || []).flatMap((r) => expandRange(r.start, r.end)));
       const booked = new Set([...effective].filter((d) => !blocked.has(d)));
 
       const today = todayIso();
@@ -166,8 +171,8 @@
       });
     }
 
-    function toggleBlock(iso) {
-      const ranges = getBlockedDates(activeSlug) || [];
+    async function toggleBlock(iso) {
+      const ranges = await getBlockedDates(activeSlug) || [];
       const blocked = new Set(ranges.flatMap((r) => expandRange(r.start, r.end)));
       if (blocked.has(iso)) blocked.delete(iso); else blocked.add(iso);
 
@@ -184,7 +189,7 @@
       }
       if (start !== null) newRanges.push({ start, end: prev });
 
-      setBlockedDates(activeSlug, newRanges);
+      await setBlockedDates(activeSlug, newRanges);
       toast(blocked.has(iso) ? "Date blocked." : "Date unblocked.");
       renderCalendar();
     }

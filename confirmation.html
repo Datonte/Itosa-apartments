@@ -120,7 +120,7 @@
 
   async function finalize(reference) {
     // Try existing booking first (in case of refresh)
-    let booking = getBookingByRef(reference);
+    let booking = await getBookingByRef(reference);
 
     if (!booking) {
       // Build booking from sessionStorage draft
@@ -144,7 +144,7 @@
         notes: draft.notes,
         totals: draft.totals
       };
-      saveBooking(booking);
+      await saveBooking(booking);
       sessionStorage.removeItem("itosa.bookingDraft");
     }
 
