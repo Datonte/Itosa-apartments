@@ -2,13 +2,11 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [
-    { "source": "/admin", "destination": "/admin-dashboard" },
+    { "source": "/admin", "destination": "/admin-dashboard.html" },
     { "source": "/apartments/:slug", "destination": "/details.html" }
   ],
   "redirects": [
-    { "source": "/details", "destination": "/browse", "permanent": false },
-    { "source": "/index", "destination": "/", "permanent": true },
-    { "source": "/(.*)\\.html", "destination": "/$1", "permanent": true }
+    { "source": "/index", "destination": "/", "permanent": true }
   ],
   "headers": [
     {
