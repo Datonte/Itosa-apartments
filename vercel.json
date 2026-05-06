@@ -1,12 +1,23 @@
 {
-  "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [
-    { "source": "/admin", "destination": "/admin-dashboard.html" },
-    { "source": "/apartments/:slug", "destination": "/details.html" }
+    { "source": "/browse",             "destination": "/browse.html" },
+    { "source": "/booking",            "destination": "/booking.html" },
+    { "source": "/confirmation",       "destination": "/confirmation.html" },
+    { "source": "/contact",            "destination": "/contact.html" },
+    { "source": "/faq",                "destination": "/faq.html" },
+    { "source": "/terms",              "destination": "/terms.html" },
+    { "source": "/refund",             "destination": "/refund.html" },
+    { "source": "/admin",              "destination": "/admin-dashboard.html" },
+    { "source": "/admin-dashboard",    "destination": "/admin-dashboard.html" },
+    { "source": "/admin-apartments",   "destination": "/admin-apartments.html" },
+    { "source": "/admin-bookings",     "destination": "/admin-bookings.html" },
+    { "source": "/admin-availability", "destination": "/admin-availability.html" },
+    { "source": "/apartments/:slug",   "destination": "/details.html" }
   ],
   "redirects": [
-    { "source": "/index", "destination": "/", "permanent": true }
+    { "source": "/index",   "destination": "/",       "permanent": true },
+    { "source": "/details", "destination": "/browse", "permanent": false }
   ],
   "headers": [
     {
