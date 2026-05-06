@@ -21,7 +21,7 @@ export const BRAND = {
     tiktok:    "https://tiktok.com/@PLACEHOLDER_HANDLE"
   },
   // GEO targets — used for SEO copy + JSON-LD
-  serviceAreas: ["Lagos", "Surulere", "Isheri", "Lagos Mainland"],
+  serviceAreas: ["Lagos", "Surulere", "Isheri"],
   // SITE
   domain: "https://itosaapartment.com",  // PLACEHOLDER — replace with your real domain
   ogDefaultImage: "/assets/images/icons/og-default.svg"  // SVG placeholder — replace with og-default.jpg (1200x630) for real social previews

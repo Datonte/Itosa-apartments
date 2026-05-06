@@ -94,23 +94,41 @@ function highlightMobileNav() {
 }
 
 function initDarkMode() {
-  // Inject toggle button into desktop nav and mobile menu
-  const btn = document.createElement("button");
-  btn.id = "theme-toggle";
-  btn.setAttribute("aria-label", "Toggle dark mode");
-  btn.className = "theme-toggle-btn";
-  btn.innerHTML = `<span class="material-symbols-outlined" id="theme-icon">${document.documentElement.classList.contains("dark") ? "light_mode" : "dark_mode"}</span>`;
+  const isDark = () => document.documentElement.classList.contains("dark");
+  const iconFor = () => (isDark() ? "light_mode" : "dark_mode");
 
-  // Insert before the "Book Your Stay" CTA in desktop nav
-  const desktopCTA = document.querySelector("header a[href='/browse'].hidden.md\\:inline-flex");
-  if (desktopCTA) desktopCTA.before(btn);
+  // Floating button — always visible on every page
+  const float = document.createElement("button");
+  float.id = "theme-toggle-float";
+  float.className = "theme-toggle-float";
+  float.setAttribute("aria-label", "Toggle dark mode");
+  float.setAttribute("title", "Toggle dark mode");
+  float.innerHTML = `<span class="material-symbols-outlined">${iconFor()}</span>`;
+  document.body.appendChild(float);
 
-  btn.addEventListener("click", () => {
-    const isDark = document.documentElement.classList.toggle("dark");
-    document.documentElement.classList.toggle("light", !isDark);
-    document.getElementById("theme-icon").textContent = isDark ? "light_mode" : "dark_mode";
-    localStorage.setItem("itosa.theme", isDark ? "dark" : "light");
-  });
+  // Optional inline slot — pages that want it inline can add <span data-theme-toggle-slot></span>
+  const slot = document.querySelector("[data-theme-toggle-slot]");
+  let inline = null;
+  if (slot) {
+    inline = document.createElement("button");
+    inline.className = "theme-toggle-btn";
+    inline.setAttribute("aria-label", "Toggle dark mode");
+    inline.innerHTML = `<span class="material-symbols-outlined">${iconFor()}</span>`;
+    slot.appendChild(inline);
+  }
+
+  function toggle() {
+    const dark = !isDark();
+    document.documentElement.classList.toggle("dark", dark);
+    document.documentElement.classList.toggle("light", !dark);
+    localStorage.setItem("itosa.theme", dark ? "dark" : "light");
+    const icon = dark ? "light_mode" : "dark_mode";
+    float.querySelector(".material-symbols-outlined").textContent = icon;
+    if (inline) inline.querySelector(".material-symbols-outlined").textContent = icon;
+  }
+
+  float.addEventListener("click", toggle);
+  if (inline) inline.addEventListener("click", toggle);
 }
 
 // Tiny toast helper (importable elsewhere too)

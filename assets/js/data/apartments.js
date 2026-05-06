@@ -60,13 +60,13 @@ export const APARTMENTS = [
       "A calm, modern 1-bedroom retreat in the heart of Surulere — minutes from the National Stadium and Barracks. Designed for guests who want quiet, secure rest after a long day in Lagos.",
     amenities: ["wifi", "ac", "kitchen", "smart_tv", "parking", "security", "inverter", "water"],
     landmarks: [
-      { name: "Femi Gbajabiamila General Hospital", distanceKm: 0.3,  travelByCar: "2 min" },
-      { name: "National Stadium",                   distanceKm: 2.0,  travelByCar: "8 min" },
-      { name: "National Theatre",                   distanceKm: 8.5,  travelByCar: "21 min" },
-      { name: "NTA Lagos",                          distanceKm: 9.0,  travelByCar: "22 min" },
-      { name: "Lagos International Airport",        distanceKm: 20.0, travelByCar: "25 min" },
-      { name: "Lekki",                              distanceKm: 22.0, travelByCar: "30 min" },
-      { name: "Victoria Island",                    distanceKm: 28.0, travelByCar: "45 min" }
+      { name: "Femi Gbajabiamila General Hospital", distanceKm: 0.3,  travelByCar: "2 min",  coords: { lat: 6.4980, lng: 3.3590 } },
+      { name: "National Stadium",                   distanceKm: 2.0,  travelByCar: "8 min",  coords: { lat: 6.5006, lng: 3.3625 } },
+      { name: "National Theatre",                   distanceKm: 8.5,  travelByCar: "21 min", coords: { lat: 6.4707, lng: 3.3833 } },
+      { name: "NTA Lagos",                          distanceKm: 9.0,  travelByCar: "22 min", coords: { lat: 6.5095, lng: 3.3711 } },
+      { name: "Lagos International Airport",        distanceKm: 20.0, travelByCar: "25 min", coords: { lat: 6.5774, lng: 3.3214 } },
+      { name: "Lekki",                              distanceKm: 22.0, travelByCar: "30 min", coords: { lat: 6.4474, lng: 3.4710 } },
+      { name: "Victoria Island",                    distanceKm: 28.0, travelByCar: "45 min", coords: { lat: 6.4281, lng: 3.4219 } }
     ],
     gallery: [
       "/assets/images/placeholders/surulere-1-bedroom-1.jpg",
@@ -136,47 +136,6 @@ export const APARTMENTS = [
       title: "Isheri 2-Bedroom Shortlet — ITOSA Apartment",
       description: "Book a 2-bedroom shortlet apartment in Isheri, Lagos. Family-friendly, secure, 24/7 inverter, fast WiFi. Direct booking from ₦95,000 / night.",
       keywords: "isheri shortlet, isheri 2 bedroom, shortlet apartment lagos, family shortlet lagos"
-    }
-  },
-  {
-    id: "apt-003",
-    slug: "lagos-mainland-studio",
-    name: "The Mainland Studio",
-    type: "Studio Apartment",
-    location: "Lagos Mainland",
-    city: "Lagos",
-    address: "PLACEHOLDER_STREET, Lagos Mainland",
-    coords: { lat: 6.5244, lng: 3.3792 },
-    pricePerNight: 45000,
-    currency: "NGN",
-    minStayNights: 1,
-    beds: 1,
-    baths: 1,
-    maxGuests: 2,
-    rating: 4.7,
-    reviewCount: 0,
-    description:
-      "Stylish studio for solo travellers and couples. Smart TV, fast WiFi, complimentary water, and inverter backup so you never lose power. Walk to nearby cafés and transport links.",
-    amenities: ["wifi", "ac", "kitchen", "smart_tv", "security", "inverter", "water", "workspace"],
-    landmarks: [
-      { name: "Yaba Market",   distanceKm: 1.8 },
-      { name: "Onike Junction",distanceKm: 0.6 }
-    ],
-    gallery: [
-      "/assets/images/placeholders/lagos-mainland-studio-1.jpg",
-      "/assets/images/placeholders/lagos-mainland-studio-2.jpg",
-      "/assets/images/placeholders/lagos-mainland-studio-3.jpg",
-      "/assets/images/placeholders/lagos-mainland-studio-4.jpg",
-      "/assets/images/placeholders/lagos-mainland-studio-5.jpg"
-    ],
-    galleryFallback: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=1200&q=80",
-    houseRules: HOUSE_RULES_DEFAULT,
-    damagePolicy: DAMAGE_POLICY_DEFAULT,
-    status: "available",
-    seo: {
-      title: "Lagos Mainland Studio Shortlet — ITOSA Apartment",
-      description: "Affordable studio shortlet on the Lagos Mainland from ₦45,000 / night. 24/7 inverter, fast WiFi, secure entry. Direct booking online.",
-      keywords: "lagos mainland shortlet, studio apartment lagos, affordable shortlet, lagos shortlet booking"
     }
   }
 ];

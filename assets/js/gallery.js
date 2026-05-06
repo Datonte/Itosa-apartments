@@ -56,6 +56,7 @@ function openLightbox(images, startIdx, alt) {
   lb.className = "lightbox";
   lb.innerHTML = `
     <button class="lightbox-close" aria-label="Close"><span class="material-symbols-outlined">close</span></button>
+    <div class="lightbox-counter" aria-live="polite"><span id="lb-current">${idx + 1}</span> / ${images.length}</div>
     <button class="lightbox-nav prev" aria-label="Previous"><span class="material-symbols-outlined">chevron_left</span></button>
     <img src="${images[idx]}" alt="${alt}" />
     <button class="lightbox-nav next" aria-label="Next"><span class="material-symbols-outlined">chevron_right</span></button>
@@ -65,12 +66,33 @@ function openLightbox(images, startIdx, alt) {
   requestAnimationFrame(() => lb.classList.add("open"));
 
   const img = lb.querySelector("img");
-  const show = (i) => { idx = (i + images.length) % images.length; img.src = images[idx]; };
+  const counter = lb.querySelector("#lb-current");
+
+  const preload = (i) => { const im = new Image(); im.src = images[(i + images.length) % images.length]; };
+  preload(idx + 1);
+  preload(idx - 1);
+
+  const show = (i) => {
+    idx = (i + images.length) % images.length;
+    img.src = images[idx];
+    counter.textContent = idx + 1;
+    preload(idx + 1);
+    preload(idx - 1);
+  };
+
   lb.querySelector(".prev").addEventListener("click", (e) => { e.stopPropagation(); show(idx - 1); });
   lb.querySelector(".next").addEventListener("click", (e) => { e.stopPropagation(); show(idx + 1); });
   lb.querySelector(".lightbox-close").addEventListener("click", close);
   lb.addEventListener("click", (e) => { if (e.target === lb) close(); });
   document.addEventListener("keydown", onKey);
+
+  // Touch swipe (mobile)
+  let touchStartX = 0;
+  lb.addEventListener("touchstart", (e) => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
+  lb.addEventListener("touchend", (e) => {
+    const dx = e.changedTouches[0].screenX - touchStartX;
+    if (Math.abs(dx) > 50) show(dx < 0 ? idx + 1 : idx - 1);
+  }, { passive: true });
 
   function onKey(e) {
     if (e.key === "Escape") close();

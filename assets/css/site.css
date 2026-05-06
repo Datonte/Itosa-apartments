@@ -459,3 +459,175 @@ html.dark tbody tr.bg-zinc-50 { background-color: #1a1b1c !important; }
 
 /* Apt cards hover shadow in dark */
 html.dark .apt-card:hover { box-shadow: 0 20px 40px rgba(0,0,0,0.5) !important; }
+
+/* =====================================================
+   FLOATING DARK MODE TOGGLE (visible on every page)
+   ===================================================== */
+.theme-toggle-float {
+  position: fixed;
+  left: 16px;
+  bottom: 80px;            /* sits above mobile bottom nav (64px), avoids right-side WhatsApp button */
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #ffffff;
+  color: #181919;
+  border: 1px solid #e5e2e1;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.14);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 60;
+  cursor: pointer;
+  transition: transform 0.18s ease, background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+.theme-toggle-float:hover {
+  transform: scale(1.08);
+  background: #f7f3f2;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+}
+.theme-toggle-float:active { transform: scale(0.94); }
+.theme-toggle-float .material-symbols-outlined { font-size: 24px; }
+
+@media (min-width: 768px) {
+  .theme-toggle-float { left: 24px; bottom: 24px; }
+}
+
+html.dark .theme-toggle-float {
+  background: #1c1d1e;
+  color: #f4f4f5;
+  border-color: #3a3b3c;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+html.dark .theme-toggle-float:hover { background: #2d2e30; }
+
+/* =====================================================
+   LEAFLET MAP PINS (details page)
+   ===================================================== */
+#map-leaflet { border-radius: 1rem; }
+.leaflet-popup-content-wrapper { border-radius: 12px; }
+.leaflet-popup-content { font-family: "Be Vietnam Pro", system-ui, sans-serif; font-size: 13px; line-height: 1.45; }
+.leaflet-container { font-family: "Be Vietnam Pro", system-ui, sans-serif; }
+
+.map-pin {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  transition: transform 0.15s ease;
+}
+.map-pin-apt {
+  width: 44px; height: 44px;
+  background: #f9bd22;
+  color: #181919;
+  border: 3px solid #ffffff;
+}
+.map-pin-landmark {
+  width: 32px; height: 32px;
+  background: #ffffff;
+  color: #795900;
+  border: 2px solid #f9bd22;
+}
+.map-pin:hover { transform: scale(1.12); }
+.map-pin .material-symbols-outlined { font-size: 18px; line-height: 1; }
+.map-pin-apt .material-symbols-outlined { font-size: 22px; }
+
+html.dark .leaflet-popup-content-wrapper {
+  background: #1c1d1e !important;
+  color: #f4f4f5 !important;
+}
+html.dark .leaflet-popup-tip { background: #1c1d1e !important; }
+html.dark .leaflet-popup-content span[style*="color"] { color: #a1a1aa !important; }
+
+/* =====================================================
+   LIGHTBOX COUNTER
+   ===================================================== */
+.lightbox-counter {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  font-size: 13px;
+  font-weight: 600;
+  z-index: 1001;
+  letter-spacing: 0.04em;
+  -webkit-backdrop-filter: blur(4px);
+          backdrop-filter: blur(4px);
+}
+
+/* =====================================================
+   HOVER EFFECTS + MICRO-ANIMATIONS
+   ===================================================== */
+html { scroll-behavior: smooth; }
+
+/* Animated link underline */
+.link-animated {
+  position: relative;
+  display: inline-block;
+}
+.link-animated::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 2px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease;
+}
+.link-animated:hover::after { transform: scaleX(1); transform-origin: left; }
+
+/* Nav link hover shifts color toward brand-yellow */
+.nav-link { transition: color 0.25s ease; }
+.nav-link:hover { color: #795900 !important; }
+html.dark .nav-link:hover { color: #f9bd22 !important; }
+
+/* Image zoom inside cards & gallery thumbs */
+.apt-card img,
+.gallery-thumb {
+  transition: transform 0.5s cubic-bezier(0.22, 0.68, 0, 1.2);
+}
+.apt-card:hover img { transform: scale(1.06); }
+.gallery-thumb:hover { transform: scale(1.03); cursor: zoom-in; }
+
+/* Button micro-press */
+button, .btn-press {
+  transition: transform 0.12s ease, background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+button:active:not(:disabled), .btn-press:active { transform: scale(0.97); }
+
+/* Soft fade-in for sections on initial load */
+@media (prefers-reduced-motion: no-preference) {
+  main > section { animation: fadeInUp 0.6s ease both; }
+  main > section:nth-child(2) { animation-delay: 0.05s; }
+  main > section:nth-child(3) { animation-delay: 0.1s; }
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* =====================================================
+   CONTRAST TWEAKS (light + dark)
+   ===================================================== */
+/* Improve nav link contrast in light mode (was text-zinc-600 → bump) */
+.nav-link { color: #444748; }   /* on-surface-variant baseline */
+
+/* Footer subtle text — keep light grey on dark, but ensure links pop */
+footer a:hover { color: #f9bd22; }
+
+/* Make text-zinc-400 on light backgrounds darker (it was failing AA) */
+html.light .bg-white .text-zinc-400,
+html.light .bg-brand-bg .text-zinc-400 { color: #71717a !important; }
+
+/* Dark mode: bump muted text up so it stays readable */
+html.dark .text-on-surface-variant { color: #b4b4b8 !important; }
+html.dark .text-zinc-500 { color: #a1a1aa !important; }
+html.dark .text-zinc-400 { color: #71717a !important; }

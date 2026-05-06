@@ -13,6 +13,5 @@ export const BOOKED_RANGES = {
   ],
   "isheri-2-bedroom": [
     // { start: "2026-05-20", end: "2026-05-25" }
-  ],
-  "lagos-mainland-studio": []
+  ]
 };
