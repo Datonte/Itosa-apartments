@@ -38,63 +38,102 @@ const DAMAGE_POLICY_DEFAULT = {
   note: "A walk-through is conducted at check-in and check-out. Major damages will be invoiced separately."
 };
 
+// Shared Surulere fields (same building, same amenities/landmarks/coords for all 3 floors)
+const SURULERE_SHARED = {
+  type: "1 Bedroom Apartment",
+  location: "Surulere",
+  city: "Lagos",
+  address: "SD 7, Colindale Park Estate, Surulere, Lagos 101241",
+  coords: { lat: 6.5009, lng: 3.3582 },
+  pricePerNight: 65000,
+  currency: "NGN",
+  minStayNights: 1,
+  beds: 1,
+  baths: 1,
+  maxGuests: 2,
+  rating: 4.9,
+  reviewCount: 0,
+  description:
+    "A calm, modern 1-bedroom retreat in the heart of Surulere — minutes from the National Stadium and Barracks. Designed for guests who want quiet, secure rest after a long day in Lagos.",
+  amenities: ["wifi", "ac", "kitchen", "smart_tv", "parking", "security", "inverter", "water"],
+  landmarks: [
+    { name: "Femi Gbajabiamila General Hospital", distanceKm: 0.3,  travelByCar: "2 min",  coords: { lat: 6.4980, lng: 3.3590 } },
+    { name: "National Stadium",                   distanceKm: 2.0,  travelByCar: "8 min",  coords: { lat: 6.5006, lng: 3.3625 } },
+    { name: "National Theatre",                   distanceKm: 8.5,  travelByCar: "21 min", coords: { lat: 6.4707, lng: 3.3833 } },
+    { name: "NTA Lagos",                          distanceKm: 9.0,  travelByCar: "22 min", coords: { lat: 6.5095, lng: 3.3711 } },
+    { name: "Lagos International Airport",        distanceKm: 20.0, travelByCar: "25 min", coords: { lat: 6.5774, lng: 3.3214 } },
+    { name: "Lekki",                              distanceKm: 22.0, travelByCar: "30 min", coords: { lat: 6.4474, lng: 3.4710 } },
+    { name: "Victoria Island",                    distanceKm: 28.0, travelByCar: "45 min", coords: { lat: 6.4281, lng: 3.4219 } }
+  ],
+  galleryFallback: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1200&q=80",
+  houseRules: HOUSE_RULES_DEFAULT,
+  damagePolicy: DAMAGE_POLICY_DEFAULT,
+  status: "available",
+  groupSlug: "surulere",
+  groupName: "Surulere — Colindale Park Estate"
+};
+
 export const APARTMENTS = [
   {
-    id: "apt-001",
-    slug: "surulere-1-bedroom",
-    name: "The Surulere Suite",
-    type: "1 Bedroom Apartment",
-    location: "Surulere",
-    city: "Lagos",
-    address: "SD 7, Colindale Park Estate, Surulere, Lagos 101241",
-    coords: { lat: 6.5009, lng: 3.3582 },
-    pricePerNight: 65000,
-    currency: "NGN",
-    minStayNights: 1,
-    beds: 1,
-    baths: 1,
-    maxGuests: 2,
-    rating: 4.9,
-    reviewCount: 0,                                // PLACEHOLDER — increment as real reviews come in
-    description:
-      "A calm, modern 1-bedroom retreat in the heart of Surulere — minutes from the National Stadium and Barracks. Designed for guests who want quiet, secure rest after a long day in Lagos.",
-    amenities: ["wifi", "ac", "kitchen", "smart_tv", "parking", "security", "inverter", "water"],
-    landmarks: [
-      { name: "Femi Gbajabiamila General Hospital", distanceKm: 0.3,  travelByCar: "2 min",  coords: { lat: 6.4980, lng: 3.3590 } },
-      { name: "National Stadium",                   distanceKm: 2.0,  travelByCar: "8 min",  coords: { lat: 6.5006, lng: 3.3625 } },
-      { name: "National Theatre",                   distanceKm: 8.5,  travelByCar: "21 min", coords: { lat: 6.4707, lng: 3.3833 } },
-      { name: "NTA Lagos",                          distanceKm: 9.0,  travelByCar: "22 min", coords: { lat: 6.5095, lng: 3.3711 } },
-      { name: "Lagos International Airport",        distanceKm: 20.0, travelByCar: "25 min", coords: { lat: 6.5774, lng: 3.3214 } },
-      { name: "Lekki",                              distanceKm: 22.0, travelByCar: "30 min", coords: { lat: 6.4474, lng: 3.4710 } },
-      { name: "Victoria Island",                    distanceKm: 28.0, travelByCar: "45 min", coords: { lat: 6.4281, lng: 3.4219 } }
-    ],
+    ...SURULERE_SHARED,
+    id: "apt-001-g",
+    slug: "surulere-ground-floor",
+    name: "The Surulere Suite — Ground Floor",
+    floorLabel: "Ground Floor",
+    groupOrder: 1,
     gallery: [
-      "/assets/images/placeholders/surulere-1-bedroom-1.jpg",
-      "/assets/images/placeholders/surulere-1-bedroom-2.jpg",
-      "/assets/images/placeholders/surulere-1-bedroom-3.jpg",
-      "/assets/images/placeholders/surulere-1-bedroom-4.jpg",
-      "/assets/images/placeholders/surulere-1-bedroom-5.jpg",
-      "/assets/images/placeholders/surulere-1-bedroom-6.jpg",
-      "/assets/images/placeholders/surulere-1-bedroom-7.jpg",
-      "/assets/images/placeholders/surulere-1-bedroom-8.jpg",
-      "/assets/images/placeholders/surulere-1-bedroom-9.jpg",
-      "/assets/images/placeholders/surulere-1-bedroom-10.jpg",
-      "/assets/images/placeholders/surulere-1-bedroom-11.jpg",
-      "/assets/images/placeholders/surulere-1-bedroom-12.jpg",
-      "/assets/images/placeholders/surulere-1-bedroom-13.jpg",
-      "/assets/images/placeholders/surulere-1-bedroom-14.jpg",
-      "/assets/images/placeholders/surulere-1-bedroom-15.jpg",
-      "/assets/images/placeholders/surulere-1-bedroom-16.jpg",
-      "/assets/images/placeholders/surulere-1-bedroom-17.jpg"
+      "/assets/images/placeholders/surulere-ground-floor-1.jpg",
+      "/assets/images/placeholders/surulere-ground-floor-2.jpg",
+      "/assets/images/placeholders/surulere-ground-floor-3.jpg",
+      "/assets/images/placeholders/surulere-ground-floor-4.jpg",
+      "/assets/images/placeholders/surulere-ground-floor-5.jpg",
+      "/assets/images/placeholders/surulere-ground-floor-6.jpg"
     ],
-    galleryFallback: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1200&q=80",
-    houseRules: HOUSE_RULES_DEFAULT,
-    damagePolicy: DAMAGE_POLICY_DEFAULT,
-    status: "available",                           // available | renovation
     seo: {
-      title: "Surulere 1-Bedroom Shortlet — ITOSA Apartment",
-      description: "Book a clean, secure 1-bedroom shortlet in Surulere, Lagos. 24/7 inverter, fast WiFi, full kitchen. Direct booking, no hidden fees.",
-      keywords: "surulere shortlet, surulere 1 bedroom apartment, shortlet apartment lagos, surulere apartment for rent"
+      title: "Surulere Shortlet — Ground Floor 1BR | ITOSA Apartment",
+      description: "Book the ground-floor 1-bedroom shortlet at SD 7 Colindale Park, Surulere. 24/7 inverter, fast WiFi, full kitchen. Direct booking, no hidden fees.",
+      keywords: "surulere ground floor shortlet, surulere 1 bedroom apartment, shortlet apartment lagos"
+    }
+  },
+  {
+    ...SURULERE_SHARED,
+    id: "apt-001-1",
+    slug: "surulere-first-floor",
+    name: "The Surulere Suite — First Floor",
+    floorLabel: "First Floor",
+    groupOrder: 2,
+    gallery: [
+      "/assets/images/placeholders/surulere-first-floor-1.jpg",
+      "/assets/images/placeholders/surulere-first-floor-2.jpg",
+      "/assets/images/placeholders/surulere-first-floor-3.jpg",
+      "/assets/images/placeholders/surulere-first-floor-4.jpg",
+      "/assets/images/placeholders/surulere-first-floor-5.jpg",
+      "/assets/images/placeholders/surulere-first-floor-6.jpg"
+    ],
+    seo: {
+      title: "Surulere Shortlet — First Floor 1BR | ITOSA Apartment",
+      description: "Book the first-floor 1-bedroom shortlet at SD 7 Colindale Park, Surulere. 24/7 inverter, fast WiFi, full kitchen. Direct booking, no hidden fees.",
+      keywords: "surulere first floor shortlet, surulere 1 bedroom apartment, shortlet apartment lagos"
+    }
+  },
+  {
+    ...SURULERE_SHARED,
+    id: "apt-001-2",
+    slug: "surulere-second-floor",
+    name: "The Surulere Suite — Second Floor",
+    floorLabel: "Second Floor",
+    groupOrder: 3,
+    gallery: [
+      "/assets/images/placeholders/surulere-second-floor-1.jpg",
+      "/assets/images/placeholders/surulere-second-floor-2.jpg",
+      "/assets/images/placeholders/surulere-second-floor-3.jpg",
+      "/assets/images/placeholders/surulere-second-floor-4.jpg",
+      "/assets/images/placeholders/surulere-second-floor-5.jpg"
+    ],
+    seo: {
+      title: "Surulere Shortlet — Second Floor 1BR | ITOSA Apartment",
+      description: "Book the second-floor 1-bedroom shortlet at SD 7 Colindale Park, Surulere. 24/7 inverter, fast WiFi, full kitchen. Direct booking, no hidden fees.",
+      keywords: "surulere second floor shortlet, surulere 1 bedroom apartment, shortlet apartment lagos"
     }
   },
   {

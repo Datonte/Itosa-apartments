@@ -369,8 +369,26 @@
 
   injectLD(buildLocalBusinessLD());
 
+  // Collapse grouped apartments (multi-floor units) to one representative each.
+  function collapseGroups(arr) {
+    const out = [];
+    const seen = new Set();
+    for (const a of arr) {
+      if (a.groupSlug) {
+        if (seen.has(a.groupSlug)) continue;
+        seen.add(a.groupSlug);
+        const siblings = arr.filter(x => x.groupSlug === a.groupSlug)
+                            .sort((x, y) => (x.groupOrder || 99) - (y.groupOrder || 99));
+        out.push({ ...siblings[0], _siblings: siblings });
+      } else {
+        out.push(a);
+      }
+    }
+    return out;
+  }
+
   const grid = document.getElementById("featured-grid");
-  const apts = getApartments().slice(0, 3);
+  const apts = collapseGroups(getApartments()).slice(0, 3);
   if (apts.length === 0) {
     grid.innerHTML = '<p class="col-span-full text-center text-on-surface-variant">No apartments yet — add some via /admin-apartments.</p>';
   } else {
@@ -379,18 +397,24 @@
 
   function card(a) {
     const img = (a.gallery && a.gallery[0]) || a.galleryFallback || "";
+    const isGroup = a._siblings && a._siblings.length > 1;
+    const displayName = isGroup ? (a.groupName || a.name) : a.name;
     const statusBadge = a.status === "available"
       ? '<span class="inline-flex items-center gap-1 px-3 py-1 bg-accent-green text-white font-label-bold text-[10px] uppercase tracking-widest rounded-full shadow-md"><span class="h-1.5 w-1.5 rounded-full bg-white animate-pulse"></span>Available</span>'
       : '<span class="px-3 py-1 bg-zinc-900 text-white font-label-bold text-[10px] uppercase tracking-widest rounded-full shadow-md">' + (a.status || "Unavailable") + '</span>';
+    const groupBadge = isGroup
+      ? `<span class="absolute top-4 right-4 inline-flex items-center gap-1 px-3 py-1 bg-accent-blue text-white font-label-bold text-[10px] uppercase tracking-widest rounded-full shadow-md"><span class="material-symbols-outlined text-[12px]">layers</span>${a._siblings.length} floors</span>`
+      : "";
     return `
       <a href="/apartments/${a.slug}" class="apt-card group bg-white border border-zinc-200 rounded-3xl overflow-hidden shadow-card block">
         <div class="relative aspect-[4/3] overflow-hidden bg-surface-container">
-          <img loading="lazy" src="${img}" alt="${a.name} — ${a.location}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" onerror="this.onerror=null;this.src='${a.galleryFallback || ""}'" />
+          <img loading="lazy" src="${img}" alt="${displayName} — ${a.location}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" onerror="this.onerror=null;this.src='${a.galleryFallback || ""}'" />
           <div class="absolute top-4 left-4">${statusBadge}</div>
+          ${groupBadge}
         </div>
         <div class="p-6">
           <p class="font-caption text-brand-yellow-deep uppercase tracking-[0.1em] mb-1 text-xs font-bold">${a.location}</p>
-          <h3 class="font-display-xl text-headline-md text-brand-ink mb-2">${a.name}</h3>
+          <h3 class="font-display-xl text-headline-md text-brand-ink mb-2">${displayName}</h3>
           <p class="text-on-surface-variant text-sm leading-relaxed line-clamp-2 mb-4">${a.description}</p>
           <div class="flex items-center gap-3 mb-4 text-xs text-on-surface-variant">
             <span class="inline-flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">bed</span> ${a.beds} Bed</span>

@@ -63,6 +63,9 @@
       <span class="text-brand-ink font-semibold" id="bc-name">…</span>
     </nav>
 
+    <!-- Floor picker (only shown for grouped apartments like Surulere's 3 floors) -->
+    <div id="floor-picker" class="hidden mb-5"></div>
+
     <header class="mb-6">
       <h1 id="apt-title" class="font-display-xl text-headline-lg text-brand-ink">Loading…</h1>
       <div class="flex flex-wrap items-center gap-3 mt-2 text-sm text-on-surface-variant">
@@ -252,7 +255,7 @@
 
 <script type="module">
   import "/assets/js/site.js";
-  import { getApartmentBySlug, getEffectiveBlockedDates } from "/assets/js/data/store.js";
+  import { getApartmentBySlug, getApartments, getEffectiveBlockedDates } from "/assets/js/data/store.js";
   import { AMENITY_CATALOG } from "/assets/js/data/apartments.js";
   import { getSlugFromUrl } from "/assets/js/utils/slug.js";
   import { formatNGN } from "/assets/js/utils/currency.js";
@@ -295,6 +298,27 @@
         { name: a.name, url: BRAND.domain + "/apartments/" + a.slug }
       ])
     );
+
+    // Floor picker — only for grouped multi-floor apartments
+    const siblings = a.groupSlug
+      ? getApartments().filter(x => x.groupSlug === a.groupSlug)
+                       .sort((x, y) => (x.groupOrder || 99) - (y.groupOrder || 99))
+      : [];
+    if (siblings.length > 1) {
+      const picker = document.getElementById("floor-picker");
+      const tabs = siblings.map(s => {
+        const active = s.slug === a.slug;
+        const cls = active
+          ? "px-5 py-2 rounded-full text-sm font-semibold bg-brand-yellow text-brand-ink shadow ring-1 ring-brand-yellow"
+          : "px-5 py-2 rounded-full text-sm font-semibold text-on-surface-variant hover:bg-white hover:text-brand-ink transition-colors";
+        return `<a href="/apartments/${s.slug}" class="${cls}">${s.floorLabel || s.name}</a>`;
+      }).join("");
+      picker.innerHTML = `
+        <div class="text-xs text-on-surface-variant mb-2 font-semibold uppercase tracking-wider">Choose your floor — same building, separate calendars</div>
+        <div class="inline-flex p-1 bg-surface-container-low rounded-full border border-zinc-200 gap-1">${tabs}</div>
+      `;
+      picker.classList.remove("hidden");
+    }
 
     document.getElementById("bc-name").textContent = a.name;
     document.getElementById("apt-title").textContent = a.name;

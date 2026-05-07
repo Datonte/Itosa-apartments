@@ -17,7 +17,8 @@
   ],
   "redirects": [
     { "source": "/index",   "destination": "/",       "permanent": true },
-    { "source": "/details", "destination": "/browse", "permanent": false }
+    { "source": "/details", "destination": "/browse", "permanent": false },
+    { "source": "/apartments/surulere-1-bedroom", "destination": "/apartments/surulere-ground-floor", "permanent": false }
   ],
   "headers": [
     {
