@@ -8,9 +8,10 @@ export const BRAND = {
   tagline: "Rest. Relax. Recharge.",
   description:
     "Premium shortlet apartments in Lagos — Surulere & Isheri. Direct booking, secure payment, no hidden fees.",
-  // CONTACT — replace
-  phone: "PLACEHOLDER_PHONE",            // e.g. "+234 800 000 0000"
-  whatsapp: "PLACEHOLDER_WHATSAPP",      // digits only, with country code, no '+', e.g. "2348000000000"
+  // CONTACT
+  phone:    "+234 808 591 8163",         // primary line (tel: href is auto-stripped to digits)
+  phoneAlt: "+234 813 662 0256",         // secondary line
+  whatsapp: "2348139970432",             // WhatsApp number, digits only with country code, no '+'
   email: "Itosa10@yahoo.com",
   address: "Lagos, Nigeria",             // street + city. Update once you have a public address.
   // SOCIAL — replace each with full URL

@@ -61,14 +61,15 @@
         <p class="text-on-surface-variant text-sm mb-3">Fastest response — usually within minutes.</p>
         <p class="text-brand-ink font-semibold group-hover:text-brand-yellow-deep">Chat now →</p>
       </a>
-      <a href="tel:PLACEHOLDER_PHONE" data-bind="phone-link" class="group bg-white p-6 rounded-2xl border border-zinc-100 shadow-card hover:shadow-card-hover transition-shadow">
+      <div class="group bg-white p-6 rounded-2xl border border-zinc-100 shadow-card hover:shadow-card-hover transition-shadow">
         <div class="h-12 w-12 rounded-full bg-brand-yellow/15 text-brand-yellow-deep flex items-center justify-center mb-4">
           <span class="material-symbols-outlined">call</span>
         </div>
         <h2 class="font-display-xl text-lg text-brand-ink mb-1">Phone</h2>
-        <p class="text-on-surface-variant text-sm mb-3">9am – 9pm, every day (WAT).</p>
-        <p class="text-brand-ink font-semibold group-hover:text-brand-yellow-deep" data-bind="phone">PLACEHOLDER_PHONE</p>
-      </a>
+        <p class="text-on-surface-variant text-sm mb-3">8am – 9pm, every day (WAT).</p>
+        <p><a href="tel:PLACEHOLDER_PHONE" data-bind="phone-link" class="block text-brand-ink font-semibold hover:text-brand-yellow-deep">PLACEHOLDER_PHONE</a></p>
+        <p class="mt-1"><a href="tel:PLACEHOLDER_PHONE" data-bind="phone-alt-link" class="block text-brand-ink font-semibold hover:text-brand-yellow-deep">PLACEHOLDER_PHONE</a></p>
+      </div>
       <a href="mailto:PLACEHOLDER_EMAIL" data-bind="email-link" class="group bg-white p-6 rounded-2xl border border-zinc-100 shadow-card hover:shadow-card-hover transition-shadow">
         <div class="h-12 w-12 rounded-full bg-brand-yellow/15 text-brand-yellow-deep flex items-center justify-center mb-4">
           <span class="material-symbols-outlined">mail</span>
@@ -155,7 +156,7 @@
 </main>
 
 <footer class="bg-brand-ink text-white mt-auto">
-  <div class="max-w-container mx-auto py-10 px-5 lg:px-8 text-center text-zinc-300 text-sm">
+  <div class="max-w-container mx-auto py-10 px-5 lg:px-8 text-center text-zinc-100 text-sm font-medium">
     <p>&copy; <span data-bind="year">2026</span> ITOSA APARTMENT. <a href="/terms" class="hover:text-brand-yellow">Terms</a> · <a href="/refund" class="hover:text-brand-yellow">Refund</a></p>
   </div>
 </footer>

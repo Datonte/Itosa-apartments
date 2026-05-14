@@ -19,23 +19,30 @@ document.addEventListener("DOMContentLoaded", () => {
 function bindBrand() {
   const map = {
     phone: BRAND.phone,
+    "phone-alt": BRAND.phoneAlt,
     email: BRAND.email,
     address: BRAND.address,
     "phone-link": BRAND.phone,
+    "phone-alt-link": BRAND.phoneAlt,
     "email-link": BRAND.email,
     "whatsapp-link": BRAND.whatsapp ? `https://wa.me/${BRAND.whatsapp}` : "#",
+    "whatsapp": BRAND.whatsapp ? "+" + BRAND.whatsapp.replace(/^(\d{3})(\d{3})(\d{3})(\d{4})$/, "$1 $2 $3 $4") : "",
   };
+
+  // Strip everything except digits and leading + so the tel: dialer parses it
+  const telSafe = (v) => String(v || "").replace(/[^+0-9]/g, "");
 
   document.querySelectorAll("[data-bind]").forEach((el) => {
     const key = el.getAttribute("data-bind");
     if (!(key in map)) return;
     const value = map[key];
-    if (key === "phone-link") {
-      el.setAttribute("href", `tel:${value}`);
-      if (el.textContent.includes("PLACEHOLDER")) el.textContent = value;
+    if (!value) return;
+    if (key === "phone-link" || key === "phone-alt-link") {
+      el.setAttribute("href", `tel:${telSafe(value)}`);
+      el.textContent = value;
     } else if (key === "email-link") {
       el.setAttribute("href", `mailto:${value}`);
-      if (el.textContent.includes("PLACEHOLDER")) el.textContent = value;
+      if (el.textContent.includes("PLACEHOLDER") || el.textContent.trim() === "") el.textContent = value;
     } else if (key === "whatsapp-link") {
       el.setAttribute("href", value);
     } else {
