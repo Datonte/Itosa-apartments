@@ -623,9 +623,16 @@ button:active:not(:disabled), .btn-press:active { transform: scale(0.97); }
 /* Footer subtle text — keep light grey on dark, but ensure links pop */
 footer a:hover { color: #f9bd22; }
 
-/* Make text-zinc-400 on light backgrounds darker (it was failing AA) */
-html.light .bg-white .text-zinc-400,
-html.light .bg-brand-bg .text-zinc-400 { color: #71717a !important; }
+/* =====================================================
+   LIGHT-MODE CONTENT TEXT CONTRAST
+   Make muted/secondary text actually readable on the
+   near-white page body. Does not affect the dark footer
+   (which uses text-white / text-zinc-100 / text-zinc-200,
+   none of which are overridden here).
+   ===================================================== */
+html.light .text-on-surface-variant { color: #1c1b1b !important; }
+html.light .text-zinc-400 { color: #3f3f46 !important; }   /* was #a1a1aa */
+html.light .text-zinc-500 { color: #27272a !important; }   /* was #71717a */
 
 /* Dark mode: bump muted text up so it stays readable */
 html.dark .text-on-surface-variant { color: #b4b4b8 !important; }
