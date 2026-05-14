@@ -626,13 +626,47 @@ footer a:hover { color: #f9bd22; }
 /* =====================================================
    LIGHT-MODE CONTENT TEXT CONTRAST
    Make muted/secondary text actually readable on the
-   near-white page body. Does not affect the dark footer
-   (which uses text-white / text-zinc-100 / text-zinc-200,
-   none of which are overridden here).
+   near-white page body.
    ===================================================== */
 html.light .text-on-surface-variant { color: #1c1b1b !important; }
 html.light .text-zinc-400 { color: #3f3f46 !important; }   /* was #a1a1aa */
 html.light .text-zinc-500 { color: #27272a !important; }   /* was #71717a */
+
+/* =====================================================
+   LIGHT-MODE FOOTER — light background, black text
+   Footer flips to match the light page in light mode so
+   text doesn't merge into a dark stripe at the bottom.
+   Dark mode keeps the original dark footer (see html.dark
+   footer rule above).
+   ===================================================== */
+html.light footer {
+  background-color: #fdf8f8 !important;
+  border-top: 1px solid #e5e2e1;
+}
+html.light footer * {
+  color: #181919 !important;
+}
+/* Social icon pills — invert so they read on the light bg */
+html.light footer [data-social] {
+  background-color: #181919 !important;
+  border-color: #181919 !important;
+}
+html.light footer [data-social] svg { color: #ffffff !important; }
+html.light footer [data-social]:hover {
+  background-color: #f9bd22 !important;
+  border-color: #f9bd22 !important;
+}
+html.light footer [data-social]:hover svg { color: #181919 !important; }
+/* WhatsApp button keeps its green */
+html.light footer a[href*="wa.me"] {
+  background-color: #25D366 !important;
+}
+html.light footer a[href*="wa.me"],
+html.light footer a[href*="wa.me"] * { color: #ffffff !important; }
+/* Divider line between main + copyright row */
+html.light footer .border-white\/10 { border-color: #e5e2e1 !important; }
+/* Animated link underline color in the footer */
+html.light footer .link-animated::after { background: #181919 !important; }
 
 /* Dark mode: bump muted text up so it stays readable */
 html.dark .text-on-surface-variant { color: #b4b4b8 !important; }
