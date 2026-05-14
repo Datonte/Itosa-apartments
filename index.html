@@ -61,9 +61,23 @@
 
 <main class="flex-grow pt-20">
   <!-- HERO -->
-  <section class="relative min-h-[88vh] flex items-center justify-center overflow-hidden">
-    <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1800&q=80');"></div>
+  <section class="relative min-h-[88vh] flex items-center justify-center overflow-hidden" id="hero">
+    <div class="absolute inset-0" id="hero-slideshow" aria-hidden="true">
+      <div class="absolute inset-0 bg-cover bg-center hero-slide hero-slide-active" style="background-image: url('/assets/images/slideshow/hero-1.jpg');"></div>
+      <div class="absolute inset-0 bg-cover bg-center hero-slide" style="background-image: url('/assets/images/slideshow/hero-2.jpg');"></div>
+      <div class="absolute inset-0 bg-cover bg-center hero-slide" style="background-image: url('/assets/images/slideshow/hero-3.jpg');"></div>
+      <div class="absolute inset-0 bg-cover bg-center hero-slide" style="background-image: url('/assets/images/slideshow/hero-4.jpg');"></div>
+      <div class="absolute inset-0 bg-cover bg-center hero-slide" style="background-image: url('/assets/images/slideshow/hero-5.jpg');"></div>
+    </div>
     <div class="absolute inset-0 bg-gradient-to-b from-black/35 via-black/30 to-black/55"></div>
+    <!-- Slideshow dot indicators -->
+    <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex gap-2" id="hero-dots" role="tablist" aria-label="Hero slideshow">
+      <button class="hero-dot hero-dot-active" data-slide="0" aria-label="Slide 1"></button>
+      <button class="hero-dot" data-slide="1" aria-label="Slide 2"></button>
+      <button class="hero-dot" data-slide="2" aria-label="Slide 3"></button>
+      <button class="hero-dot" data-slide="3" aria-label="Slide 4"></button>
+      <button class="hero-dot" data-slide="4" aria-label="Slide 5"></button>
+    </div>
 
     <div class="relative z-10 text-center text-white max-w-4xl px-5 lg:px-8 flex flex-col items-center gap-6 lg:gap-8">
       <span class="inline-flex items-center gap-2 px-4 py-1.5 bg-white/15 backdrop-blur-sm rounded-full text-xs lg:text-sm font-semibold tracking-widest uppercase border border-white/20">
@@ -461,6 +475,52 @@
         </div>
       </a>`;
   }
+</script>
+
+<!-- Hero slideshow -->
+<script>
+  (function initHeroSlideshow() {
+    const slides = document.querySelectorAll(".hero-slide");
+    const dots = document.querySelectorAll("#hero-dots .hero-dot");
+    if (slides.length < 2) return;
+    let current = 0;
+    let timer = null;
+    let paused = false;
+
+    function show(idx) {
+      slides[current].classList.remove("hero-slide-active");
+      if (dots[current]) dots[current].classList.remove("hero-dot-active");
+      current = (idx + slides.length) % slides.length;
+      slides[current].classList.add("hero-slide-active");
+      if (dots[current]) dots[current].classList.add("hero-dot-active");
+    }
+
+    function start() {
+      timer = setInterval(function () { if (!paused) show(current + 1); }, 5000);
+    }
+
+    dots.forEach(function (d, i) {
+      d.addEventListener("click", function () {
+        show(i);
+        clearInterval(timer);
+        start();
+      });
+    });
+
+    const hero = document.getElementById("hero");
+    if (hero) {
+      hero.addEventListener("mouseenter", function () { paused = true; });
+      hero.addEventListener("mouseleave", function () { paused = false; });
+    }
+
+    // Preload neighbor images so the fade feels instant
+    slides.forEach(function (s) {
+      const m = s.style.backgroundImage.match(/url\(["']?(.+?)["']?\)/);
+      if (m) { const im = new Image(); im.src = m[1]; }
+    });
+
+    start();
+  })();
 </script>
 
 </body>
