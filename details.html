@@ -299,24 +299,56 @@
       ])
     );
 
-    // Floor picker — only for grouped multi-floor apartments
+    // Two-level picker — floor tabs (top) + unit chooser (bottom).
+    // Floor row hides when group has only one floor; unit row hides when the active floor has only one unit.
     const siblings = a.groupSlug
       ? getApartments().filter(x => x.groupSlug === a.groupSlug)
                        .sort((x, y) => (x.groupOrder || 99) - (y.groupOrder || 99))
       : [];
     if (siblings.length > 1) {
       const picker = document.getElementById("floor-picker");
-      const tabs = siblings.map(s => {
-        const active = s.slug === a.slug;
-        const cls = active
-          ? "px-5 py-2 rounded-full text-sm font-semibold bg-brand-yellow text-brand-ink shadow ring-1 ring-brand-yellow"
-          : "px-5 py-2 rounded-full text-sm font-semibold text-on-surface-variant hover:bg-white hover:text-brand-ink transition-colors";
-        return `<a href="/apartments/${s.slug}" class="${cls}">${s.floorLabel || s.name}</a>`;
-      }).join("");
-      picker.innerHTML = `
-        <div class="text-xs text-on-surface-variant mb-2 font-semibold uppercase tracking-wider">Choose your floor — same building, separate calendars</div>
-        <div class="inline-flex p-1 bg-surface-container-low rounded-full border border-zinc-200 gap-1">${tabs}</div>
-      `;
+      const uniqueFloors = [...new Set(siblings.map(s => s.floor || s.floorLabel))];
+      const activeFloor = a.floor || a.floorLabel;
+      const unitsOnActiveFloor = siblings.filter(s => (s.floor || s.floorLabel) === activeFloor);
+
+      // Row 1: floor tabs (shown only if more than one floor)
+      let floorRow = "";
+      if (uniqueFloors.length > 1) {
+        const floorTabs = uniqueFloors.map(f => {
+          const first = siblings.find(s => (s.floor || s.floorLabel) === f);
+          const active = f === activeFloor;
+          const cls = active
+            ? "px-5 py-2 rounded-full text-sm font-semibold bg-brand-yellow text-brand-ink shadow ring-1 ring-brand-yellow"
+            : "px-5 py-2 rounded-full text-sm font-semibold text-on-surface-variant hover:bg-white hover:text-brand-ink transition-colors";
+          return `<a href="/apartments/${first.slug}" class="${cls}">${f}</a>`;
+        }).join("");
+        floorRow = `
+          <div class="text-xs text-on-surface-variant mb-2 font-semibold uppercase tracking-wider">Choose your floor</div>
+          <div class="inline-flex p-1 bg-surface-container-low rounded-full border border-zinc-200 gap-1 mb-4">${floorTabs}</div>
+        `;
+      }
+
+      // Row 2: unit chooser within the active floor (shown only if the floor has multiple units)
+      let unitRow = "";
+      if (unitsOnActiveFloor.length > 1) {
+        const unitTabs = unitsOnActiveFloor.map(u => {
+          const active = u.slug === a.slug;
+          const cls = active
+            ? "px-4 py-2.5 rounded-xl text-sm bg-brand-yellow text-brand-ink shadow ring-1 ring-brand-yellow"
+            : "px-4 py-2.5 rounded-xl text-sm bg-white border border-zinc-200 text-brand-ink hover:border-brand-yellow hover:bg-brand-yellow/10 transition-colors";
+          const typeShort = u.type.replace(" Apartment", "").replace(" (Self-Contain)", "");
+          return `<a href="/apartments/${u.slug}" class="${cls} inline-flex flex-col items-start min-w-[140px]">
+                    <span class="font-semibold">${u.floorLabel}</span>
+                    <span class="text-[11px] opacity-80 mt-0.5">${typeShort} · ${formatNGN(u.pricePerNight)}/night</span>
+                  </a>`;
+        }).join("");
+        unitRow = `
+          <div class="text-xs text-on-surface-variant mb-2 font-semibold uppercase tracking-wider">Choose your unit on ${activeFloor}</div>
+          <div class="flex flex-wrap gap-2">${unitTabs}</div>
+        `;
+      }
+
+      picker.innerHTML = floorRow + unitRow;
       picker.classList.remove("hidden");
     }
 

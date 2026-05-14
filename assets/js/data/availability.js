@@ -13,7 +13,10 @@ export const BOOKED_RANGES = {
   ],
   "surulere-first-floor": [],
   "surulere-second-floor": [],
-  "isheri-2-bedroom": [
-    // { start: "2026-05-20", end: "2026-05-25" }
-  ]
+  "isheri-zion-a": [],
+  "isheri-zion-b": [],
+  "isheri-ivie-home": [],
+  "isheri-nicole-home": [],
+  "isheri-ee-tasha": [],
+  "isheri-trey": []
 };

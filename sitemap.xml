@@ -30,7 +30,32 @@
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://itosaapartment.com/apartments/isheri-2-bedroom</loc>
+    <loc>https://itosaapartment.com/apartments/isheri-zion-a</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://itosaapartment.com/apartments/isheri-zion-b</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://itosaapartment.com/apartments/isheri-ivie-home</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://itosaapartment.com/apartments/isheri-nicole-home</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://itosaapartment.com/apartments/isheri-ee-tasha</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://itosaapartment.com/apartments/isheri-trey</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>

@@ -403,8 +403,38 @@
       ? '<span class="inline-flex items-center gap-1 px-3 py-1 bg-accent-green text-white font-label-bold text-[10px] uppercase tracking-widest rounded-full shadow-md"><span class="h-1.5 w-1.5 rounded-full bg-white animate-pulse"></span>Available</span>'
       : '<span class="px-3 py-1 bg-zinc-900 text-white font-label-bold text-[10px] uppercase tracking-widest rounded-full shadow-md">' + (a.status || "Unavailable") + '</span>';
     const groupBadge = isGroup
-      ? `<span class="absolute top-4 right-4 inline-flex items-center gap-1 px-3 py-1 bg-accent-blue text-white font-label-bold text-[10px] uppercase tracking-widest rounded-full shadow-md"><span class="material-symbols-outlined text-[12px]">layers</span>${a._siblings.length} floors</span>`
+      ? `<span class="absolute top-4 right-4 inline-flex items-center gap-1 px-3 py-1 bg-accent-blue text-white font-label-bold text-[10px] uppercase tracking-widest rounded-full shadow-md"><span class="material-symbols-outlined text-[12px]">layers</span>${a._siblings.length} units</span>`
       : "";
+
+    let priceBlock, specsLine;
+    if (isGroup) {
+      const prices = a._siblings.map(s => s.pricePerNight);
+      const min = Math.min(...prices), max = Math.max(...prices);
+      priceBlock = (min === max)
+        ? `<span class="block text-xl font-bold text-brand-ink">${formatNGN(min)}</span>
+           <span class="block text-xs text-on-surface-variant">per night · ${a._siblings.length} units</span>`
+        : `<span class="block text-xl font-bold text-brand-ink">From ${formatNGN(min)}</span>
+           <span class="block text-xs text-on-surface-variant">${a._siblings.length} units · ₦${(min/1000).toFixed(0)}k–₦${(max/1000).toFixed(0)}k</span>`;
+      const beds = a._siblings.map(s => s.beds);
+      const baths = a._siblings.map(s => s.baths);
+      const guests = a._siblings.map(s => s.maxGuests);
+      const fmt = (arr, suffix) => {
+        const mn = Math.min(...arr), mx = Math.max(...arr);
+        return mn === mx ? `${mn} ${suffix}` : `${mn}–${mx} ${suffix}`;
+      };
+      specsLine = `
+        <span class="inline-flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">bed</span> ${fmt(beds, "Bed")}</span>
+        <span class="inline-flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">shower</span> ${fmt(baths, "Bath")}</span>
+        <span class="inline-flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">group</span> ${fmt(guests, "Guests")}</span>`;
+    } else {
+      priceBlock = `<span class="block text-xl font-bold text-brand-ink">${formatNGN(a.pricePerNight)}</span>
+                    <span class="block text-xs text-on-surface-variant">per night</span>`;
+      specsLine = `
+        <span class="inline-flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">bed</span> ${a.beds} Bed</span>
+        <span class="inline-flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">shower</span> ${a.baths} Bath</span>
+        <span class="inline-flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">group</span> ${a.maxGuests} Guests</span>`;
+    }
+
     return `
       <a href="/apartments/${a.slug}" class="apt-card group bg-white border border-zinc-200 rounded-3xl overflow-hidden shadow-card block">
         <div class="relative aspect-[4/3] overflow-hidden bg-surface-container">
@@ -416,15 +446,10 @@
           <p class="font-caption text-brand-yellow-deep uppercase tracking-[0.1em] mb-1 text-xs font-bold">${a.location}</p>
           <h3 class="font-display-xl text-headline-md text-brand-ink mb-2">${displayName}</h3>
           <p class="text-on-surface-variant text-sm leading-relaxed line-clamp-2 mb-4">${a.description}</p>
-          <div class="flex items-center gap-3 mb-4 text-xs text-on-surface-variant">
-            <span class="inline-flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">bed</span> ${a.beds} Bed</span>
-            <span class="inline-flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">shower</span> ${a.baths} Bath</span>
-            <span class="inline-flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">group</span> ${a.maxGuests} Guests</span>
+          <div class="flex items-center gap-3 mb-4 text-xs text-on-surface-variant">${specsLine}
           </div>
           <div class="flex items-end justify-between">
-            <p>
-              <span class="block text-xl font-bold text-brand-ink">${formatNGN(a.pricePerNight)}</span>
-              <span class="block text-xs text-on-surface-variant">per night</span>
+            <p>${priceBlock}
             </p>
             <span class="inline-flex items-center gap-1 px-4 py-2 bg-brand-yellow text-brand-ink rounded-full text-sm font-semibold shadow-md group-hover:bg-brand-ink group-hover:text-white group-hover:shadow-lg transition-all">View<span class="material-symbols-outlined text-[16px]">arrow_forward</span></span>
           </div>

@@ -18,7 +18,8 @@
   "redirects": [
     { "source": "/index",   "destination": "/",       "permanent": true },
     { "source": "/details", "destination": "/browse", "permanent": false },
-    { "source": "/apartments/surulere-1-bedroom", "destination": "/apartments/surulere-ground-floor", "permanent": false }
+    { "source": "/apartments/surulere-1-bedroom", "destination": "/apartments/surulere-ground-floor", "permanent": false },
+    { "source": "/apartments/isheri-2-bedroom",   "destination": "/apartments/isheri-ivie-home",      "permanent": false }
   ],
   "headers": [
     {

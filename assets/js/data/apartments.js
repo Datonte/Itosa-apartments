@@ -38,6 +38,28 @@ const DAMAGE_POLICY_DEFAULT = {
   note: "A walk-through is conducted at check-in and check-out. Major damages will be invoiced separately."
 };
 
+// Shared Isheri fields (same building, same amenities/landmarks/coords for all 6 units)
+const ISHERI_SHARED = {
+  location: "Isheri",
+  city: "Lagos",
+  address: "Block 11, Teju Royal Estate, 18 Azuka Nwosu Street, White House Bus Stop, Isheri-Osun Ijegun, Lagos",
+  coords: { lat: 6.5520, lng: 3.2810 },           // approximate Isheri-Osun Ijegun; refine if needed
+  currency: "NGN",
+  minStayNights: 1,
+  rating: 4.8,
+  reviewCount: 0,
+  amenities: ["wifi", "ac", "kitchen", "smart_tv", "parking", "security", "inverter", "water"],
+  landmarks: [
+    { name: "White House Event Hall", distanceKm: 1.8, travelByCar: "5 min", coords: { lat: 6.5530, lng: 3.2825 } }
+  ],
+  galleryFallback: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1200&q=80",
+  houseRules: HOUSE_RULES_DEFAULT,
+  damagePolicy: DAMAGE_POLICY_DEFAULT,
+  status: "available",
+  groupSlug: "isheri",
+  groupName: "Isheri — Teju Royal Estate"
+};
+
 // Shared Surulere fields (same building, same amenities/landmarks/coords for all 3 floors)
 const SURULERE_SHARED = {
   type: "1 Bedroom Apartment",
@@ -79,6 +101,7 @@ export const APARTMENTS = [
     id: "apt-001-g",
     slug: "surulere-ground-floor",
     name: "The Surulere Suite — Ground Floor",
+    floor: "Ground Floor",
     floorLabel: "Ground Floor",
     groupOrder: 1,
     gallery: [
@@ -100,6 +123,7 @@ export const APARTMENTS = [
     id: "apt-001-1",
     slug: "surulere-first-floor",
     name: "The Surulere Suite — First Floor",
+    floor: "First Floor",
     floorLabel: "First Floor",
     groupOrder: 2,
     gallery: [
@@ -121,6 +145,7 @@ export const APARTMENTS = [
     id: "apt-001-2",
     slug: "surulere-second-floor",
     name: "The Surulere Suite — Second Floor",
+    floor: "Second Floor",
     floorLabel: "Second Floor",
     groupOrder: 3,
     gallery: [
@@ -137,44 +162,164 @@ export const APARTMENTS = [
     }
   },
   {
-    id: "apt-002",
-    slug: "isheri-2-bedroom",
-    name: "The Isheri Loft",
-    type: "2 Bedroom Apartment",
-    location: "Isheri",
-    city: "Lagos",
-    address: "PLACEHOLDER_STREET, Isheri, Lagos",
-    coords: { lat: 6.6322, lng: 3.3470 },
-    pricePerNight: 95000,
-    currency: "NGN",
-    minStayNights: 2,
-    beds: 2,
-    baths: 2,
-    maxGuests: 4,
-    rating: 4.8,
-    reviewCount: 0,
+    ...ISHERI_SHARED,
+    id: "apt-002-zion-a",
+    slug: "isheri-zion-a",
+    name: "Zion A — Isheri Self-Contain",
+    type: "Single Room (Self-Contain)",
+    beds: 1, baths: 1, maxGuests: 2,
+    pricePerNight: 20000,
+    floor: "First Floor",
+    floorLabel: "Zion A",
+    groupOrder: 1,
     description:
-      "Spacious 2-bedroom apartment in Isheri — perfect for families and small groups. Full kitchen, dedicated workspace, secure parking, and a quiet neighborhood that lets you actually rest.",
-    amenities: ["wifi", "ac", "kitchen", "smart_tv", "parking", "security", "inverter", "water", "workspace", "washer"],
-    landmarks: [
-      { name: "Isheri-Magodo Bridge", distanceKm: 1.0 },
-      { name: "Berger Bus Stop",      distanceKm: 2.4 }
-    ],
+      "Compact, modern self-contain studio on the first floor of Block 11, Teju Royal Estate. Private bath, kitchen, AC, and 24/7 inverter. Perfect for solo travellers and short stays.",
     gallery: [
-      "/assets/images/placeholders/isheri-2-bedroom-1.jpg",
-      "/assets/images/placeholders/isheri-2-bedroom-2.jpg",
-      "/assets/images/placeholders/isheri-2-bedroom-3.jpg",
-      "/assets/images/placeholders/isheri-2-bedroom-4.jpg",
-      "/assets/images/placeholders/isheri-2-bedroom-5.jpg"
+      "/assets/images/placeholders/isheri-zion-a-1.jpg",
+      "/assets/images/placeholders/isheri-zion-a-2.jpg",
+      "/assets/images/placeholders/isheri-zion-a-3.jpg",
+      "/assets/images/placeholders/isheri-zion-a-4.jpg"
     ],
-    galleryFallback: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1200&q=80",
-    houseRules: HOUSE_RULES_DEFAULT,
-    damagePolicy: DAMAGE_POLICY_DEFAULT,
-    status: "available",
     seo: {
-      title: "Isheri 2-Bedroom Shortlet — ITOSA Apartment",
-      description: "Book a 2-bedroom shortlet apartment in Isheri, Lagos. Family-friendly, secure, 24/7 inverter, fast WiFi. Direct booking from ₦95,000 / night.",
-      keywords: "isheri shortlet, isheri 2 bedroom, shortlet apartment lagos, family shortlet lagos"
+      title: "Zion A — Isheri Self-Contain Shortlet | ITOSA Apartment",
+      description: "Book Zion A, a clean self-contain studio in Isheri-Osun Ijegun, Lagos. 24/7 inverter, fast WiFi, private bath. From ₦20,000 / night.",
+      keywords: "isheri self contain, isheri studio shortlet, ijegun shortlet, lagos single room"
+    }
+  },
+  {
+    ...ISHERI_SHARED,
+    id: "apt-002-zion-b",
+    slug: "isheri-zion-b",
+    name: "Zion B — Isheri Self-Contain",
+    type: "Single Room (Self-Contain)",
+    beds: 1, baths: 1, maxGuests: 2,
+    pricePerNight: 20000,
+    floor: "First Floor",
+    floorLabel: "Zion B",
+    groupOrder: 2,
+    description:
+      "A second self-contain studio on the first floor — same calm, secure setup as Zion A. Private bath, kitchen, AC, 24/7 power. Great for solo or couple stays.",
+    gallery: [
+      "/assets/images/placeholders/isheri-zion-b-1.jpg",
+      "/assets/images/placeholders/isheri-zion-b-2.jpg"
+    ],
+    seo: {
+      title: "Zion B — Isheri Self-Contain Shortlet | ITOSA Apartment",
+      description: "Book Zion B, a clean self-contain studio in Isheri-Osun Ijegun, Lagos. 24/7 inverter, fast WiFi, private bath. From ₦20,000 / night.",
+      keywords: "isheri self contain, isheri studio shortlet, ijegun shortlet, lagos single room"
+    }
+  },
+  {
+    ...ISHERI_SHARED,
+    id: "apt-002-ivie",
+    slug: "isheri-ivie-home",
+    name: "Ivie Home — Isheri 2-Bedroom",
+    type: "2 Bedroom Apartment",
+    beds: 2, baths: 2, maxGuests: 4,
+    pricePerNight: 50000,
+    floor: "First Floor",
+    floorLabel: "Ivie Home",
+    groupOrder: 3,
+    description:
+      "Spacious 2-bedroom on the first floor — full kitchen, two en-suite bathrooms, smart TV, and a quiet, secure compound. Comfortable for families and small groups.",
+    gallery: [
+      "/assets/images/placeholders/isheri-ivie-home-1.jpg",
+      "/assets/images/placeholders/isheri-ivie-home-2.jpg",
+      "/assets/images/placeholders/isheri-ivie-home-3.jpg",
+      "/assets/images/placeholders/isheri-ivie-home-4.jpg",
+      "/assets/images/placeholders/isheri-ivie-home-5.jpg",
+      "/assets/images/placeholders/isheri-ivie-home-6.jpg",
+      "/assets/images/placeholders/isheri-ivie-home-7.jpg",
+      "/assets/images/placeholders/isheri-ivie-home-8.jpg",
+      "/assets/images/placeholders/isheri-ivie-home-9.jpg"
+    ],
+    seo: {
+      title: "Ivie Home — Isheri 2-Bedroom Shortlet | ITOSA Apartment",
+      description: "Book Ivie Home, a 2-bedroom shortlet in Isheri-Osun Ijegun, Lagos. Two en-suite baths, full kitchen, 24/7 inverter. From ₦50,000 / night.",
+      keywords: "isheri 2 bedroom shortlet, ijegun shortlet, lagos family shortlet, isheri apartment"
+    }
+  },
+  {
+    ...ISHERI_SHARED,
+    id: "apt-002-nicole",
+    slug: "isheri-nicole-home",
+    name: "Nicole Home — Isheri 2-Bedroom",
+    type: "2 Bedroom Apartment",
+    beds: 2, baths: 2, maxGuests: 4,
+    pricePerNight: 50000,
+    floor: "First Floor",
+    floorLabel: "Nicole Home",
+    groupOrder: 4,
+    description:
+      "Bright 2-bedroom on the first floor — two en-suite bathrooms, full kitchen, smart TV, and dedicated parking. A relaxed family-friendly stay in Ijegun.",
+    gallery: [
+      "/assets/images/placeholders/isheri-nicole-home-1.jpg",
+      "/assets/images/placeholders/isheri-nicole-home-2.jpg",
+      "/assets/images/placeholders/isheri-nicole-home-3.jpg",
+      "/assets/images/placeholders/isheri-nicole-home-4.jpg",
+      "/assets/images/placeholders/isheri-nicole-home-5.jpg",
+      "/assets/images/placeholders/isheri-nicole-home-6.jpg",
+      "/assets/images/placeholders/isheri-nicole-home-7.jpg",
+      "/assets/images/placeholders/isheri-nicole-home-8.jpg",
+      "/assets/images/placeholders/isheri-nicole-home-9.jpg"
+    ],
+    seo: {
+      title: "Nicole Home — Isheri 2-Bedroom Shortlet | ITOSA Apartment",
+      description: "Book Nicole Home, a 2-bedroom shortlet in Isheri-Osun Ijegun, Lagos. Two en-suite baths, full kitchen, 24/7 inverter. From ₦50,000 / night.",
+      keywords: "isheri 2 bedroom shortlet, ijegun shortlet, lagos family shortlet, isheri apartment"
+    }
+  },
+  {
+    ...ISHERI_SHARED,
+    id: "apt-002-ee-tasha",
+    slug: "isheri-ee-tasha",
+    name: "EE Tasha — Isheri 2-Bedroom",
+    type: "2 Bedroom Apartment",
+    beds: 2, baths: 2, maxGuests: 4,
+    pricePerNight: 50000,
+    floor: "Ground Floor",
+    floorLabel: "EE Tasha",
+    groupOrder: 5,
+    description:
+      "Ground-floor 2-bedroom — easy access, two en-suite bathrooms, full kitchen, smart TV, secure parking. Quiet neighbourhood, 5 minutes to White House Event Hall.",
+    gallery: [
+      "/assets/images/placeholders/isheri-ee-tasha-1.jpg",
+      "/assets/images/placeholders/isheri-ee-tasha-2.jpg",
+      "/assets/images/placeholders/isheri-ee-tasha-3.jpg",
+      "/assets/images/placeholders/isheri-ee-tasha-4.jpg"
+    ],
+    seo: {
+      title: "EE Tasha — Isheri 2-Bedroom Shortlet | ITOSA Apartment",
+      description: "Book EE Tasha, a ground-floor 2-bedroom shortlet in Isheri-Osun Ijegun, Lagos. Two en-suite baths, full kitchen, 24/7 inverter. From ₦50,000 / night.",
+      keywords: "isheri 2 bedroom shortlet, ijegun shortlet, lagos family shortlet, isheri apartment"
+    }
+  },
+  {
+    ...ISHERI_SHARED,
+    id: "apt-002-trey",
+    slug: "isheri-trey",
+    name: "Trey — Isheri 3-Bedroom",
+    type: "3 Bedroom Apartment",
+    beds: 3, baths: 4, maxGuests: 6,
+    pricePerNight: 70000,
+    floor: "Ground Floor",
+    floorLabel: "Trey",
+    groupOrder: 6,
+    description:
+      "Roomy 3-bedroom on the ground floor — three en-suite bedrooms plus a visitor toilet, full kitchen, smart TV, secure parking. Built for families, friends, and longer stays.",
+    gallery: [
+      "/assets/images/placeholders/isheri-trey-1.jpg",
+      "/assets/images/placeholders/isheri-trey-2.jpg",
+      "/assets/images/placeholders/isheri-trey-3.jpg",
+      "/assets/images/placeholders/isheri-trey-4.jpg",
+      "/assets/images/placeholders/isheri-trey-5.jpg",
+      "/assets/images/placeholders/isheri-trey-6.jpg",
+      "/assets/images/placeholders/isheri-trey-7.jpg"
+    ],
+    seo: {
+      title: "Trey — Isheri 3-Bedroom Shortlet | ITOSA Apartment",
+      description: "Book Trey, a ground-floor 3-bedroom shortlet in Isheri-Osun Ijegun, Lagos. Three en-suite baths plus visitor toilet, full kitchen, 24/7 inverter. From ₦70,000 / night.",
+      keywords: "isheri 3 bedroom shortlet, ijegun shortlet, lagos family shortlet, isheri apartment"
     }
   }
 ];
