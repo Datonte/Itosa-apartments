@@ -43,14 +43,14 @@ const ISHERI_SHARED = {
   location: "Isheri",
   city: "Lagos",
   address: "Block 11, Teju Royal Estate, 18 Azuka Nwosu Street, White House Bus Stop, Isheri-Osun Ijegun, Lagos",
-  coords: { lat: 6.5520, lng: 3.2810 },           // approximate Isheri-Osun Ijegun; refine if needed
+  coords: { lat: 6.517697, lng: 3.271221 },       // exact location supplied by owner
   currency: "NGN",
   minStayNights: 1,
   rating: 4.8,
   reviewCount: 0,
   amenities: ["wifi", "ac", "kitchen", "smart_tv", "parking", "security", "inverter", "water"],
   landmarks: [
-    { name: "White House Event Hall", distanceKm: 1.8, travelByCar: "5 min", coords: { lat: 6.5530, lng: 3.2825 } }
+    { name: "White House Event Hall", distanceKm: 1.8, travelByCar: "5 min" }
   ],
   galleryFallback: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1200&q=80",
   houseRules: HOUSE_RULES_DEFAULT,
