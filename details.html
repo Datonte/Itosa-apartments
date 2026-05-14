@@ -287,7 +287,7 @@
     setOG("og:title", document.title);
     setOG("og:description", a.seo?.description || a.description.slice(0, 155));
     setOG("og:url", BRAND.domain + "/apartments/" + a.slug);
-    setOG("og:image", (a.gallery && a.gallery[0]) || a.galleryFallback || "");
+    setOG("og:image", a.groupCoverPhoto || (a.gallery && a.gallery[0]) || a.galleryFallback || "");
     addCanonical(BRAND.domain + "/apartments/" + a.slug);
 
     injectLD(
@@ -359,9 +359,14 @@
     document.getElementById("apt-location").textContent = `${a.location}, ${a.city || "Lagos"}`;
     document.getElementById("apt-type").innerHTML = `<span class="material-symbols-outlined text-[18px]">apartment</span> ${a.type || "Apartment"}`;
 
+    // Prepend the group cover (building exterior) so it lands as the big first bento tile.
+    const unitImages = (a.gallery || []).filter(Boolean);
+    const galleryImages = a.groupCoverPhoto
+      ? [a.groupCoverPhoto, ...unitImages]
+      : (unitImages.length ? unitImages : (a.galleryFallback ? [a.galleryFallback] : []));
     renderBentoGallery({
       root: document.getElementById("gallery-root"),
-      images: (a.gallery || []).filter(Boolean).length ? a.gallery : (a.galleryFallback ? [a.galleryFallback] : []),
+      images: galleryImages,
       alt: a.name
     });
 

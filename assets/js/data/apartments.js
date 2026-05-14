@@ -57,7 +57,8 @@ const ISHERI_SHARED = {
   damagePolicy: DAMAGE_POLICY_DEFAULT,
   status: "available",
   groupSlug: "isheri",
-  groupName: "Isheri — Teju Royal Estate"
+  groupName: "Isheri — Teju Royal Estate",
+  groupCoverPhoto: "/assets/images/placeholders/isheri-building.jpg"
 };
 
 // Shared Surulere fields (same building, same amenities/landmarks/coords for all 3 floors)
@@ -92,7 +93,8 @@ const SURULERE_SHARED = {
   damagePolicy: DAMAGE_POLICY_DEFAULT,
   status: "available",
   groupSlug: "surulere",
-  groupName: "Surulere — Colindale Park Estate"
+  groupName: "Surulere — Colindale Park Estate",
+  groupCoverPhoto: "/assets/images/placeholders/surulere-building.jpg"
 };
 
 export const APARTMENTS = [
@@ -314,7 +316,9 @@ export const APARTMENTS = [
       "/assets/images/placeholders/isheri-trey-4.jpg",
       "/assets/images/placeholders/isheri-trey-5.jpg",
       "/assets/images/placeholders/isheri-trey-6.jpg",
-      "/assets/images/placeholders/isheri-trey-7.jpg"
+      "/assets/images/placeholders/isheri-trey-7.jpg",
+      "/assets/images/placeholders/isheri-trey-8.jpg",
+      "/assets/images/placeholders/isheri-trey-9.jpg"
     ],
     seo: {
       title: "Trey — Isheri 3-Bedroom Shortlet | ITOSA Apartment",

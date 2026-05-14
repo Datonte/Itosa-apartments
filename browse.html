@@ -255,9 +255,11 @@
   }
 
   function card(a) {
-    const img = (a.gallery && a.gallery[0]) || a.galleryFallback || "";
     const isAvail = a.status === "available";
     const isGroup = a._siblings && a._siblings.length > 1;
+    const img = (isGroup && a.groupCoverPhoto)
+      ? a.groupCoverPhoto
+      : ((a.gallery && a.gallery[0]) || a.galleryFallback || "");
     const displayName = isGroup ? (a.groupName || a.name) : a.name;
     const badge = isAvail
       ? '<span class="inline-flex items-center gap-1 px-3 py-1 bg-accent-green text-white font-label-bold text-[10px] uppercase tracking-widest rounded-full shadow-md"><span class="h-1.5 w-1.5 rounded-full bg-white animate-pulse"></span>Available</span>'
