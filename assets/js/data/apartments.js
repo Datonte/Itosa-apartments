@@ -67,7 +67,7 @@ const SURULERE_SHARED = {
   city: "Lagos",
   address: "SD 7, Colindale Park Estate, Surulere, Lagos 101241",
   coords: { lat: 6.5009, lng: 3.3582 },
-  pricePerNight: 65000,
+  pricePerNight: 60000,
   currency: "NGN",
   minStayNights: 1,
   beds: 1,
