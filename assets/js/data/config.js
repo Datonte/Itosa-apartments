@@ -12,7 +12,7 @@ export const BRAND = {
   phone:    "+234 808 591 8163",         // primary line (tel: href is auto-stripped to digits)
   phoneAlt: "+234 813 662 0256",         // secondary line
   whatsapp: "2348139970432",             // WhatsApp number, digits only with country code, no '+'
-  email: "Itosa10@yahoo.com",
+  email: "itosaapartmentss@gmail.com",
   address: "Lagos, Nigeria",             // street + city. Update once you have a public address.
   // SOCIAL — replace each with full URL
   social: {
