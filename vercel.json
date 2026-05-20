@@ -1,5 +1,8 @@
 {
   "trailingSlash": false,
+  "crons": [
+    { "path": "/api/supabase-keepalive", "schedule": "0 3 * * *" }
+  ],
   "rewrites": [
     { "source": "/browse",             "destination": "/browse.html" },
     { "source": "/booking",            "destination": "/booking.html" },
