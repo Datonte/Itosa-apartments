@@ -29,9 +29,10 @@ export const BRAND = {
 };
 
 export const PAYMENT = {
-  // Paystack public key — safe in the browser. Replace with your live key when ready.
-  // Get yours at https://dashboard.paystack.com/#/settings/developer
-  paystackPublicKey: "pk_test_PLACEHOLDER",
+  // Paystack public key — safe in the browser (only public keys belong here).
+  // Test key currently active. When KYC clears, swap for the live key starting pk_live_…
+  // Dashboard: https://dashboard.paystack.com/#/settings/developer
+  paystackPublicKey: "pk_test_b79619dd1a02b34cfdeb57edb936a4053e7f6884",
   currency: "NGN"
 };
 
