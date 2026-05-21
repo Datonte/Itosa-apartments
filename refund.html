@@ -3,6 +3,17 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Performance hints + anti-FOUC critical CSS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.tailwindcss.com">
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+  <style>
+    html,body { background:#fdf8f8; font-family:"Be Vietnam Pro",system-ui,sans-serif; margin:0; }
+    html.dark, html.dark body { background:#111213; color:#e4e4e7; }
+    body { opacity:0; animation: bodyFadeIn .35s ease-out .05s forwards; }
+    @keyframes bodyFadeIn { to { opacity:1; } }
+  </style>
   <title>Refund &amp; Cancellation Policy | ITOSA Apartment</title>
   <meta name="description" content="ITOSA Apartment refund and cancellation policy: free cancellation up to 48 hours before check-in, no-shows, late cancellations and refund timelines." />
   <meta name="robots" content="index, follow" />

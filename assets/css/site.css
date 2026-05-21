@@ -541,6 +541,38 @@ html.dark .leaflet-popup-tip { background: #1c1d1e !important; }
 html.dark .leaflet-popup-content span[style*="color"] { color: #a1a1aa !important; }
 
 /* =====================================================
+   CROSS-PAGE TRANSITIONS (Chrome/Edge/Safari)
+   Smooth cross-fade between page navigations. Older browsers
+   (Firefox) just ignore this rule — same hard cut as before.
+   ===================================================== */
+@view-transition { navigation: auto; }
+
+/* =====================================================
+   LOADING SKELETONS — shimmer placeholder for apartment grids
+   Replaced by JS once data renders.
+   ===================================================== */
+.apt-skeleton {
+  aspect-ratio: 3 / 4;
+  background: linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%);
+  background-size: 200% 100%;
+  animation: skeleton 1.4s ease infinite;
+  border-radius: 1.5rem;
+  width: 100%;
+}
+@keyframes skeleton {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+html.dark .apt-skeleton {
+  background: linear-gradient(110deg, #1f2022 8%, #2a2b2d 18%, #1f2022 33%);
+  background-size: 200% 100%;
+}
+@media (prefers-reduced-motion: reduce) {
+  .apt-skeleton { animation: none; background: #ececec; }
+  html.dark .apt-skeleton { background: #1f2022; }
+}
+
+/* =====================================================
    HERO SLIDESHOW (homepage)
    Cross-fading background images, dot indicators
    ===================================================== */
