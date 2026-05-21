@@ -110,22 +110,31 @@
 .lightbox img { max-width: min(92vw, 1400px); max-height: 88vh; object-fit: contain; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
 .lightbox-close, .lightbox-nav {
   position: absolute;
-  background: rgba(255,255,255,0.12);
+  background: rgba(0,0,0,0.6);
   color: #fff;
-  border: 0;
-  width: 48px;
-  height: 48px;
+  border: 2px solid rgba(255,255,255,0.4);
+  width: 52px;
+  height: 52px;
   border-radius: 9999px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   backdrop-filter: blur(8px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
 }
 .lightbox-close { top: 24px; right: 24px; }
 .lightbox-nav.prev { left: 24px; top: 50%; transform: translateY(-50%); }
 .lightbox-nav.next { right: 24px; top: 50%; transform: translateY(-50%); }
-.lightbox-nav:hover, .lightbox-close:hover { background: rgba(255,255,255,0.25); }
+.lightbox-nav:hover, .lightbox-close:hover {
+  background: #f9bd22;
+  color: #181919;
+  border-color: #f9bd22;
+}
+.lightbox-nav.prev:hover { transform: translateY(-50%) scale(1.08); }
+.lightbox-nav.next:hover { transform: translateY(-50%) scale(1.08); }
+.lightbox-close:hover { transform: scale(1.08); }
 
 /* Trust strip */
 .trust-strip {

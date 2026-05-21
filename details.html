@@ -331,12 +331,12 @@
           const active = f === activeFloor;
           const cls = active
             ? "px-5 py-2 rounded-full text-sm font-semibold bg-brand-yellow text-brand-ink shadow ring-1 ring-brand-yellow"
-            : "px-5 py-2 rounded-full text-sm font-semibold text-on-surface-variant hover:bg-white hover:text-brand-ink transition-colors";
+            : "px-5 py-2 rounded-full text-sm font-semibold bg-white border border-zinc-300 text-brand-ink hover:border-brand-yellow hover:bg-brand-yellow/10 transition-colors";
           return `<a href="/apartments/${first.slug}" class="${cls}">${f}</a>`;
         }).join("");
         floorRow = `
           <div class="text-xs text-on-surface-variant mb-2 font-semibold uppercase tracking-wider">Choose your floor</div>
-          <div class="inline-flex p-1 bg-surface-container-low rounded-full border border-zinc-200 gap-1 mb-4">${floorTabs}</div>
+          <div class="inline-flex flex-wrap gap-2 mb-4">${floorTabs}</div>
         `;
       }
 
@@ -371,11 +371,13 @@
     document.getElementById("apt-location").textContent = `${a.location}, ${a.city || "Lagos"}`;
     document.getElementById("apt-type").innerHTML = `<span class="material-symbols-outlined text-[18px]">apartment</span> ${a.type || "Apartment"}`;
 
-    // Prepend the group cover (building exterior) so it lands as the big first bento tile.
+    // Show ONLY this unit's photos in the bento gallery on the detail page.
+    // (The group cover / building exterior is used on the /browse card and as
+    // og:image, but inside the detail page guests want to see what they're booking.)
     const unitImages = (a.gallery || []).filter(Boolean);
-    const galleryImages = a.groupCoverPhoto
-      ? [a.groupCoverPhoto, ...unitImages]
-      : (unitImages.length ? unitImages : (a.galleryFallback ? [a.galleryFallback] : []));
+    const galleryImages = unitImages.length
+      ? unitImages
+      : (a.galleryFallback ? [a.galleryFallback] : []);
     renderBentoGallery({
       root: document.getElementById("gallery-root"),
       images: galleryImages,
