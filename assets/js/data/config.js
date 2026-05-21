@@ -29,11 +29,23 @@ export const BRAND = {
 };
 
 export const PAYMENT = {
+  // "bank-transfer" → guest sees bank transfer instructions, admin manually confirms.
+  // "paystack"      → guest pays online via Paystack inline checkout.
+  // Flip this single value to switch the whole booking flow once Paystack is live.
+  mode: "bank-transfer",
+
   // Paystack public key — safe in the browser (only public keys belong here).
   // Test key currently active. When KYC clears, swap for the live key starting pk_live_…
   // Dashboard: https://dashboard.paystack.com/#/settings/developer
   paystackPublicKey: "pk_test_b79619dd1a02b34cfdeb57edb936a4053e7f6884",
   currency: "NGN"
+};
+
+// Bank account for manual transfers (used when PAYMENT.mode === "bank-transfer").
+export const BANK = {
+  accountNumber: "3091820975",
+  bankName: "First Bank",
+  accountName: "Ayodele James"
 };
 
 export const FEES = {

@@ -40,11 +40,11 @@
   <div class="max-w-2xl mx-auto">
 
     <div class="text-center mb-8">
-      <div class="inline-flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100 text-emerald-600 mb-4">
-        <span class="material-symbols-outlined text-4xl filled" style="font-variation-settings:'FILL' 1;">check_circle</span>
+      <div id="status-icon" class="inline-flex h-16 w-16 items-center justify-center rounded-full bg-amber-100 text-amber-600 mb-4">
+        <span class="material-symbols-outlined text-4xl filled" style="font-variation-settings:'FILL' 1;">schedule</span>
       </div>
-      <h1 class="font-display-xl text-headline-lg text-brand-ink mb-2">Booking confirmed!</h1>
-      <p class="text-on-surface-variant">A confirmation will be sent to your email shortly.</p>
+      <h1 id="page-title" class="font-display-xl text-headline-lg text-brand-ink mb-2">Reservation held</h1>
+      <p id="page-subtitle" class="text-on-surface-variant">Complete your bank transfer to confirm the booking.</p>
     </div>
 
     <div id="missing-state" class="hidden text-center py-12 bg-white rounded-2xl border border-zinc-100">
@@ -76,10 +76,71 @@
 
       <dl class="grid grid-cols-2 gap-4 text-sm mb-6">
         <div><dt class="text-on-surface-variant text-xs uppercase tracking-wider mb-1">Guest</dt><dd class="font-semibold text-brand-ink" id="c-guest">—</dd></div>
-        <div><dt class="text-on-surface-variant text-xs uppercase tracking-wider mb-1">Total paid</dt><dd class="font-semibold text-brand-ink" id="c-total">—</dd></div>
+        <div><dt class="text-on-surface-variant text-xs uppercase tracking-wider mb-1" data-total-label="paid">Total</dt><dd class="font-semibold text-brand-ink" id="c-total">—</dd></div>
         <div><dt class="text-on-surface-variant text-xs uppercase tracking-wider mb-1">Check-in</dt><dd class="font-semibold text-brand-ink">From 3:00 PM</dd></div>
         <div><dt class="text-on-surface-variant text-xs uppercase tracking-wider mb-1">Check-out</dt><dd class="font-semibold text-brand-ink">By 11:00 AM</dd></div>
       </dl>
+
+      <!-- BANK TRANSFER INSTRUCTIONS (visible when PAYMENT.mode === "bank-transfer" + status pending) -->
+      <div id="transfer-banner" class="hidden mb-6 rounded-2xl border-2 border-brand-yellow/50 bg-brand-yellow/5 p-5">
+        <p class="text-xs font-bold uppercase tracking-widest text-brand-yellow-deep mb-3 flex items-center gap-2">
+          <span class="material-symbols-outlined text-[18px]">account_balance</span>
+          Complete your transfer
+        </p>
+        <p class="text-sm text-on-surface-variant mb-4">
+          Transfer the total to the account below, then send proof on WhatsApp. Your dates are held for <strong class="text-brand-ink">24 hours</strong>.
+        </p>
+        <dl class="space-y-3 text-sm bg-white rounded-xl p-4 border border-zinc-200">
+          <div class="flex items-center justify-between gap-3">
+            <dt class="text-on-surface-variant uppercase tracking-wider text-xs font-bold">Bank</dt>
+            <dd class="font-semibold text-brand-ink" id="t-bank">—</dd>
+          </div>
+          <div class="flex items-center justify-between gap-3 border-t border-zinc-100 pt-3">
+            <dt class="text-on-surface-variant uppercase tracking-wider text-xs font-bold">Account name</dt>
+            <dd class="font-semibold text-brand-ink" id="t-name">—</dd>
+          </div>
+          <div class="flex items-center justify-between gap-3 border-t border-zinc-100 pt-3">
+            <dt class="text-on-surface-variant uppercase tracking-wider text-xs font-bold">Account number</dt>
+            <dd class="font-mono font-bold text-brand-ink flex items-center gap-2">
+              <span id="t-acct">—</span>
+              <button type="button" class="copy-btn px-2 py-1 text-xs bg-brand-yellow text-brand-ink rounded-full font-semibold" data-copy-from="t-acct">Copy</button>
+            </dd>
+          </div>
+          <div class="flex items-center justify-between gap-3 border-t border-zinc-100 pt-3">
+            <dt class="text-on-surface-variant uppercase tracking-wider text-xs font-bold">Amount</dt>
+            <dd class="font-bold text-brand-ink flex items-center gap-2">
+              <span id="t-amount">—</span>
+              <button type="button" class="copy-btn px-2 py-1 text-xs bg-brand-yellow text-brand-ink rounded-full font-semibold" data-copy-from="t-amount-raw">Copy</button>
+              <span id="t-amount-raw" class="hidden"></span>
+            </dd>
+          </div>
+          <div class="flex items-center justify-between gap-3 border-t border-zinc-100 pt-3 bg-brand-yellow/10 -mx-4 -mb-4 px-4 pb-4 rounded-b-xl">
+            <dt class="text-brand-yellow-deep uppercase tracking-wider text-xs font-bold">Transfer description ⚠</dt>
+            <dd class="font-mono font-bold text-brand-yellow-deep flex items-center gap-2">
+              <span id="t-ref">—</span>
+              <button type="button" class="copy-btn px-2 py-1 text-xs bg-brand-ink text-white rounded-full font-semibold" data-copy-from="t-ref">Copy</button>
+            </dd>
+          </div>
+        </dl>
+        <p class="text-xs text-on-surface-variant mt-3 italic">Use the booking ID above as the transfer description so we can match your payment to this reservation.</p>
+
+        <a id="whatsapp-proof" href="#" class="mt-5 inline-flex items-center justify-center gap-2 w-full px-5 py-3 bg-[#25D366] text-white font-semibold rounded-full hover:opacity-90 transition-opacity">
+          <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326z"/></svg>
+          Send payment proof on WhatsApp
+        </a>
+      </div>
+
+      <!-- PAID banner (shown after admin confirms) -->
+      <div id="paid-banner" class="hidden bg-emerald-50 border border-emerald-200 text-emerald-900 p-4 rounded-xl text-sm mb-6">
+        <p class="font-semibold mb-1 flex items-center gap-2"><span class="material-symbols-outlined text-[18px]">check_circle</span>Payment confirmed — see you on check-in</p>
+        <p class="text-emerald-900/80 leading-relaxed">Your booking is fully confirmed. We'll WhatsApp you 24 hours before arrival with check-in details.</p>
+      </div>
+
+      <!-- Paystack pending banner (only used when PAYMENT.mode === "paystack") -->
+      <div id="paystack-banner" class="hidden bg-amber-50 border border-amber-200 text-amber-900 p-4 rounded-xl text-sm mb-6">
+        <p class="font-semibold mb-1 flex items-center gap-2"><span class="material-symbols-outlined text-[18px]">hourglass_top</span>Payment received — verification pending</p>
+        <p class="text-amber-900/80 leading-relaxed">Your payment has been captured by Paystack. Final verification typically completes within a minute.</p>
+      </div>
 
       <div class="bg-surface-container-low p-4 rounded-xl text-sm text-on-surface-variant mb-6">
         <p class="font-semibold text-brand-ink mb-1">What's next?</p>
@@ -88,15 +149,6 @@
           <li>Bring a valid ID for check-in verification.</li>
           <li>Need to change something? Use the contact details below.</li>
         </ul>
-      </div>
-
-      <!-- Verification status banner (driven by server-verify TODO) -->
-      <div id="verify-banner" class="bg-amber-50 border border-amber-200 text-amber-900 p-4 rounded-xl text-sm mb-6">
-        <p class="font-semibold mb-1 flex items-center gap-2"><span class="material-symbols-outlined text-[18px]">hourglass_top</span>Payment received — verification pending</p>
-        <p class="text-amber-900/80 leading-relaxed">
-          Your payment has been captured by Paystack. Final verification typically completes within a minute.
-          <span class="block mt-2 text-xs italic">[Owner note: until backend webhook is wired, status stays "pending verification". See TODO in <code>assets/js/payment.js</code>.]</span>
-        </p>
       </div>
 
       <div class="flex flex-col sm:flex-row gap-3 sm:justify-between">
@@ -120,6 +172,7 @@
   import { formatNGN } from "/assets/js/utils/currency.js";
   import { formatDateLong } from "/assets/js/utils/date.js";
   import { verifyPaymentOnServer } from "/assets/js/payment.js";
+  import { PAYMENT, BANK, BRAND } from "/assets/js/data/config.js";
 
   const params = new URLSearchParams(window.location.search);
   const ref = params.get("ref");
@@ -181,8 +234,7 @@
 
   function render(b, a) {
     document.getElementById("ok-state").classList.remove("hidden");
-    document.getElementById("c-id").textContent = b.paystackRef;
-    document.getElementById("c-status").textContent = "Pending verification";
+    document.getElementById("c-id").textContent = b.paystackRef || b.id;
     document.getElementById("c-image").src = (a?.gallery && a.gallery[0]) || a?.galleryFallback || "";
     document.getElementById("c-image").alt = a?.name || "";
     document.getElementById("c-location").textContent = a?.location || "";
@@ -190,6 +242,81 @@
     document.getElementById("c-stay").textContent = `${formatDateLong(b.checkin)} → ${formatDateLong(b.checkout)} · ${b.guests} guest${b.guests > 1 ? "s" : ""}`;
     document.getElementById("c-guest").textContent = b.name + " · " + b.email;
     document.getElementById("c-total").textContent = formatNGN(b.totals?.total || 0);
+
+    // Status + mode-aware rendering
+    const status = b.paymentStatus;
+    const total = b.totals?.total || 0;
+    const bookingId = b.paystackRef || b.id;
+
+    const statusEl = document.getElementById("c-status");
+    const statusIcon = document.getElementById("status-icon");
+    const titleEl = document.getElementById("page-title");
+    const subEl = document.getElementById("page-subtitle");
+    const totalLabel = document.querySelector("dt[data-total-label]");
+
+    if (status === "paid") {
+      // Fully confirmed
+      statusEl.textContent = "Confirmed";
+      statusEl.className = "font-semibold text-emerald-600";
+      statusIcon.className = "inline-flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100 text-emerald-600 mb-4";
+      statusIcon.querySelector(".material-symbols-outlined").textContent = "check_circle";
+      titleEl.textContent = "Booking confirmed!";
+      subEl.textContent = "We'll WhatsApp you 24 hours before check-in.";
+      document.getElementById("paid-banner").classList.remove("hidden");
+    } else if (PAYMENT.mode === "bank-transfer") {
+      // Bank-transfer mode + still pending → show transfer instructions
+      statusEl.textContent = "Awaiting transfer";
+      statusEl.className = "font-semibold text-amber-600";
+      // Keep the amber clock icon
+      titleEl.textContent = "Reservation held";
+      subEl.textContent = "Complete your bank transfer to confirm.";
+
+      // Wire the transfer card
+      const banner = document.getElementById("transfer-banner");
+      banner.classList.remove("hidden");
+      document.getElementById("t-bank").textContent = BANK.bankName;
+      document.getElementById("t-name").textContent = BANK.accountName;
+      document.getElementById("t-acct").textContent = BANK.accountNumber;
+      document.getElementById("t-amount").textContent = formatNGN(total);
+      document.getElementById("t-amount-raw").textContent = total;
+      document.getElementById("t-ref").textContent = bookingId;
+
+      // WhatsApp pre-fill
+      const waNumber = (BRAND.whatsapp || "").replace(/[^0-9]/g, "");
+      const msg = `Hi ITOSA Apartment, I just reserved ${a?.name || "an apartment"} for ${formatDateLong(b.checkin)} to ${formatDateLong(b.checkout)} (${formatNGN(total)}). My booking ID is ${bookingId}. I'll send my transfer proof shortly.`;
+      const waHref = waNumber ? `https://wa.me/${waNumber}?text=${encodeURIComponent(msg)}` : "#";
+      document.getElementById("whatsapp-proof").href = waHref;
+
+      // Re-label the summary total ("Total" vs "Total paid")
+    } else {
+      // Paystack mode + pending verification
+      statusEl.textContent = "Pending verification";
+      statusEl.className = "font-semibold text-amber-600";
+      document.getElementById("paystack-banner").classList.remove("hidden");
+    }
+
+    // Re-label the "Total paid" line in the summary card depending on status
+    const totalLine = document.querySelector('dt[data-total-label="paid"]');
+    if (totalLine) totalLine.textContent = status === "paid" ? "Total paid" : "Total due";
+
+    wireCopyButtons();
+  }
+
+  function wireCopyButtons() {
+    document.querySelectorAll(".copy-btn").forEach((btn) => {
+      if (btn.dataset.wired) return;
+      btn.dataset.wired = "1";
+      btn.addEventListener("click", async () => {
+        const target = document.getElementById(btn.getAttribute("data-copy-from"));
+        if (!target) return;
+        try {
+          await navigator.clipboard.writeText(target.textContent.trim());
+          const original = btn.textContent;
+          btn.textContent = "Copied!";
+          setTimeout(() => { btn.textContent = original; }, 1500);
+        } catch {}
+      });
+    });
   }
 </script>
 

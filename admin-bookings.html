@@ -179,8 +179,8 @@
     const body = document.getElementById("drawer-body");
     body.innerHTML = `
       <div class="bg-surface-container-low p-3 rounded-xl">
-        <p class="text-xs uppercase tracking-wider text-on-surface-variant font-bold mb-1">Booking ID</p>
-        <p class="font-mono text-xs">${escape(b.paystackRef || b.id)}</p>
+        <p class="text-xs uppercase tracking-wider text-brand-yellow-deep font-bold mb-1">Booking ID — match this to the transfer description</p>
+        <p class="font-mono text-base font-bold text-brand-ink select-all">${escape(b.paystackRef || b.id)}</p>
       </div>
       <p><strong>Apartment:</strong> ${escape(apt?.name || b.apartmentSlug)}</p>
       <p><strong>Stay:</strong> ${formatDateLong(b.checkin)} → ${formatDateLong(b.checkout)}</p>
@@ -196,7 +196,7 @@
     `;
     const actions = document.getElementById("drawer-actions");
     actions.innerHTML = `
-      ${b.paymentStatus !== "paid" ? `<button data-action="mark-paid" class="w-full py-2.5 bg-emerald-600 text-white font-semibold rounded-full hover:bg-emerald-700">Mark as paid</button>` : ""}
+      ${b.paymentStatus !== "paid" ? `<button data-action="mark-paid" class="w-full py-2.5 bg-emerald-600 text-white font-semibold rounded-full hover:bg-emerald-700"><span class="inline-flex items-center gap-2 justify-center"><span class="material-symbols-outlined text-[18px]">check_circle</span>Confirm payment received</span></button>` : ""}
       ${b.paymentStatus !== "cancelled" ? `<button data-action="cancel" class="w-full py-2.5 bg-white border border-zinc-200 text-brand-ink font-semibold rounded-full hover:bg-surface-container-low">Cancel booking</button>` : ""}
       <button data-action="delete" class="w-full py-2.5 text-rose-600 font-semibold rounded-full hover:bg-rose-50">Delete record</button>
     `;

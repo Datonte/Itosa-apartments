@@ -141,8 +141,8 @@
 
     <!-- STEP 3: Pay -->
     <section id="panel-3" class="hidden bg-white p-6 lg:p-8 rounded-2xl shadow-card border border-zinc-100">
-      <h1 class="font-display-xl text-headline-lg text-brand-ink mb-1">Pay securely</h1>
-      <p class="text-on-surface-variant text-sm mb-6">Powered by Paystack — Nigeria's most trusted payment gateway. Your card details never touch our servers.</p>
+      <h1 class="font-display-xl text-headline-lg text-brand-ink mb-1" id="step3-title">Reserve your stay</h1>
+      <p class="text-on-surface-variant text-sm mb-6" id="step3-subtitle">Confirm to hold your dates. We'll send transfer details next.</p>
 
       <div class="bg-surface-container-low p-5 rounded-xl mb-6">
         <h2 class="font-display-xl text-lg text-brand-ink mb-3">Booking summary</h2>
@@ -156,23 +156,60 @@
           <div class="flex justify-between"><span class="text-on-surface-variant"><span id="p-rate">—</span> × <span id="p-nights">—</span> nights</span><span id="p-subtotal">—</span></div>
           <div class="flex justify-between"><span class="text-on-surface-variant">Cleaning fee</span><span id="p-cleaning">—</span></div>
           <div class="flex justify-between"><span class="text-on-surface-variant">Service fee</span><span id="p-service">—</span></div>
-          <div class="flex justify-between font-bold text-lg text-brand-ink border-t border-zinc-200 pt-2 mt-2"><span>Total to pay</span><span id="p-total">—</span></div>
+          <div class="flex justify-between font-bold text-lg text-brand-ink border-t border-zinc-200 pt-2 mt-2"><span>Total</span><span id="p-total">—</span></div>
         </div>
       </div>
 
+      <!-- BANK TRANSFER CARD (visible when PAYMENT.mode === 'bank-transfer') -->
+      <div id="transfer-card" class="hidden mb-6 rounded-2xl border-2 border-brand-yellow/50 bg-brand-yellow/5 p-5">
+        <p class="text-xs font-bold uppercase tracking-widest text-brand-yellow-deep mb-3 flex items-center gap-2">
+          <span class="material-symbols-outlined text-[18px]">account_balance</span>
+          Bank transfer instructions
+        </p>
+        <p class="text-sm text-on-surface-variant mb-4">
+          Click <strong class="text-brand-ink">Confirm Reservation</strong> below — your dates are held for <strong class="text-brand-ink">24 hours</strong>. Then transfer the total to:
+        </p>
+        <dl class="space-y-3 text-sm bg-white rounded-xl p-4 border border-zinc-200">
+          <div class="flex items-center justify-between gap-3">
+            <dt class="text-on-surface-variant uppercase tracking-wider text-xs font-bold">Bank</dt>
+            <dd class="font-semibold text-brand-ink" id="bank-name-display">—</dd>
+          </div>
+          <div class="flex items-center justify-between gap-3 border-t border-zinc-100 pt-3">
+            <dt class="text-on-surface-variant uppercase tracking-wider text-xs font-bold">Account name</dt>
+            <dd class="font-semibold text-brand-ink" id="bank-acct-name">—</dd>
+          </div>
+          <div class="flex items-center justify-between gap-3 border-t border-zinc-100 pt-3">
+            <dt class="text-on-surface-variant uppercase tracking-wider text-xs font-bold">Account number</dt>
+            <dd class="font-mono font-bold text-brand-ink flex items-center gap-2">
+              <span id="bank-acct-number">—</span>
+              <button type="button" class="copy-btn px-2 py-1 text-xs bg-brand-yellow text-brand-ink rounded-full font-semibold" data-copy-from="bank-acct-number">Copy</button>
+            </dd>
+          </div>
+          <div class="flex items-center justify-between gap-3 border-t border-zinc-100 pt-3">
+            <dt class="text-on-surface-variant uppercase tracking-wider text-xs font-bold">Amount</dt>
+            <dd class="font-bold text-brand-ink flex items-center gap-2">
+              <span id="bank-amount">—</span>
+              <button type="button" class="copy-btn px-2 py-1 text-xs bg-brand-yellow text-brand-ink rounded-full font-semibold" data-copy-from="bank-amount-raw">Copy</button>
+              <span id="bank-amount-raw" class="hidden"></span>
+            </dd>
+          </div>
+        </dl>
+        <p class="text-xs text-on-surface-variant mt-3 italic">After clicking <strong>Confirm Reservation</strong> you'll get a unique booking ID — include it as the transfer description so we can match the payment to your booking.</p>
+      </div>
+
       <div class="trust-strip mb-6 rounded-xl border border-zinc-100">
-        <div class="trust-item"><span class="material-symbols-outlined">lock</span>SSL encrypted</div>
-        <div class="trust-item"><span class="material-symbols-outlined">verified_user</span>Paystack verified</div>
-        <div class="trust-item"><span class="material-symbols-outlined">payments</span>No hidden fees</div>
-        <div class="trust-item"><span class="material-symbols-outlined">undo</span>Free 48h cancel</div>
+        <div class="trust-item"><span class="material-symbols-outlined text-accent-green">lock</span>Secure reservation</div>
+        <div class="trust-item"><span class="material-symbols-outlined text-accent-blue">schedule</span>24-hour hold</div>
+        <div class="trust-item"><span class="material-symbols-outlined text-brand-yellow-deep">support_agent</span>WhatsApp confirmation</div>
+        <div class="trust-item"><span class="material-symbols-outlined text-brand-yellow-deep">undo</span>Free 48h cancel</div>
       </div>
 
       <div class="flex flex-col sm:flex-row gap-3 sm:justify-between">
         <button type="button" class="text-center px-6 py-3 text-brand-ink font-semibold rounded-full hover:bg-surface-container-low" data-go="2">Back</button>
-        <button id="pay-btn" type="button" class="px-8 py-3 bg-brand-yellow text-brand-ink font-label-bold text-label-bold rounded-full hover:bg-brand-ink hover:text-white transition-colors">
-          <span class="inline-flex items-center gap-2">
+        <button id="pay-btn" type="button" class="px-8 py-3 bg-brand-yellow text-brand-ink font-label-bold text-label-bold rounded-full hover:bg-brand-ink hover:text-white transition-colors shadow-md ring-2 ring-brand-yellow/40">
+          <span class="inline-flex items-center gap-2" id="pay-btn-content">
             <span class="material-symbols-outlined text-[18px]">lock</span>
-            Pay <span id="p-total-btn">—</span>
+            <span id="pay-btn-label">Confirm Reservation</span>
           </span>
         </button>
       </div>
@@ -194,6 +231,8 @@
   import { nightsBetween, formatDateLong } from "/assets/js/utils/date.js";
   import { validateName, validateEmail, validatePhoneNG, validateGuests, validateDates } from "/assets/js/utils/validation.js";
   import { payWithPaystack } from "/assets/js/payment.js";
+  import { saveBooking } from "/assets/js/data/store.js";
+  import { PAYMENT, BANK } from "/assets/js/data/config.js";
 
   const params = new URLSearchParams(window.location.search);
   const slug = params.get("slug");
@@ -295,13 +334,92 @@
     document.getElementById("p-cleaning").textContent = formatNGN(totals.cleaning);
     document.getElementById("p-service").textContent = formatNGN(totals.service);
     document.getElementById("p-total").textContent = formatNGN(totals.total);
-    document.getElementById("p-total-btn").textContent = formatNGN(totals.total);
+
+    // Mode-specific rendering
+    if (PAYMENT.mode === "bank-transfer") {
+      // Show bank transfer instructions
+      document.getElementById("step3-title").textContent = "Reserve your stay";
+      document.getElementById("step3-subtitle").textContent = "Click Confirm to hold your dates for 24 hours, then transfer the total to the account below.";
+      document.getElementById("transfer-card").classList.remove("hidden");
+      document.getElementById("bank-name-display").textContent = BANK.bankName;
+      document.getElementById("bank-acct-name").textContent = BANK.accountName;
+      document.getElementById("bank-acct-number").textContent = BANK.accountNumber;
+      document.getElementById("bank-amount").textContent = formatNGN(totals.total);
+      document.getElementById("bank-amount-raw").textContent = totals.total;
+      document.getElementById("pay-btn-label").textContent = "Confirm Reservation";
+    } else {
+      // Paystack mode — keep original "Pay ₦X" button
+      document.getElementById("step3-title").textContent = "Pay securely";
+      document.getElementById("step3-subtitle").textContent = "Powered by Paystack — Nigeria's most trusted payment gateway. Your card details never touch our servers.";
+      document.getElementById("transfer-card").classList.add("hidden");
+      document.getElementById("pay-btn-label").textContent = "Pay " + formatNGN(totals.total);
+    }
+
+    wireCopyButtons();
   }
 
-  function payNow(a, totals) {
+  function wireCopyButtons() {
+    document.querySelectorAll(".copy-btn").forEach((btn) => {
+      if (btn.dataset.wired) return;
+      btn.dataset.wired = "1";
+      btn.addEventListener("click", async () => {
+        const targetId = btn.getAttribute("data-copy-from");
+        const target = document.getElementById(targetId);
+        if (!target) return;
+        try {
+          await navigator.clipboard.writeText(target.textContent.trim());
+          const original = btn.textContent;
+          btn.textContent = "Copied!";
+          setTimeout(() => { btn.textContent = original; }, 1500);
+        } catch {}
+      });
+    });
+  }
+
+  function generateBookingId() {
+    return "B" + Date.now() + Math.random().toString(36).slice(2, 6).toUpperCase();
+  }
+
+  async function payNow(a, totals) {
     const draft = JSON.parse(sessionStorage.getItem("itosa.bookingDraft") || "null");
     if (!draft) { alert("Booking session lost — please go back and re-enter your details."); return; }
 
+    if (PAYMENT.mode === "bank-transfer") {
+      // Manual bank transfer flow: save the booking immediately, redirect to confirmation
+      const btn = document.getElementById("pay-btn");
+      btn.disabled = true;
+      btn.style.opacity = "0.6";
+      try {
+        const bookingId = generateBookingId();
+        const booking = {
+          id: bookingId,
+          paystackRef: bookingId,           // use booking ID as the reference for the bank transfer
+          paymentStatus: "pending_verification",
+          createdAt: Date.now(),
+          apartmentSlug: a.slug,
+          checkin: draft.checkin,
+          checkout: draft.checkout,
+          guests: draft.guests,
+          name: draft.name,
+          phone: draft.phone,
+          email: draft.email,
+          notes: draft.notes,
+          totals: totals,
+          nights: totals.nights
+        };
+        await saveBooking(booking);
+        sessionStorage.removeItem("itosa.bookingDraft");
+        window.location.href = "/confirmation?ref=" + encodeURIComponent(bookingId);
+      } catch (err) {
+        console.error("Could not save booking:", err);
+        alert("We couldn't hold your reservation right now — please try again, or contact us on WhatsApp.");
+        btn.disabled = false;
+        btn.style.opacity = "";
+      }
+      return;
+    }
+
+    // Paystack mode
     payWithPaystack({
       email: draft.email,
       amountNaira: totals.total,
@@ -315,13 +433,10 @@
         guest_phone: draft.phone
       },
       onSuccess: (reference) => {
-        // Persist draft so confirmation.html can rebuild the booking
         sessionStorage.setItem("itosa.lastPayRef", reference);
         window.location.href = "/confirmation?ref=" + encodeURIComponent(reference);
       },
-      onClose: () => {
-        // user dismissed — keep them on the pay step
-      }
+      onClose: () => { /* user dismissed — stay on this step */ }
     });
   }
 
