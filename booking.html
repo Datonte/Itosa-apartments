@@ -409,6 +409,19 @@
         };
         await saveBooking(booking);
         sessionStorage.removeItem("itosa.bookingDraft");
+
+        // Fire-and-forget owner notification email. Don't await so the redirect
+        // is never blocked by email service issues.
+        fetch("/api/send-email", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            type: "owner-new-booking",
+            booking: booking,
+            apartment: { name: a.name, slug: a.slug, location: a.location }
+          })
+        }).catch((err) => console.warn("Owner notification email failed:", err));
+
         window.location.href = "/confirmation?ref=" + encodeURIComponent(bookingId);
       } catch (err) {
         console.error("Could not save booking:", err);
