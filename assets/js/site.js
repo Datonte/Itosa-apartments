@@ -17,16 +17,22 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function bindBrand() {
+  // Pretty-print the WhatsApp number as +234 813 997 0432 for display
+  const whatsappDisplay = BRAND.whatsapp
+    ? "+" + BRAND.whatsapp.replace(/^(\d{3})(\d{3})(\d{3})(\d{4})$/, "$1 $2 $3 $4")
+    : "";
+
   const map = {
     phone: BRAND.phone,
     "phone-alt": BRAND.phoneAlt,
+    "whatsapp": whatsappDisplay,
     email: BRAND.email,
     address: BRAND.address,
     "phone-link": BRAND.phone,
     "phone-alt-link": BRAND.phoneAlt,
+    "whatsapp-tel-link": whatsappDisplay,             // tel: link using the WhatsApp number (also callable)
     "email-link": BRAND.email,
     "whatsapp-link": BRAND.whatsapp ? `https://wa.me/${BRAND.whatsapp}` : "#",
-    "whatsapp": BRAND.whatsapp ? "+" + BRAND.whatsapp.replace(/^(\d{3})(\d{3})(\d{3})(\d{4})$/, "$1 $2 $3 $4") : "",
   };
 
   // Strip everything except digits and leading + so the tel: dialer parses it
@@ -37,7 +43,7 @@ function bindBrand() {
     if (!(key in map)) return;
     const value = map[key];
     if (!value) return;
-    if (key === "phone-link" || key === "phone-alt-link") {
+    if (key === "phone-link" || key === "phone-alt-link" || key === "whatsapp-tel-link") {
       el.setAttribute("href", `tel:${telSafe(value)}`);
       el.textContent = value;
     } else if (key === "email-link") {
