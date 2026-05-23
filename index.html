@@ -187,47 +187,20 @@
     </div>
   </section>
 
-  <!-- TESTIMONIALS (placeholder until real reviews are collected) -->
-  <section class="py-16 lg:py-24 px-5 lg:px-8 max-w-container mx-auto">
+  <!-- TESTIMONIALS — real guest reviews rendered from /assets/js/data/reviews.js -->
+  <section id="reviews" class="py-16 lg:py-24 px-5 lg:px-8 max-w-container mx-auto">
     <div class="text-center mb-12">
       <p class="font-label-bold text-label-bold text-brand-yellow-deep uppercase mb-2">Guest Stories</p>
-      <h2 class="font-display-xl text-headline-lg text-brand-ink">Loved by guests across Nigeria</h2>
-      <p class="font-body-md text-on-surface-variant mt-2 max-w-xl mx-auto text-sm">Real reviews land here once your first guests check out — until then, this section uses placeholders.</p>
+      <h2 class="font-display-xl text-headline-lg text-brand-ink">Loved by guests across the world</h2>
+      <p class="font-body-md text-on-surface-variant mt-2 max-w-xl mx-auto text-sm">
+        <span id="review-count-label">14</span> five-star reviews from past stays in Surulere and Isheri.
+      </p>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <article class="bg-white p-6 rounded-2xl border border-zinc-100 shadow-card">
-        <div class="flex gap-1 mb-3 text-brand-yellow">
-          <span class="material-symbols-outlined filled text-[18px]" style="font-variation-settings:'FILL' 1;">star</span>
-          <span class="material-symbols-outlined filled text-[18px]" style="font-variation-settings:'FILL' 1;">star</span>
-          <span class="material-symbols-outlined filled text-[18px]" style="font-variation-settings:'FILL' 1;">star</span>
-          <span class="material-symbols-outlined filled text-[18px]" style="font-variation-settings:'FILL' 1;">star</span>
-          <span class="material-symbols-outlined filled text-[18px]" style="font-variation-settings:'FILL' 1;">star</span>
-        </div>
-        <p class="text-on-surface-variant leading-relaxed mb-4">[PLACEHOLDER review — quiet, clean, and the inverter saved us the night NEPA went off. Will book again.]</p>
-        <p class="font-semibold text-brand-ink text-sm">— Guest name (placeholder)</p>
-      </article>
-      <article class="bg-white p-6 rounded-2xl border border-zinc-100 shadow-card">
-        <div class="flex gap-1 mb-3 text-brand-yellow">
-          <span class="material-symbols-outlined filled text-[18px]" style="font-variation-settings:'FILL' 1;">star</span>
-          <span class="material-symbols-outlined filled text-[18px]" style="font-variation-settings:'FILL' 1;">star</span>
-          <span class="material-symbols-outlined filled text-[18px]" style="font-variation-settings:'FILL' 1;">star</span>
-          <span class="material-symbols-outlined filled text-[18px]" style="font-variation-settings:'FILL' 1;">star</span>
-          <span class="material-symbols-outlined filled text-[18px]" style="font-variation-settings:'FILL' 1;">star</span>
-        </div>
-        <p class="text-on-surface-variant leading-relaxed mb-4">[PLACEHOLDER review — booking was easy, payment was instant, the apartment was exactly as advertised. Highly recommended.]</p>
-        <p class="font-semibold text-brand-ink text-sm">— Guest name (placeholder)</p>
-      </article>
-      <article class="bg-white p-6 rounded-2xl border border-zinc-100 shadow-card">
-        <div class="flex gap-1 mb-3 text-brand-yellow">
-          <span class="material-symbols-outlined filled text-[18px]" style="font-variation-settings:'FILL' 1;">star</span>
-          <span class="material-symbols-outlined filled text-[18px]" style="font-variation-settings:'FILL' 1;">star</span>
-          <span class="material-symbols-outlined filled text-[18px]" style="font-variation-settings:'FILL' 1;">star</span>
-          <span class="material-symbols-outlined filled text-[18px]" style="font-variation-settings:'FILL' 1;">star</span>
-          <span class="material-symbols-outlined filled text-[18px]" style="font-variation-settings:'FILL' 1;">star</span>
-        </div>
-        <p class="text-on-surface-variant leading-relaxed mb-4">[PLACEHOLDER review — perfect for a long weekend in Lagos. The host was responsive and the location is very secure.]</p>
-        <p class="font-semibold text-brand-ink text-sm">— Guest name (placeholder)</p>
-      </article>
+    <div id="reviews-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    <div class="text-center mt-8">
+      <button id="show-all-reviews" class="px-6 py-3 bg-brand-yellow text-brand-ink font-semibold rounded-full hover:bg-brand-ink hover:text-white transition-colors shadow-md ring-2 ring-brand-yellow/40">
+        <span class="inline-flex items-center gap-2"><span class="material-symbols-outlined text-[18px]">expand_more</span><span>Show all <span class="show-all-count">14</span> reviews</span></span>
+      </button>
     </div>
   </section>
 
@@ -489,6 +462,48 @@
         </div>
       </a>`;
   }
+
+  // ----- Render real guest reviews into the testimonials section -----
+  import("/assets/js/data/reviews.js").then(({ REVIEWS }) => {
+    const grid = document.getElementById("reviews-grid");
+    const countLabel = document.getElementById("review-count-label");
+    const showAllBtn = document.getElementById("show-all-reviews");
+    if (!grid || !REVIEWS || REVIEWS.length === 0) return;
+
+    const FIRST = 6;
+    if (countLabel) countLabel.textContent = REVIEWS.length;
+    document.querySelectorAll(".show-all-count").forEach((el) => { el.textContent = REVIEWS.length; });
+
+    function reviewCard(r) {
+      const stars = "★".repeat(r.rating || 5);
+      const placeLine = r.location ? `${r.name} · ${r.location}` : r.name;
+      return `
+        <article class="bg-white p-6 rounded-2xl border border-zinc-200 shadow-card flex flex-col h-full">
+          <div class="text-brand-yellow text-lg leading-none mb-3 tracking-wide" aria-label="${r.rating || 5} out of 5 stars">${stars}</div>
+          <p class="text-on-surface-variant text-sm leading-relaxed flex-grow mb-4 italic">&ldquo;${r.text}&rdquo;</p>
+          <footer class="text-xs text-brand-ink font-semibold border-t border-zinc-100 pt-3">
+            ${placeLine}
+            <span class="text-on-surface-variant font-normal block mt-0.5">${r.date}</span>
+          </footer>
+        </article>`;
+    }
+
+    function render(all) {
+      const list = all ? REVIEWS : REVIEWS.slice(0, FIRST);
+      grid.innerHTML = list.map(reviewCard).join("");
+    }
+
+    render(false);
+    if (REVIEWS.length <= FIRST) {
+      // No need for the button if we already show everything
+      if (showAllBtn) showAllBtn.remove();
+    } else if (showAllBtn) {
+      showAllBtn.addEventListener("click", function () {
+        render(true);
+        showAllBtn.remove();
+      });
+    }
+  });
 </script>
 
 <!-- Hero slideshow -->
