@@ -206,7 +206,23 @@
   }
 
   async function doAction(act, id) {
-    if (act === "mark-paid") { await updateBookingStatus(id, "paid"); toast("Marked as paid."); }
+    if (act === "mark-paid") {
+      // Look up the booking + apartment BEFORE mutating, so we can send the
+      // guest a confirmation email with the right details.
+      const all = await getBookings();
+      const booking = all.find((b) => b.id === id);
+      await updateBookingStatus(id, "paid");
+      toast("Marked as paid.");
+      if (booking && booking.email) {
+        const a = getApartmentBySlug(booking.apartmentSlug);
+        const apartment = a ? { name: a.name, slug: a.slug, location: a.location, address: a.address } : { name: booking.apartmentSlug, slug: booking.apartmentSlug };
+        fetch("/api/send-email", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ type: "guest-payment-confirmed", booking, apartment })
+        }).catch((err) => console.warn("Guest payment-confirmed email failed:", err));
+      }
+    }
     if (act === "cancel") { if (!confirm("Cancel this booking?")) return; await updateBookingStatus(id, "cancelled"); toast("Booking cancelled."); }
     if (act === "delete") { if (!confirm("Permanently delete this booking record?")) return; await deleteBooking(id); toast("Booking deleted."); }
     closeDrawer();
