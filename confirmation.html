@@ -133,6 +133,21 @@
           </a>
           <p class="text-[11px] text-emerald-900/70 mt-2 text-center">This number can also be called directly.</p>
         </div>
+
+        <!-- "I've sent the transfer" button — flags the booking as awaiting admin verification -->
+        <div class="mt-4">
+          <button id="claim-transfer-btn" type="button" class="inline-flex items-center justify-center gap-2 w-full px-5 py-3 bg-brand-ink text-white font-semibold rounded-full hover:bg-zinc-800 transition-colors">
+            <span class="material-symbols-outlined text-[18px]">check_circle</span>
+            I've sent the transfer
+          </button>
+          <p class="text-[11px] text-on-surface-variant mt-2 text-center">Tap this once your transfer is sent. It tells the host to check First Bank and confirm your booking.</p>
+        </div>
+
+        <!-- After click: replaces the button above -->
+        <div id="claim-confirmed" class="hidden mt-4 p-4 bg-emerald-50 border border-emerald-200 rounded-xl text-center">
+          <p class="font-semibold text-emerald-900 flex items-center justify-center gap-2"><span class="material-symbols-outlined text-[20px]">hourglass_top</span>Transfer reported · Awaiting confirmation</p>
+          <p class="text-xs text-emerald-900/80 mt-1">We're checking First Bank now. You'll get a final confirmation email shortly.</p>
+        </div>
       </div>
 
       <!-- PAID banner (shown after admin confirms) -->
@@ -173,7 +188,7 @@
 
 <script type="module">
   import "/assets/js/site.js";
-  import { saveBooking, getBookingByRef, getApartmentBySlug } from "/assets/js/data/store.js";
+  import { saveBooking, getBookingByRef, getApartmentBySlug, updateBookingStatus } from "/assets/js/data/store.js";
   import { formatNGN } from "/assets/js/utils/currency.js";
   import { formatDateLong } from "/assets/js/utils/date.js";
   import { verifyPaymentOnServer } from "/assets/js/payment.js";
@@ -291,6 +306,39 @@
       const msg = `Hi ITOSA Apartment, I just reserved ${a?.name || "an apartment"} for ${formatDateLong(b.checkin)} to ${formatDateLong(b.checkout)} (${formatNGN(total)}). My booking ID is ${bookingId}. I'll send my transfer proof shortly.`;
       const waHref = waNumber ? `https://wa.me/${waNumber}?text=${encodeURIComponent(msg)}` : "#";
       document.getElementById("whatsapp-proof").href = waHref;
+
+      // "I've sent the transfer" button — flags booking as "transfer_claimed"
+      const claimBtn = document.getElementById("claim-transfer-btn");
+      const claimConfirmed = document.getElementById("claim-confirmed");
+      // If guest revisits the confirmation page after already claiming, skip the button
+      if (b.paymentStatus === "transfer_claimed") {
+        claimBtn.classList.add("hidden");
+        claimConfirmed.classList.remove("hidden");
+      }
+      claimBtn?.addEventListener("click", async () => {
+        claimBtn.disabled = true;
+        claimBtn.style.opacity = "0.6";
+        try {
+          await updateBookingStatus(b.id, "transfer_claimed");
+          claimBtn.classList.add("hidden");
+          claimConfirmed.classList.remove("hidden");
+          // Notify admin that the guest has actively claimed the transfer
+          fetch("/api/send-email", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              type: "owner-transfer-claimed",
+              booking: { ...b, paymentStatus: "transfer_claimed" },
+              apartment: a ? { name: a.name, slug: a.slug, location: a.location, address: a.address } : { name: b.apartmentSlug, slug: b.apartmentSlug }
+            })
+          }).catch((err) => console.warn("Owner transfer-claimed email failed:", err));
+        } catch (err) {
+          console.error("Could not mark transfer as claimed:", err);
+          claimBtn.disabled = false;
+          claimBtn.style.opacity = "";
+          alert("Could not mark your transfer as sent. Please send your proof on WhatsApp instead.");
+        }
+      });
 
       // Re-label the summary total ("Total" vs "Total paid")
     } else {

@@ -3,11 +3,12 @@
 //
 // Active types:
 //   - "owner-new-booking"        → owner gets a notification at itosaapartmentss@gmail.com
+//   - "owner-transfer-claimed"   → owner gets an urgent alert when guest taps "I've sent the transfer"
 //   - "guest-reservation-held"   → guest gets bank-transfer instructions + booking ID
 //   - "guest-payment-confirmed"  → guest gets confirmation after admin marks paid
 //
 // POST body shape:
-//   { type: "owner-new-booking" | "guest-reservation-held" | "guest-payment-confirmed",
+//   { type: <one of the above>,
 //     booking: {...}, apartment: { name, slug, location, address? } }
 
 const FROM_ADDRESS = "ITOSA Apartment <bookings@itosa-apartments.com>";
@@ -41,6 +42,8 @@ export default async function handler(req, res) {
   let payload;
   if (type === "owner-new-booking") {
     payload = buildOwnerNotification(booking, apartment);
+  } else if (type === "owner-transfer-claimed") {
+    payload = buildOwnerTransferClaimed(booking, apartment);
   } else if (type === "guest-reservation-held") {
     payload = buildGuestReservationHeld(booking, apartment);
   } else if (type === "guest-payment-confirmed") {
@@ -91,6 +94,57 @@ function buildOwnerNotification(b, a) {
 
   const subject = `New booking · ${aptName} · ${total} · ${checkin} → ${checkout}`;
   const html = ownerHtml({ bookingId, aptName, aptLoc, checkin, checkout, nights, total, b });
+
+  return {
+    from: FROM_ADDRESS,
+    to: [OWNER_INBOX],
+    subject,
+    html,
+    reply_to: b?.email || undefined
+  };
+}
+
+function buildOwnerTransferClaimed(b, a) {
+  if (!b) return null;
+  const total = "₦" + ((b?.totals?.total) || 0).toLocaleString();
+  const aptName = a?.name || b?.apartmentSlug || "An apartment";
+  const aptLoc  = a?.location || "";
+  const bookingId = b?.paystackRef || b?.id || "—";
+  const checkin = b?.checkin || "—";
+  const checkout = b?.checkout || "—";
+
+  const subject = `💸 TRANSFER CLAIMED · ${aptName} · ${total} · Check First Bank`;
+
+  const body = `
+    <div style="padding:24px;">
+      <div style="margin:0 0 16px;padding:16px;background:#fef3c7;border:2px solid #f59e0b;border-radius:12px;text-align:center;">
+        <p style="margin:0;font-size:22px;">💸</p>
+        <p style="margin:6px 0 0;font-size:18px;font-weight:700;color:#92400e;">Guest says they've sent the transfer</p>
+        <p style="margin:4px 0 0;font-size:13px;color:#b45309;">Open First Bank, match the amount + reference, then confirm in admin.</p>
+      </div>
+
+      <div style="margin:0 0 20px;padding:16px;background:#fff8df;border:2px solid #f9bd22;border-radius:12px;text-align:center;">
+        <p style="margin:0;font-size:11px;letter-spacing:0.15em;color:#795900;text-transform:uppercase;font-weight:700;">Match this reference in your First Bank app</p>
+        <p style="margin:6px 0 0;font-family:'Courier New',monospace;font-size:22px;font-weight:700;color:#181919;">${escapeHtml(bookingId)}</p>
+        <p style="margin:8px 0 0;font-size:16px;font-weight:700;color:#181919;">Expected amount: ${total}</p>
+      </div>
+
+      <table style="width:100%;border-collapse:collapse;font-size:14px;">
+        <tr><td style="padding:6px 0;color:#666;width:130px;">Apartment</td><td style="padding:6px 0;font-weight:600;">${escapeHtml(aptName)}${aptLoc ? " · " + escapeHtml(aptLoc) : ""}</td></tr>
+        <tr><td style="padding:6px 0;color:#666;">Dates</td><td style="padding:6px 0;font-weight:600;">${escapeHtml(checkin)} → ${escapeHtml(checkout)}</td></tr>
+        <tr><td style="padding:6px 0;color:#666;">Guest</td><td style="padding:6px 0;font-weight:600;">${escapeHtml(b?.name || "—")}</td></tr>
+        <tr><td style="padding:6px 0;color:#666;">Phone</td><td style="padding:6px 0;font-weight:600;"><a href="tel:${escapeHtml(b?.phone || "")}" style="color:#181919;text-decoration:none;">${escapeHtml(b?.phone || "—")}</a></td></tr>
+        <tr><td style="padding:6px 0;color:#666;">Email</td><td style="padding:6px 0;font-weight:600;"><a href="mailto:${escapeHtml(b?.email || "")}" style="color:#181919;">${escapeHtml(b?.email || "—")}</a></td></tr>
+      </table>
+
+      <div style="margin-top:24px;text-align:center;">
+        <a href="${ADMIN_URL}" style="display:inline-block;padding:12px 24px;background:#181919;color:#fff;text-decoration:none;border-radius:9999px;font-weight:600;font-size:14px;">Open admin bookings</a>
+      </div>
+
+      <p style="margin:24px 0 0;font-size:12px;color:#888;text-align:center;">Once the transfer is visible in First Bank, click "Confirm payment received" — the guest gets an automatic confirmation email.</p>
+    </div>
+  `;
+  const html = shell(body, "#f59e0b", "#ffffff");
 
   return {
     from: FROM_ADDRESS,

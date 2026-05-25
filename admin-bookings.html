@@ -62,6 +62,7 @@
       <div class="flex flex-wrap gap-2 items-center">
         <select id="filter-status" class="input-base w-auto h-10 text-sm">
           <option value="all">All statuses</option>
+          <option value="transfer_claimed">💸 Awaiting confirm</option>
           <option value="paid">Paid</option>
           <option value="pending_verification">Pending</option>
           <option value="cancelled">Cancelled</option>
@@ -74,7 +75,7 @@
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
       <div class="bg-white p-5 rounded-2xl shadow-card border border-zinc-100"><p class="text-xs uppercase tracking-wider text-on-surface-variant font-bold mb-2">Total bookings</p><p class="text-2xl font-bold" id="s-total">—</p></div>
       <div class="bg-white p-5 rounded-2xl shadow-card border border-zinc-100"><p class="text-xs uppercase tracking-wider text-on-surface-variant font-bold mb-2">Paid</p><p class="text-2xl font-bold text-emerald-600" id="s-paid">—</p></div>
-      <div class="bg-white p-5 rounded-2xl shadow-card border border-zinc-100"><p class="text-xs uppercase tracking-wider text-on-surface-variant font-bold mb-2">Pending</p><p class="text-2xl font-bold text-amber-600" id="s-pending">—</p></div>
+      <div class="bg-orange-50 p-5 rounded-2xl shadow-card border border-orange-200"><p class="text-xs uppercase tracking-wider text-orange-800 font-bold mb-2">💸 Awaiting confirm</p><p class="text-2xl font-bold text-orange-800" id="s-claimed">—</p><p class="text-[10px] text-orange-800/70 mt-1">Guest says they've sent transfer</p></div>
       <div class="bg-white p-5 rounded-2xl shadow-card border border-zinc-100"><p class="text-xs uppercase tracking-wider text-on-surface-variant font-bold mb-2">Revenue</p><p class="text-2xl font-bold text-brand-ink" id="s-revenue">—</p></div>
     </div>
 
@@ -142,7 +143,7 @@
 
     document.getElementById("s-total").textContent = all.length;
     document.getElementById("s-paid").textContent = all.filter((b) => b.paymentStatus === "paid").length;
-    document.getElementById("s-pending").textContent = all.filter((b) => b.paymentStatus === "pending_verification").length;
+    document.getElementById("s-claimed").textContent = all.filter((b) => b.paymentStatus === "transfer_claimed").length;
     document.getElementById("s-revenue").textContent = formatNGN(all.filter((b) => b.paymentStatus === "paid").reduce((s, b) => s + (b.totals?.total || 0), 0));
 
     const rows = document.getElementById("rows");
@@ -152,8 +153,9 @@
     }
     rows.innerHTML = filtered.map((b) => {
       const apt = getApartmentBySlug(b.apartmentSlug);
-      // Surface overlap warnings — only meaningful for pending bookings (paid ones already won the race)
-      const overlaps = b.paymentStatus === "pending_verification" ? findOverlappingBookings(b, all) : [];
+      // Surface overlap warnings — only meaningful for un-confirmed bookings (paid ones already won the race)
+      const isUnconfirmed = b.paymentStatus === "pending_verification" || b.paymentStatus === "transfer_claimed";
+      const overlaps = isUnconfirmed ? findOverlappingBookings(b, all) : [];
       const overlapBadge = overlaps.length
         ? `<span title="Overlaps with ${overlaps.map((o) => o.paystackRef || o.id).join(", ")}" class="inline-flex items-center gap-1 ml-2 px-2 py-0.5 text-[10px] font-semibold rounded-full bg-amber-100 text-amber-900 border border-amber-300">⚠ ${overlaps.length} overlap${overlaps.length > 1 ? "s" : ""}</span>`
         : "";
@@ -231,9 +233,9 @@
         return;
       }
 
-      // Soft warning — other pending bookings overlap. Confirming this one means
+      // Soft warning — other pending (or claimed) bookings overlap. Confirming this one means
       // the others are now competing for blocked dates. Ask admin to confirm.
-      const pendingConflicts = overlaps.filter((b) => b.paymentStatus === "pending_verification");
+      const pendingConflicts = overlaps.filter((b) => b.paymentStatus === "pending_verification" || b.paymentStatus === "transfer_claimed");
       if (pendingConflicts.length) {
         const list = pendingConflicts.map((b) => `• ${b.paystackRef || b.id} — ${b.name || "Unknown"} (${b.checkin} → ${b.checkout})`).join("\n");
         const ok = confirm(
@@ -268,6 +270,7 @@
   function statusBadge(s) {
     const map = {
       paid: '<span class="px-3 py-1 text-xs font-semibold rounded-full bg-emerald-50 text-emerald-700">Paid</span>',
+      transfer_claimed: '<span class="px-3 py-1 text-xs font-semibold rounded-full bg-orange-100 text-orange-800 border border-orange-300">💸 Awaiting confirm</span>',
       pending_verification: '<span class="px-3 py-1 text-xs font-semibold rounded-full bg-amber-50 text-amber-700">Pending</span>',
       cancelled: '<span class="px-3 py-1 text-xs font-semibold rounded-full bg-zinc-100 text-zinc-600">Cancelled</span>',
       failed: '<span class="px-3 py-1 text-xs font-semibold rounded-full bg-rose-50 text-rose-700">Failed</span>'
