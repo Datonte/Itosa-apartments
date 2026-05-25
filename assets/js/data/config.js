@@ -25,7 +25,7 @@ export const BRAND = {
   serviceAreas: ["Lagos", "Surulere", "Isheri"],
   // SITE
   domain: "https://itosa-apartments.com",  // PLACEHOLDER — replace with your real domain
-  ogDefaultImage: "/assets/images/icons/og-default.svg"  // SVG placeholder — replace with og-default.jpg (1200x630) for real social previews
+  ogDefaultImage: "/assets/images/hero.jpg"  // Real homepage hero photo — used as the social-share fallback when a page has no specific image
 };
 
 export const PAYMENT = {

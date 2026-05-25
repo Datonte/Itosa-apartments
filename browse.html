@@ -17,14 +17,23 @@
   <title>Browse Shortlet Apartments — Lagos, Surulere & Isheri | ITOSA</title>
   <meta name="description" content="Browse premium shortlet apartments in Lagos. Compare apartments in Surulere and Isheri. Real photos, real prices, real availability." />
   <meta name="keywords" content="browse shortlet apartments lagos, surulere apartment, isheri apartment, itosa apartments" />
+  <!-- Geo signals — Lagos State, midpoint between Surulere and Isheri buildings -->
+  <meta name="geo.region" content="NG-LA" />
+  <meta name="geo.placename" content="Lagos" />
+  <meta name="geo.position" content="6.5009;3.3582" />
+  <meta name="ICBM" content="6.5009, 3.3582" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://itosa-apartments.com/browse" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Browse Shortlet Apartments — Lagos | ITOSA" />
   <meta property="og:description" content="Compare premium shortlets in Surulere & Isheri. Direct booking, no logins." />
   <meta property="og:url" content="https://itosa-apartments.com/browse" />
-  <meta property="og:image" content="https://itosa-apartments.com/assets/images/icons/og-default.jpg" />
+  <meta property="og:image" content="https://itosa-apartments.com/assets/images/hero.jpg" />
+  <meta property="og:site_name" content="ITOSA APARTMENT" />
   <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Browse Shortlet Apartments — Lagos | ITOSA" />
+  <meta name="twitter:description" content="Compare premium shortlets in Surulere & Isheri. Direct booking, no logins." />
+  <meta name="twitter:image" content="https://itosa-apartments.com/assets/images/hero.jpg" />
 
   <link rel="icon" href="/assets/images/logo.jpeg" type="image/jpeg" />
 
@@ -201,12 +210,14 @@
   import "/assets/js/site.js";
   import { getApartments } from "/assets/js/data/store.js";
   import { formatNGN } from "/assets/js/utils/currency.js";
-  import { buildItemListLD, buildBreadcrumbLD, injectLD } from "/assets/js/seo-helpers.js";
+  import { buildItemListLD, buildBreadcrumbLD, buildLocalBusinessLD, injectLD } from "/assets/js/seo-helpers.js";
   import { BRAND } from "/assets/js/data/config.js";
+  import { REVIEWS } from "/assets/js/data/reviews.js";
 
   const ALL = getApartments();
 
   injectLD(
+    buildLocalBusinessLD(REVIEWS),
     buildItemListLD(ALL),
     buildBreadcrumbLD([
       { name: "Home", url: BRAND.domain + "/" },

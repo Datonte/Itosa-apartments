@@ -1,10 +1,72 @@
 // JSON-LD builders for Schema.org structured data.
 // Each helper returns a JSON object — callers stringify and inject into a <script type="application/ld+json"> tag.
+//
+// IMPORTANT: Review schema must always be NESTED inside another schema type
+// (Apartment, LodgingBusiness, etc.) — never standalone — or Google rejects it.
 
 import { BRAND, POLICIES } from "./data/config.js";
 
-export function buildLocalBusinessLD() {
+// ---------- ratings + reviews ----------
+
+export function buildAggregateRatingLD(reviews) {
+  if (!reviews || !reviews.length) return null;
+  const ratings = reviews.map((r) => r.rating).filter((n) => typeof n === "number");
+  if (!ratings.length) return null;
+  const avg = ratings.reduce((a, b) => a + b, 0) / ratings.length;
   return {
+    "@type": "AggregateRating",
+    ratingValue: Number(avg.toFixed(1)),
+    reviewCount: reviews.length,
+    bestRating: 5,
+    worstRating: 1
+  };
+}
+
+// Parse "April 2025" → "2025-04-01" (1st of the month — Schema.org accepts month-precision)
+function parseReviewDate(s) {
+  if (!s) return undefined;
+  const months = { january:"01", february:"02", march:"03", april:"04", may:"05", june:"06",
+                   july:"07", august:"08", september:"09", october:"10", november:"11", december:"12" };
+  const parts = String(s).trim().split(/\s+/);
+  if (parts.length === 2) {
+    const m = months[parts[0].toLowerCase()];
+    const y = parts[1];
+    if (m && /^\d{4}$/.test(y)) return `${y}-${m}-01`;
+  }
+  return undefined;
+}
+
+export function buildReviewLD(r) {
+  const out = {
+    "@type": "Review",
+    author: { "@type": "Person", name: r.name + (r.location ? ", " + r.location : "") },
+    reviewRating: { "@type": "Rating", ratingValue: r.rating, bestRating: 5, worstRating: 1 },
+    reviewBody: r.text
+  };
+  const dp = parseReviewDate(r.date);
+  if (dp) out.datePublished = dp;
+  return out;
+}
+
+// ---------- nearby attractions ----------
+
+export function buildPlaceLD(landmark) {
+  if (!landmark || !landmark.name) return null;
+  const place = { "@type": "Place", name: landmark.name };
+  if (landmark.coords) {
+    place.geo = {
+      "@type": "GeoCoordinates",
+      latitude: landmark.coords.lat,
+      longitude: landmark.coords.lng
+    };
+  }
+  return place;
+}
+
+// ---------- main builders ----------
+
+export function buildLocalBusinessLD(reviews) {
+  const out = {
     "@context": "https://schema.org",
     "@type": "LodgingBusiness",
     name: BRAND.name,
@@ -20,12 +82,18 @@ export function buildLocalBusinessLD() {
       addressCountry: "NG",
       streetAddress: BRAND.address
     },
-    areaServed: BRAND.serviceAreas.map((a) => ({ "@type": "City", name: a })),
+    areaServed: (BRAND.serviceAreas || []).map((a) => ({ "@type": "City", name: a })),
     sameAs: Object.values(BRAND.social || {}).filter(Boolean),
     checkinTime: POLICIES.checkInTime,
     checkoutTime: POLICIES.checkOutTime,
-    priceRange: "₦₦"
+    priceRange: BRAND.priceRange || "₦20,000–₦70,000"
   };
+  if (reviews && reviews.length) {
+    const agg = buildAggregateRatingLD(reviews);
+    if (agg) out.aggregateRating = agg;
+    out.review = reviews.slice(0, 3).map(buildReviewLD);
+  }
+  return out;
 }
 
 export function buildBreadcrumbLD(items) {
@@ -42,8 +110,8 @@ export function buildBreadcrumbLD(items) {
   };
 }
 
-export function buildAccommodationLD(apt, amenityCatalog = {}) {
-  return {
+export function buildAccommodationLD(apt, amenityCatalog = {}, reviews) {
+  const out = {
     "@context": "https://schema.org",
     "@type": "Apartment",
     name: apt.name,
@@ -80,6 +148,25 @@ export function buildAccommodationLD(apt, amenityCatalog = {}) {
       availability: apt.status === "available" ? "https://schema.org/InStock" : "https://schema.org/OutOfStock"
     }
   };
+
+  // hasMap — direct link to Google Maps coords
+  if (apt.coords) {
+    out.hasMap = "https://www.google.com/maps/search/?api=1&query=" + apt.coords.lat + "," + apt.coords.lng;
+  }
+
+  // nearbyAttraction — landmarks with names (coords optional)
+  if (apt.landmarks && apt.landmarks.length) {
+    out.nearbyAttraction = apt.landmarks.map(buildPlaceLD).filter(Boolean);
+  }
+
+  // Reviews + aggregateRating — must be nested under itemReviewed (this Apartment)
+  if (reviews && reviews.length) {
+    const agg = buildAggregateRatingLD(reviews);
+    if (agg) out.aggregateRating = agg;
+    out.review = reviews.slice(0, 5).map(buildReviewLD);
+  }
+
+  return out;
 }
 
 export function buildItemListLD(apartments) {
@@ -108,13 +195,13 @@ export function buildFAQLD(qa) {
   };
 }
 
-export function buildContactPageLD() {
+export function buildContactPageLD(reviews) {
   return {
     "@context": "https://schema.org",
     "@type": "ContactPage",
     name: "Contact " + BRAND.name,
     url: BRAND.domain + "/contact",
-    mainEntity: buildLocalBusinessLD()
+    mainEntity: buildLocalBusinessLD(reviews)
   };
 }
 

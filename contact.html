@@ -17,13 +17,23 @@
   <title>Contact ITOSA Apartment — Lagos Shortlet Booking & Support</title>
   <meta name="description" content="Reach the ITOSA Apartment team. WhatsApp, phone, and email support for shortlet bookings in Lagos, Surulere, and Isheri." />
   <meta name="keywords" content="contact itosa apartment, lagos shortlet contact, surulere apartment contact, whatsapp shortlet lagos" />
+  <!-- Geo signals — Lagos State, midpoint between Surulere and Isheri buildings -->
+  <meta name="geo.region" content="NG-LA" />
+  <meta name="geo.placename" content="Lagos" />
+  <meta name="geo.position" content="6.5009;3.3582" />
+  <meta name="ICBM" content="6.5009, 3.3582" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://itosa-apartments.com/contact" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Contact ITOSA Apartment" />
   <meta property="og:description" content="WhatsApp, phone & email support for shortlet bookings in Lagos." />
   <meta property="og:url" content="https://itosa-apartments.com/contact" />
-  <meta property="og:image" content="https://itosa-apartments.com/assets/images/icons/og-default.jpg" />
+  <meta property="og:image" content="https://itosa-apartments.com/assets/images/hero.jpg" />
+  <meta property="og:site_name" content="ITOSA APARTMENT" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Contact ITOSA Apartment" />
+  <meta name="twitter:description" content="WhatsApp, phone & email support for shortlet bookings in Lagos." />
+  <meta name="twitter:image" content="https://itosa-apartments.com/assets/images/hero.jpg" />
 
   <link rel="icon" href="/assets/images/logo.jpeg" type="image/jpeg" />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -193,9 +203,10 @@
   import "/assets/js/site.js";
   import { BRAND } from "/assets/js/data/config.js";
   import { buildContactPageLD, buildBreadcrumbLD, injectLD } from "/assets/js/seo-helpers.js";
+  import { REVIEWS } from "/assets/js/data/reviews.js";
 
   injectLD(
-    buildContactPageLD(),
+    buildContactPageLD(REVIEWS),
     buildBreadcrumbLD([
       { name: "Home", url: BRAND.domain + "/" },
       { name: "Contact", url: BRAND.domain + "/contact" }

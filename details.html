@@ -18,10 +18,16 @@
   <title>Apartment Details — ITOSA Apartment</title>
   <meta name="description" content="Premium shortlet apartment details. Real photos, real prices, real availability. Book direct with ITOSA Apartment." />
   <meta name="robots" content="index, follow" />
+  <!-- Geo signals — apartment-specific coords are set dynamically below; this is the fallback. -->
+  <meta name="geo.region" content="NG-LA" />
+  <meta name="geo.placename" content="Lagos" />
+  <meta name="geo.position" content="6.5009;3.3582" />
+  <meta name="ICBM" content="6.5009, 3.3582" />
 
   <link rel="icon" href="/assets/images/logo.jpeg" type="image/jpeg" />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="https://itosa-apartments.com/assets/images/icons/og-default.jpg" />
+  <meta property="og:image" content="https://itosa-apartments.com/assets/images/hero.jpg" />
+  <meta property="og:site_name" content="ITOSA APARTMENT" />
   <meta name="twitter:card" content="summary_large_image" />
 
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -278,6 +284,7 @@
   import { initRangePicker } from "/assets/js/calendar.js";
   import { buildAccommodationLD, buildBreadcrumbLD, injectLD } from "/assets/js/seo-helpers.js";
   import { BRAND } from "/assets/js/data/config.js";
+  import { REVIEWS } from "/assets/js/data/reviews.js";
 
   const slug = getSlugFromUrl();
   const apt = slug ? getApartmentBySlug(slug) : null;
@@ -295,16 +302,28 @@
 
   function hydrate(a) {
     document.title = a.seo?.title || (a.name + " — ITOSA Apartment");
-    setMeta("description", a.seo?.description || a.description.slice(0, 155));
+    const desc = a.seo?.description || a.description.slice(0, 155);
+    const heroImg = a.groupCoverPhoto || (a.gallery && a.gallery[0]) || a.galleryFallback || "";
+    const absHero = heroImg.startsWith("http") ? heroImg : BRAND.domain + heroImg;
+    setMeta("description", desc);
     setMeta("keywords", a.seo?.keywords || "");
     setOG("og:title", document.title);
-    setOG("og:description", a.seo?.description || a.description.slice(0, 155));
+    setOG("og:description", desc);
     setOG("og:url", BRAND.domain + "/apartments/" + a.slug);
-    setOG("og:image", a.groupCoverPhoto || (a.gallery && a.gallery[0]) || a.galleryFallback || "");
+    setOG("og:image", absHero);
+    // Twitter Card — set dynamically per apartment so social previews use the right photo
+    setMeta("twitter:title", document.title);
+    setMeta("twitter:description", desc);
+    setMeta("twitter:image", absHero);
+    // Per-apartment geo signals — override the static head fallback with this apt's coords
+    if (a.coords) {
+      setMeta("geo.position", a.coords.lat + ";" + a.coords.lng);
+      setMeta("ICBM", a.coords.lat + ", " + a.coords.lng);
+    }
     addCanonical(BRAND.domain + "/apartments/" + a.slug);
 
     injectLD(
-      buildAccommodationLD(a, AMENITY_CATALOG),
+      buildAccommodationLD(a, AMENITY_CATALOG, REVIEWS),
       buildBreadcrumbLD([
         { name: "Home", url: BRAND.domain + "/" },
         { name: "Browse", url: BRAND.domain + "/browse" },

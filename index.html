@@ -15,8 +15,13 @@
     @keyframes bodyFadeIn { to { opacity:1; } }
   </style>
   <title>ITOSA Apartment — Shortlet Apartments in Lagos, Surulere & Isheri</title>
-  <meta name="description" content="Book premium shortlet apartments in Lagos — Surulere and Isheri. 24/7 inverter, secure, fast WiFi. Direct booking, no hidden fees." />
-  <meta name="keywords" content="shortlet apartments lagos, surulere shortlet, isheri shortlet, lagos apartment booking, itosa apartment" />
+  <meta name="description" content="Shortlet apartments in Lagos — Surulere (1BR) & Isheri (studio, 2BR, 3BR). 24/7 inverter, secure, fast WiFi. Daily, weekly, monthly stays. Direct booking, no hidden fees." />
+  <meta name="keywords" content="shortlet apartments lagos, shortlet surulere, shortlet isheri, lagos apartment booking, lagos shortlet near me, 24 hour power apartment lagos, itosa apartment, ijegun shortlet" />
+  <!-- Geo signals — Lagos State, midpoint between Surulere and Isheri buildings -->
+  <meta name="geo.region" content="NG-LA" />
+  <meta name="geo.placename" content="Lagos" />
+  <meta name="geo.position" content="6.5009;3.3582" />
+  <meta name="ICBM" content="6.5009, 3.3582" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://itosa-apartments.com/" />
   <!-- Open Graph -->
@@ -24,9 +29,12 @@
   <meta property="og:title" content="ITOSA Apartment — Shortlet Apartments in Lagos" />
   <meta property="og:description" content="Premium shortlet apartments in Surulere & Isheri. Direct booking, secure payment, no hidden fees." />
   <meta property="og:url" content="https://itosa-apartments.com/" />
-  <meta property="og:image" content="https://itosa-apartments.com/assets/images/icons/og-default.jpg" />
+  <meta property="og:image" content="https://itosa-apartments.com/assets/images/hero.jpg" />
   <meta property="og:site_name" content="ITOSA APARTMENT" />
   <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="ITOSA Apartment — Shortlet Apartments in Lagos" />
+  <meta name="twitter:description" content="Premium shortlet apartments in Surulere & Isheri. Direct booking, secure payment, no hidden fees." />
+  <meta name="twitter:image" content="https://itosa-apartments.com/assets/images/hero.jpg" />
 
   <link rel="icon" href="/assets/images/logo.jpeg" type="image/jpeg" />
   <link rel="apple-touch-icon" href="/assets/images/icons/apple-touch-icon.png" />
@@ -340,8 +348,9 @@
   import { getApartments } from "/assets/js/data/store.js";
   import { formatNGN } from "/assets/js/utils/currency.js";
   import { buildLocalBusinessLD, injectLD } from "/assets/js/seo-helpers.js";
+  import { REVIEWS } from "/assets/js/data/reviews.js";
 
-  injectLD(buildLocalBusinessLD());
+  injectLD(buildLocalBusinessLD(REVIEWS));
 
   // Collapse grouped apartments (multi-floor units) to one representative each.
   function collapseGroups(arr) {
