@@ -99,7 +99,7 @@ function buildOwnerNotification(b, a) {
 </body></html>`;
 
   return {
-    from: "ITOSA Bookings <onboarding@resend.dev>",   // Switch to noreply@itosaapartment.com once domain is verified
+    from: "ITOSA Bookings <onboarding@resend.dev>",   // Switch to noreply@itosa-apartments.com once domain is verified
     to: ["itosaapartmentss@gmail.com"],
     subject,
     html,

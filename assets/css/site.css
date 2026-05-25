@@ -706,13 +706,34 @@ button:active:not(:disabled), .btn-press:active { transform: scale(0.97); }
 footer a:hover { color: #f9bd22; }
 
 /* =====================================================
-   LIGHT-MODE CONTENT TEXT CONTRAST
-   Make muted/secondary text actually readable on the
-   near-white page body.
+   PURE BLACK / WHITE TEXT (Phase 22)
+   Owner wants body text fully black in light mode, fully white in
+   dark mode. Brand colours (yellow / accent / status) are NOT
+   touched here — they keep their hue.
    ===================================================== */
-html.light .text-on-surface-variant { color: #1c1b1b !important; }
-html.light .text-zinc-400 { color: #3f3f46 !important; }   /* was #a1a1aa */
-html.light .text-zinc-500 { color: #27272a !important; }   /* was #71717a */
+html.light .text-on-surface-variant,
+html.light .text-zinc-400,
+html.light .text-zinc-500,
+html.light .text-zinc-600,
+html.light .text-zinc-700,
+html.light .text-zinc-800,
+html.light .text-zinc-900 {
+  color: #181919 !important;
+}
+
+html.dark .text-on-surface-variant,
+html.dark .text-zinc-100,
+html.dark .text-zinc-200,
+html.dark .text-zinc-300,
+html.dark .text-zinc-400,
+html.dark .text-zinc-500,
+html.dark .text-zinc-600,
+html.dark .text-zinc-700,
+html.dark .text-zinc-800,
+html.dark .text-zinc-900,
+html.dark .text-brand-ink {
+  color: #f4f4f5 !important;
+}
 
 /* =====================================================
    LIGHT-MODE FOOTER — light background, black text

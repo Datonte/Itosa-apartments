@@ -1,81 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Replace https://itosaapartment.com with your real domain before deploying.
+  Replace https://itosa-apartments.com with your real domain before deploying.
   Add a new <url> block for each new apartment slug you publish.
 -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://itosaapartment.com/</loc>
+    <loc>https://itosa-apartments.com/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://itosaapartment.com/browse</loc>
+    <loc>https://itosa-apartments.com/browse</loc>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://itosaapartment.com/apartments/surulere-ground-floor</loc>
+    <loc>https://itosa-apartments.com/apartments/surulere-ground-floor</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://itosaapartment.com/apartments/surulere-first-floor</loc>
+    <loc>https://itosa-apartments.com/apartments/surulere-first-floor</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://itosaapartment.com/apartments/surulere-second-floor</loc>
+    <loc>https://itosa-apartments.com/apartments/surulere-second-floor</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://itosaapartment.com/apartments/isheri-zion-a</loc>
+    <loc>https://itosa-apartments.com/apartments/isheri-zion-a</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://itosaapartment.com/apartments/isheri-zion-b</loc>
+    <loc>https://itosa-apartments.com/apartments/isheri-zion-b</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://itosaapartment.com/apartments/isheri-ivie-home</loc>
+    <loc>https://itosa-apartments.com/apartments/isheri-ivie-home</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://itosaapartment.com/apartments/isheri-nicole-home</loc>
+    <loc>https://itosa-apartments.com/apartments/isheri-nicole-home</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://itosaapartment.com/apartments/isheri-ee-tasha</loc>
+    <loc>https://itosa-apartments.com/apartments/isheri-ee-tasha</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://itosaapartment.com/apartments/isheri-trey</loc>
+    <loc>https://itosa-apartments.com/apartments/isheri-trey</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://itosaapartment.com/contact</loc>
+    <loc>https://itosa-apartments.com/contact</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://itosaapartment.com/faq</loc>
+    <loc>https://itosa-apartments.com/faq</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://itosaapartment.com/refund</loc>
+    <loc>https://itosa-apartments.com/refund</loc>
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
-    <loc>https://itosaapartment.com/terms</loc>
+    <loc>https://itosa-apartments.com/terms</loc>
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
   </url>

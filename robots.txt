@@ -8,4 +8,4 @@ Disallow: /admin-availability
 Disallow: /booking
 Disallow: /confirmation
 
-Sitemap: https://itosaapartment.com/sitemap.xml
+Sitemap: https://itosa-apartments.com/sitemap.xml
