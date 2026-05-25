@@ -114,7 +114,7 @@
 <script type="module">
   import "/assets/js/site.js";
   import { highlightActiveAdminLink } from "/assets/js/admin.js";
-  import { getBookings, getApartmentBySlug, updateBookingStatus, deleteBooking, clearAllOverrides } from "/assets/js/data/store.js";
+  import { getBookings, getApartmentBySlug, updateBookingStatus, deleteBooking, clearAllOverrides, findOverlappingBookings } from "/assets/js/data/store.js";
   import { formatNGN } from "/assets/js/utils/currency.js";
   import { formatDate, formatDateLong } from "/assets/js/utils/date.js";
   import { toast } from "/assets/js/site.js";
@@ -147,11 +147,16 @@
 
     const rows = document.getElementById("rows");
     if (filtered.length === 0) {
-      rows.innerHTML = `<tr><td colspan="7" class="px-5 py-12 text-center text-on-surface-variant">No bookings to show. Bookings appear here after a guest pays via Paystack.</td></tr>`;
+      rows.innerHTML = `<tr><td colspan="7" class="px-5 py-12 text-center text-on-surface-variant">No bookings to show. New reservations appear here as 'Pending' — confirm payment to lock the dates.</td></tr>`;
       return;
     }
     rows.innerHTML = filtered.map((b) => {
       const apt = getApartmentBySlug(b.apartmentSlug);
+      // Surface overlap warnings — only meaningful for pending bookings (paid ones already won the race)
+      const overlaps = b.paymentStatus === "pending_verification" ? findOverlappingBookings(b, all) : [];
+      const overlapBadge = overlaps.length
+        ? `<span title="Overlaps with ${overlaps.map((o) => o.paystackRef || o.id).join(", ")}" class="inline-flex items-center gap-1 ml-2 px-2 py-0.5 text-[10px] font-semibold rounded-full bg-amber-100 text-amber-900 border border-amber-300">⚠ ${overlaps.length} overlap${overlaps.length > 1 ? "s" : ""}</span>`
+        : "";
       return `<tr class="hover:bg-surface-container-low/60">
         <td class="px-5 py-4 font-mono text-xs text-on-surface-variant">${escape(b.paystackRef || b.id)}</td>
         <td class="px-5 py-4">
@@ -161,7 +166,7 @@
         <td class="px-5 py-4 text-on-surface-variant">${escape(apt?.name || b.apartmentSlug)}</td>
         <td class="px-5 py-4 text-on-surface-variant">${formatDate(b.checkin)} → ${formatDate(b.checkout)}</td>
         <td class="px-5 py-4 font-semibold">${formatNGN(b.totals?.total || 0)}</td>
-        <td class="px-5 py-4">${statusBadge(b.paymentStatus)}</td>
+        <td class="px-5 py-4">${statusBadge(b.paymentStatus)}${overlapBadge}</td>
         <td class="px-5 py-4 text-right">
           <button data-view="${b.id}" class="text-brand-ink font-semibold hover:text-brand-yellow-deep text-xs">View</button>
         </td>
@@ -207,13 +212,41 @@
 
   async function doAction(act, id) {
     if (act === "mark-paid") {
-      // Look up the booking + apartment BEFORE mutating, so we can send the
-      // guest a confirmation email with the right details.
+      // Look up the booking + apartment BEFORE mutating, so we can:
+      //   (a) check for overlapping bookings on the same dates
+      //   (b) send the guest a confirmation email with the right details
       const all = await getBookings();
       const booking = all.find((b) => b.id === id);
+      if (!booking) { toast("Booking not found."); return; }
+
+      // Conflict guard — if another paid booking already exists for these dates, block.
+      const overlaps = findOverlappingBookings(booking, all);
+      const paidConflicts = overlaps.filter((b) => b.paymentStatus === "paid");
+      if (paidConflicts.length) {
+        const list = paidConflicts.map((b) => `${b.paystackRef || b.id} (${b.checkin} → ${b.checkout})`).join("\n");
+        alert(
+          "❌ Cannot confirm payment — another booking is already PAID for these dates:\n\n" + list +
+          "\n\nRefund this guest via WhatsApp/bank reversal, then click 'Cancel booking' on this record."
+        );
+        return;
+      }
+
+      // Soft warning — other pending bookings overlap. Confirming this one means
+      // the others are now competing for blocked dates. Ask admin to confirm.
+      const pendingConflicts = overlaps.filter((b) => b.paymentStatus === "pending_verification");
+      if (pendingConflicts.length) {
+        const list = pendingConflicts.map((b) => `• ${b.paystackRef || b.id} — ${b.name || "Unknown"} (${b.checkin} → ${b.checkout})`).join("\n");
+        const ok = confirm(
+          "⚠️ Other pending bookings overlap these dates:\n\n" + list +
+          "\n\nConfirming this booking will lock the dates. The other guests will not be able to complete their stay.\n\nProceed?"
+        );
+        if (!ok) return;
+      }
+
       await updateBookingStatus(id, "paid");
-      toast("Marked as paid.");
-      if (booking && booking.email) {
+      toast("Payment confirmed. Dates now blocked.");
+
+      if (booking.email) {
         const a = getApartmentBySlug(booking.apartmentSlug);
         const apartment = a ? { name: a.name, slug: a.slug, location: a.location, address: a.address } : { name: booking.apartmentSlug, slug: booking.apartmentSlug };
         fetch("/api/send-email", {

@@ -273,16 +273,36 @@ export async function getAllBlockedRanges() {
   return out;
 }
 
-// Effective blocked = manually blocked dates + confirmed/pending bookings
+// Effective blocked = manually blocked dates + ONLY paid bookings.
+// Pending bookings DO NOT block dates — guests can keep reserving until admin confirms a payment.
+// This means two guests can race for the same dates; the first whose payment is confirmed wins.
+// Admin sees overlap warnings in /admin-bookings to handle the loser manually.
 export async function getEffectiveBlockedDates(slug) {
   const [blocked, bookings] = await Promise.all([
     getBlockedDates(slug),
     getBookings()
   ]);
   const fromBookings = bookings
-    .filter((b) => b.apartmentSlug === slug && b.paymentStatus !== "cancelled" && b.paymentStatus !== "failed")
+    .filter((b) => b.apartmentSlug === slug && b.paymentStatus === "paid")
     .map((b) => ({ start: b.checkin, end: subOneDay(b.checkout) }));
   return [...(blocked || []), ...fromBookings];
+}
+
+// Find any other bookings that overlap a given booking's date range.
+// Returns the list of conflicting bookings (excluding the booking itself).
+// Used in /admin-bookings to surface race conditions when confirming payment.
+export function findOverlappingBookings(target, allBookings) {
+  if (!target) return [];
+  const ts = new Date(target.checkin).getTime();
+  const te = new Date(target.checkout).getTime();
+  return allBookings.filter((b) => {
+    if (!b || b.id === target.id) return false;
+    if (b.apartmentSlug !== target.apartmentSlug) return false;
+    if (b.paymentStatus === "cancelled" || b.paymentStatus === "failed") return false;
+    const bs = new Date(b.checkin).getTime();
+    const be = new Date(b.checkout).getTime();
+    return bs < te && be > ts; // half-open range overlap
+  });
 }
 
 function subOneDay(iso) {
