@@ -346,6 +346,20 @@ html.dark .text-zinc-900 { color: #f4f4f5 !important; }
 html.dark .text-zinc-800 { color: #e4e4e7 !important; }
 html.dark .text-zinc-700 { color: #d4d4d8 !important; }
 
+/* CRITICAL: brand-yellow and white buttons need dark text in dark mode too.
+   Yellow buttons must always have dark labels — white-on-yellow is unreadable.
+   White/light buttons must always have dark labels — white-on-white is invisible. */
+html.dark .bg-brand-yellow.text-brand-ink,
+html.dark .bg-brand-yellow .text-brand-ink,
+html.dark .bg-brand-yellow-soft.text-brand-ink,
+html.dark .bg-brand-yellow-soft .text-brand-ink,
+html.dark .bg-white.text-brand-ink,
+html.dark .bg-white .text-brand-ink,
+html.dark .bg-brand-bg.text-brand-ink,
+html.dark .bg-brand-bg .text-brand-ink {
+  color: #181919 !important;
+}
+
 /* Header */
 html.dark header { background-color: rgba(28, 29, 30, 0.92) !important; border-bottom-color: #2d2e30 !important; }
 html.dark #mobile-menu { background-color: #1c1d1e !important; border-top-color: #2d2e30 !important; }
@@ -707,6 +721,19 @@ html.dark .text-zinc-800,
 html.dark .text-zinc-900,
 html.dark .text-brand-ink {
   color: #f4f4f5 !important;
+}
+
+/* Re-assert: dark text on light/yellow backgrounds (this rule sits after the
+   broad override so it wins on specificity ties). */
+html.dark .bg-brand-yellow.text-brand-ink,
+html.dark .bg-brand-yellow .text-brand-ink,
+html.dark .bg-brand-yellow-soft.text-brand-ink,
+html.dark .bg-brand-yellow-soft .text-brand-ink,
+html.dark .bg-white.text-brand-ink,
+html.dark .bg-white .text-brand-ink,
+html.dark .bg-brand-bg.text-brand-ink,
+html.dark .bg-brand-bg .text-brand-ink {
+  color: #181919 !important;
 }
 
 /* =====================================================
