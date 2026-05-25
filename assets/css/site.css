@@ -36,10 +36,8 @@
 .apt-card {
   transition: transform 0.4s cubic-bezier(.22,.68,0,1.2), box-shadow 0.3s;
 }
-.apt-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.08);
-}
+/* No transform on hover. Card stays still; cursor signals it's clickable. */
+.apt-card { cursor: pointer; }
 
 /* Bento gallery */
 .gallery-thumb {
@@ -132,9 +130,7 @@
   color: #181919;
   border-color: #f9bd22;
 }
-.lightbox-nav.prev:hover { transform: translateY(-50%) scale(1.08); }
-.lightbox-nav.next:hover { transform: translateY(-50%) scale(1.08); }
-.lightbox-close:hover { transform: scale(1.08); }
+/* No scale on hover — colour change only (already above) */
 
 /* Trust strip */
 .trust-strip {
@@ -466,8 +462,7 @@ html.dark table th { border-color: #2d2e30 !important; }
 html.dark thead tr { background-color: #242526 !important; }
 html.dark tbody tr.bg-zinc-50 { background-color: #1a1b1c !important; }
 
-/* Apt cards hover shadow in dark */
-html.dark .apt-card:hover { box-shadow: 0 20px 40px rgba(0,0,0,0.5) !important; }
+/* No hover shadow change in dark either */
 
 /* =====================================================
    FLOATING DARK MODE TOGGLE (visible on every page)
@@ -491,9 +486,7 @@ html.dark .apt-card:hover { box-shadow: 0 20px 40px rgba(0,0,0,0.5) !important; 
   transition: transform 0.18s ease, background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
 }
 .theme-toggle-float:hover {
-  transform: scale(1.08);
   background: #f7f3f2;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
 }
 .theme-toggle-float:active { transform: scale(0.94); }
 .theme-toggle-float .material-symbols-outlined { font-size: 24px; }
@@ -538,7 +531,7 @@ html.dark .theme-toggle-float:hover { background: #2d2e30; }
   color: #795900;
   border: 2px solid #f9bd22;
 }
-.map-pin:hover { transform: scale(1.12); }
+/* Map pins are static; no scale on hover */
 .map-pin .material-symbols-outlined { font-size: 18px; line-height: 1; }
 .map-pin-apt .material-symbols-outlined { font-size: 22px; }
 
@@ -643,47 +636,28 @@ html.dark .apt-skeleton {
 }
 
 /* =====================================================
-   HOVER EFFECTS + MICRO-ANIMATIONS
+   HOVER STATES — static UI, no motion (Phase 23)
+   Only colour can change on hover. No transforms, no
+   underline sweeps, no scale, no lift, no fade-reveal.
+   Everything visible at rest.
    ===================================================== */
 html { scroll-behavior: smooth; }
 
-/* Animated link underline */
-.link-animated {
-  position: relative;
-  display: inline-block;
-}
-.link-animated::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -2px;
-  width: 100%;
-  height: 2px;
-  background: currentColor;
-  transform: scaleX(0);
-  transform-origin: right;
-  transition: transform 0.3s ease;
-}
-.link-animated:hover::after { transform: scaleX(1); transform-origin: left; }
+/* .link-animated is now a no-op (kept so HTML class doesn't break) */
+.link-animated { display: inline-block; }
 
-/* Nav link hover shifts color toward brand-yellow */
+/* Nav link hover: colour only */
 .nav-link { transition: color 0.25s ease; }
 .nav-link:hover { color: #795900 !important; }
 html.dark .nav-link:hover { color: #f9bd22 !important; }
 
-/* Image zoom inside cards & gallery thumbs */
-.apt-card img,
-.gallery-thumb {
-  transition: transform 0.5s cubic-bezier(0.22, 0.68, 0, 1.2);
-}
-.apt-card:hover img { transform: scale(1.06); }
-.gallery-thumb:hover { transform: scale(1.03); cursor: zoom-in; }
+/* Gallery thumbs: keep zoom cursor for affordance, no transform */
+.gallery-thumb { cursor: zoom-in; }
 
-/* Button micro-press */
+/* Buttons: colour/background transitions only, no scale */
 button, .btn-press {
-  transition: transform 0.12s ease, background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
-button:active:not(:disabled), .btn-press:active { transform: scale(0.97); }
 
 /* Soft fade-in for sections on initial load */
 @media (prefers-reduced-motion: no-preference) {
@@ -736,40 +710,62 @@ html.dark .text-brand-ink {
 }
 
 /* =====================================================
-   LIGHT-MODE FOOTER — light background, black text
-   Footer flips to match the light page in light mode so
-   text doesn't merge into a dark stripe at the bottom.
-   Dark mode keeps the original dark footer (see html.dark
-   footer rule above).
+   LIGHT-MODE FOOTER — light background, black text.
+   No wildcard `*` rule (the old one broke SVG icon fills
+   and brand-yellow logo elements). Each element class is
+   targeted explicitly.
    ===================================================== */
 html.light footer {
   background-color: #fdf8f8 !important;
+  color: #181919 !important;
   border-top: 1px solid #e5e2e1;
 }
-html.light footer * {
-  color: #181919 !important;
-}
-/* Social icon pills — invert so they read on the light bg */
+/* Flip dark-mode Tailwind text classes to dark */
+html.light footer .text-white,
+html.light footer .text-zinc-100,
+html.light footer .text-zinc-200,
+html.light footer .text-zinc-300,
+html.light footer .text-zinc-400,
+html.light footer .text-zinc-500,
+html.light footer .text-on-surface-variant { color: #181919 !important; }
+
+/* Brand-yellow elements stay yellow */
+html.light footer .text-brand-yellow      { color: #f9bd22 !important; }
+html.light footer .text-brand-yellow-deep { color: #795900 !important; }
+
+/* Social icon pills — dark pill, WHITE icon visible at rest */
 html.light footer [data-social] {
   background-color: #181919 !important;
   border-color: #181919 !important;
 }
-html.light footer [data-social] svg { color: #ffffff !important; }
+html.light footer [data-social] svg,
+html.light footer [data-social] svg path {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+}
 html.light footer [data-social]:hover {
   background-color: #f9bd22 !important;
   border-color: #f9bd22 !important;
 }
-html.light footer [data-social]:hover svg { color: #181919 !important; }
-/* WhatsApp button keeps its green */
+html.light footer [data-social]:hover svg,
+html.light footer [data-social]:hover svg path {
+  color: #181919 !important;
+  fill: #181919 !important;
+}
+
+/* WhatsApp pill stays green + white */
 html.light footer a[href*="wa.me"] {
   background-color: #25D366 !important;
+  color: #ffffff !important;
 }
-html.light footer a[href*="wa.me"],
-html.light footer a[href*="wa.me"] * { color: #ffffff !important; }
-/* Divider line between main + copyright row */
+html.light footer a[href*="wa.me"] svg,
+html.light footer a[href*="wa.me"] svg path {
+  fill: #ffffff !important;
+  color: #ffffff !important;
+}
+
+/* Divider line between main grid + copyright row */
 html.light footer .border-white\/10 { border-color: #e5e2e1 !important; }
-/* Animated link underline color in the footer */
-html.light footer .link-animated::after { background: #181919 !important; }
 
 /* Dark mode: bump muted text up so it stays readable */
 html.dark .text-on-surface-variant { color: #b4b4b8 !important; }
